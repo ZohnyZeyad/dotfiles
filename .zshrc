@@ -114,6 +114,7 @@ export PATH=$PATH:$HOME/go/bin
 # tmux
 export TMUX_SCRIPTS=$HOME/.local/scripts
 export PATH=$PATH:$TMUX_SCRIPTS
+bindkey -s ^f "tmux-sessionizer\n"
 
 # RTA
 # MAST REPORT SERVICE
