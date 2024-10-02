@@ -111,6 +111,10 @@ alias idea='/snap/intellij-idea-ultimate/current/bin/idea.sh'
 # bootdev
 export PATH=$PATH:$HOME/go/bin
 
+# tmux
+export TMUX_SCRIPTS=$HOME/.local/scripts
+export PATH=$PATH:$TMUX_SCRIPTS
+
 # RTA
 # MAST REPORT SERVICE
 export MONGO_MAST_STAGING_PASSWORD=cXn3zIalz3sIrgxv
