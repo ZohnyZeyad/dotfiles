@@ -124,6 +124,11 @@ export MONGO_COREV2_STAGING_PASSWORD=fuOUme8hG0GWZHn4
 # Okta
 alias okta="flatpak run com.okta.developer.CLI"
 
+# tmux
+if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+  tmux attach-session -t default || tmux new-session -s default
+fi
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
