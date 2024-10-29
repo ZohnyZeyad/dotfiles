@@ -26,7 +26,8 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<C-z>', '<cmd>redo<CR>')
 
-vim.keymap.set({"n", "v"}, "<C-_>", "gcc", { remap = true, desc = 'Toggle comment line'})
+vim.keymap.set("n", "<C-_>", "gcc", { remap = true, desc = 'Toggle comment line'})
+vim.keymap.set("v", "<C-_>", "gc", { remap = true, desc = 'Toggle comment'})
 
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
