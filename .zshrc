@@ -85,8 +85,12 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 
+plugins=(git)
+
 # Home Bin
 export PATH=$PATH:$HOME/bin
+export PATH="$PATH:/opt/nvim-linux64/bin"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # Aliases
 alias ls='ls --color --hyperlink=auto'

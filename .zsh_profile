@@ -4,6 +4,11 @@ VIM="nvim"
 export EDITOR=$VIM
 export GIT_EDITOR=$VIM
 export DOTFILES=$HOME/dotfiles
+export GCM_CREDENTIAL_STORE=gpg
+
+export PATH=$PATH:$HOME/.local/scripts
+export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/.local/share/coursier/bin
 
 bindkey -s ^f "tmux-sessionizer\n"
 
