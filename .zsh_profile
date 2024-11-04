@@ -5,6 +5,8 @@ export EDITOR=$VIM
 export GIT_EDITOR=$VIM
 export DOTFILES=$HOME/dotfiles
 export GCM_CREDENTIAL_STORE=gpg
+export DOCKER_CONTEXT=desktop-linux
+export DOCKER_HOST="unix:///home/zeyad-zohny/.docker/desktop/docker.sock"
 
 export PATH=$PATH:$HOME/.local/scripts
 export PATH=$PATH:$HOME/.local/bin
