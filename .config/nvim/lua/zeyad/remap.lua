@@ -15,6 +15,9 @@ vim.keymap.set("x", "<leader>p", [["_dP]])
 
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
+-- Allow saving of files as sudo when forgot to start nvim using sudo
+vim.keymap.set('c', 'w!!', 'write !SUDO_ASKPASS=`which ssh-askpass` sudo -A tee % > /dev/null <CR>', { desc = 'Write file with sudo privileges' })
+
 -- next greatest remap ever : asbjornHaland
 vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])

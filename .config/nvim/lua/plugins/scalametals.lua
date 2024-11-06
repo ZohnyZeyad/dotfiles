@@ -40,6 +40,7 @@ return {
 
     -- Example of settings
     metals_config.settings = {
+      serverVersion = "latest.snapshot",
       showImplicitArguments = true,
       excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
       testUserInterface = "Test Explorer",
