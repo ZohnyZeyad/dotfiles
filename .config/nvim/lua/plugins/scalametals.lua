@@ -9,7 +9,6 @@ return {
     {
       "mfussenegger/nvim-dap",
       config = function()
-        -- Debug settings if you're using nvim-dap
         local dap = require("dap")
 
         dap.configurations.scala = {
@@ -38,7 +37,6 @@ return {
   opts = function()
     local metals_config = require("metals").bare_config()
 
-    -- Example of settings
     metals_config.settings = {
       serverVersion = "latest.snapshot",
       showImplicitArguments = true,
@@ -46,28 +44,21 @@ return {
       testUserInterface = "Test Explorer",
     }
 
-    -- *READ THIS*
-    -- I *highly* recommend setting statusBarProvider to either "off" or "on"
-    --
-    -- "off" will enable LSP progress notifications by Metals and you'll need
-    -- to ensure you have a plugin like fidget.nvim installed to handle them.
-    --
-    -- "on" will enable the custom Metals status extension and you *have* to have
-    -- a have settings to capture this in your statusline or else you'll not see
-    -- any messages from metals. There is more info in the help docs about this
     metals_config.init_options.statusBarProvider = "off"
 
-    -- Example if you are using cmp how to make sure the correct capabilities for snippets are set
-    metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
+    metals_config.capabilities = vim.tbl_deep_extend(
+      "force",
+      {},
+      vim.lsp.protocol.make_client_capabilities(),
+      require("cmp_nvim_lsp").default_capabilities())
 
     metals_config.on_attach = function()
       require("metals").setup_dap()
 
       local map = vim.keymap.set
-      -- LSP mappings
       map("n", "gd", function()
-            require('telescope.builtin').lsp_definitions({jump_type='vsplit'})
-        end)
+        require('telescope.builtin').lsp_definitions({ jump_type = 'vsplit' })
+      end)
       map("n", "gD", vim.lsp.buf.declaration)
       map("n", "gi", vim.lsp.buf.implementation)
       map("n", "gr", vim.lsp.buf.references)
@@ -113,8 +104,6 @@ return {
         vim.diagnostic.goto_next({ wrap = false })
       end)
 
-      -- Example mappings for usage with nvim-dap. If you don't use that, you can
-      -- skip these
       map("n", "<leader>dc", function()
         require("dap").continue()
       end)

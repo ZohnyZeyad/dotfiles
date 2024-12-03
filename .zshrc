@@ -50,7 +50,7 @@ autoload -Uz compinit && compinit
 
 # Bloop
 autoload -U compinit
-fpath=($HOME/.bloop/zsh $fpath)
+fpath=($HOME/.local/share/coursier/bin/bloop/zsh $fpath)
 compinit
 
 zinit cdreplay -q

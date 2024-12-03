@@ -9,7 +9,10 @@ return {
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-cmdline",
         "hrsh7th/nvim-cmp",
-        "L3MON4D3/LuaSnip",
+        {
+            "L3MON4D3/LuaSnip",
+            dependencies = { "rafamadriz/friendly-snippets" },
+        },
         "saadparwaiz1/cmp_luasnip",
         { 'j-hui/fidget.nvim',       opts = {} },
     },
@@ -37,7 +40,7 @@ return {
         }
         require("mason-lspconfig").setup({
             handlers = {
-                function(server_name) -- default handler (optional)
+                function(server_name)
                     require("lspconfig")[server_name].setup {
                         capabilities = capabilities
                     }
@@ -65,7 +68,7 @@ return {
         cmp.setup({
             snippet = {
                 expand = function(args)
-                    require('luasnip').lsp_expand(args.body)
+                    require("luasnip.loaders.from_vscode").lazy_load().lsp_expand(args.body)
                 end,
             },
             completion = { completeopt = 'menu,menuone,noinsert' },
@@ -94,7 +97,7 @@ return {
             }),
             sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
-                { name = 'luasnip' }, -- For luasnip users.
+                { name = 'luasnip' },
             }, {
                 { name = 'buffer' },
                 { name = 'path' },

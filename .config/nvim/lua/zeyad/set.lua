@@ -33,6 +33,7 @@ vim.opt.undofile = true
 
 --vim.opt.hlsearch = false
 vim.opt.incsearch = true
+vim.opt_global.completeopt = { "menuone", "noinsert", "noselect" }
 
 vim.opt.termguicolors = true
 
