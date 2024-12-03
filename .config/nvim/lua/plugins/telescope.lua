@@ -28,7 +28,7 @@ return {
                 prompt_prefix = " ",
                 selection_caret = "󱞩 ",
                 path_display = { "filename_first" },
-                layout_strategy = "vertical",
+                -- layout_strategy = "vertical",
             },
             extensions = {
                 fzf = {
