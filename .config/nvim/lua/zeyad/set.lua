@@ -42,6 +42,9 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
+vim.opt.shada = { "'10", "<0", "s10", "h" }
+vim.opt.more = false
+vim.opt.foldmethod = "manual"
 
 vim.g.bigfile_size = 1024 * 1024 * 1 -- 1M
 
