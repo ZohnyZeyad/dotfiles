@@ -167,6 +167,9 @@ export PATH=$PATH:$HOME/go/bin
 
 export PATH=$PATH:$HOME/.local/scripts
 
+# cargo
+export PATH=$PATH:$HOME/.cargo/bin
+
 # RTA
 # MAST REPORT SERVICE
 export MONGO_MAST_STAGING_PASSWORD=cXn3zIalz3sIrgxv

@@ -33,7 +33,7 @@ return {
       end
     },
   },
-  ft = { "scala", "sbt", "java" },
+  ft = { "scala", "sbt", "java", "sc" },
   opts = function()
     local metals_config = require("metals").bare_config()
 
@@ -61,14 +61,22 @@ return {
       end)
       map("n", "gD", vim.lsp.buf.declaration)
       map("n", "gi", vim.lsp.buf.implementation)
-      map("n", "gr", vim.lsp.buf.references)
+      map("n", "gr", function()
+        require('telescope.builtin').lsp_references()
+      end)
       map("n", "K", vim.lsp.buf.hover)
       map("n", "<leader>rn", vim.lsp.buf.rename)
       map("n", "<leader>ca", vim.lsp.buf.code_action)
       map("n", "<leader>cl", vim.lsp.codelens.run)
-      map("n", "<leader>vds", vim.lsp.buf.document_symbol)
-      map("n", "<leader>vws", vim.lsp.buf.workspace_symbol)
-      map("n", "<leader>vd", vim.diagnostic.open_float)
+      map("n", "<leader>vds", function()
+        require('telescope.builtin').lsp_document_symbols()
+      end)
+      map("n", "<leader>vws", function()
+        require('telescope.builtin').lsp_workplace_symbols()
+      end)
+      map("n", "<leader>vd", function()
+        require('telescope.builtin').diagnostics()
+      end)
       map("n", "<leader>f", vim.lsp.buf.format)
       map("n", "<leader>sh", vim.lsp.buf.signature_help)
 
