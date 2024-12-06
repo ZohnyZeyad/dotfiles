@@ -1,6 +1,6 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
--- vim.keymap.set("n", "<leader>lv", '<cmd>20Lexplore<CR>')
+-- vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>pv", '<cmd>Oil<CR>')
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
@@ -19,9 +19,11 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- next greatest remap ever : asbjornHaland
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
+vim.keymap.set("v", "p", '"_dP', { desc = 'Paste without overwriting register' })
 vim.keymap.set({ "n", "v" }, "<leader>p", [["+p]])
-
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
+
+vim.keymap.set("n", "==", "gg<S-v>G", { desc = 'Select All' })
 
 -- This is going to get me cancelled
 vim.keymap.set("i", "<C-c>", "<Esc>")
@@ -47,7 +49,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
   callback = function()
     set.number = false
     set.relativenumber = false
-    set.scrolloff = 0
+    set.scrolloff = 5
   end,
 })
 
