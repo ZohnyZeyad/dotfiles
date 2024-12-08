@@ -8,6 +8,7 @@ export DOTFILES=$HOME/dotfiles
 export GCM_CREDENTIAL_STORE=gpg
 export DOCKER_CONTEXT=desktop-linux
 export DOCKER_HOST="unix:///home/zeyad-zohny/.docker/desktop/docker.sock"
+export PKG_CONFIG=/usr/bin/
 
 export PATH=$PATH:$HOME/.local/scripts
 export PATH=$PATH:$HOME/.local/bin
