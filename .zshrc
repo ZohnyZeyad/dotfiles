@@ -1,3 +1,6 @@
+# Configure color-scheme
+COLOR_SCHEME=dark
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -93,13 +96,30 @@ export PATH="$PATH:/opt/nvim-linux64/bin"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # Aliases
-alias ls='ls --color --hyperlink=auto'
+### Colorize commands
+alias ls='ls --color=auto --hyperlink=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias diff='diff --color=auto'
+alias ip='ip --color=auto'
 alias c='clear'
 alias prettyjson='python3 -m json.tool'
-alias cat='bat --style=plain'
 alias curl='curlie'
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
+
+### CAT & LESS
+command -v bat > /dev/null && \
+	alias bat='bat --theme=ansi' && \
+	alias cat='bat --style=plain --pager=never' && \
+	alias less='bat'
+
+### LS & TREE
+alias ll='ls -la'
+alias la='ls -A'
+command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
+	alias tree='lsd --tree -I ".git"'
 
 # Shell integrations
 # export FZF_DEFAULT_COMMAND='find .'

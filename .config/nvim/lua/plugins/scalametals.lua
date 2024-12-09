@@ -1,5 +1,6 @@
 return {
   "scalameta/nvim-metals",
+
   dependencies = {
     "nvim-lua/plenary.nvim",
     {
@@ -18,7 +19,6 @@ return {
             name = "RunOrTest",
             metals = {
               runType = "runOrTestFile",
-              --args = { "firstArg", "secondArg", "thirdArg" }, -- here just as an example
             },
           },
           {
@@ -33,13 +33,24 @@ return {
       end
     },
   },
+
   ft = { "scala", "sbt", "java", "sc" },
+
   opts = function()
     local metals_config = require("metals").bare_config()
 
     metals_config.settings = {
       serverVersion = "latest.snapshot",
       showImplicitArguments = true,
+      autoImportBuild = "all",
+      fallbackScalaVersion = "3.5.0",
+      inlayHints = {
+        hintsInPatternMatch = { enable = true },
+        implicitArguments = { enable = true },
+        implicitConversions = { enable = true },
+        inferredTypes = { enable = true },
+        typeParameters = { enable = true },
+      },
       excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
       testUserInterface = "Test Explorer",
     }
@@ -68,13 +79,13 @@ return {
       map("n", "<leader>rn", vim.lsp.buf.rename)
       map("n", "<leader>ca", vim.lsp.buf.code_action)
       map("n", "<leader>cl", vim.lsp.codelens.run)
-      map("n", "<leader>vds", function()
+      map("n", "<leader>gds", function()
         require('telescope.builtin').lsp_document_symbols()
       end)
-      map("n", "<leader>vws", function()
+      map("n", "<leader>gws", function()
         require('telescope.builtin').lsp_workplace_symbols()
       end)
-      map("n", "<leader>vd", function()
+      map("n", "<leader>gd", function()
         require('telescope.builtin').diagnostics()
       end)
       map("n", "<leader>f", vim.lsp.buf.format)
@@ -86,6 +97,14 @@ return {
 
       map("n", "<leader>fm", function()
         require('telescope').extensions.metals.commands()
+      end)
+
+      map("n", "<leader>pt", function()
+        require('metals.tvp').reveal_in_tree()
+      end)
+
+      map("n", "<leader>tv", function()
+        require('metals.tvp').toggle_tree_view()
       end)
 
       -- all workspace diagnostics
@@ -143,6 +162,7 @@ return {
 
     return metals_config
   end,
+
   config = function(self, metals_config)
     local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
     vim.api.nvim_create_autocmd("FileType", {
@@ -153,5 +173,4 @@ return {
       group = nvim_metals_group,
     })
   end
-
 }
