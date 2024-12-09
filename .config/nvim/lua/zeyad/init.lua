@@ -63,6 +63,18 @@ autocmd('LspAttach', {
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
     vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next({ wrap = false }) end, opts)
     vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev({ wrap = false }) end, opts)
+
+    local client = vim.lsp.get_client_by_id(e.data.client_id)
+    if not client then return end
+
+    if client.supports_method('textDocument/formatting') then
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        buffer = e.buf,
+        callback = function()
+          vim.lsp.buf.format({ bufnr = e.buf, id = client.id })
+        end,
+      })
+    end
   end
 })
 
