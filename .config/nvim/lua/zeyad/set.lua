@@ -52,6 +52,6 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
 
-vim.g.suda_smart_edit = 1
+-- vim.g.suda_smart_edit = 1
 
 -- vim.opt.colorcolumn = "80"

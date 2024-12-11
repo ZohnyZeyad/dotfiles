@@ -1,3 +1,4 @@
 return {
-  'lambdalisue/vim-suda', tag = 'v1.2.2'
+  'lambdalisue/vim-suda',
+  tag = 'v1.2.2',
 }

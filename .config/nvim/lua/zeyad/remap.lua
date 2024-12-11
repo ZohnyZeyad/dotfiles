@@ -93,6 +93,7 @@ vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 -- vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 vim.keymap.set("n", "<leader>x", "<cmd>.lua<CR>", { desc = "Execute the current line" })
 vim.keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>", { desc = "Execute the current file" })
+vim.keymap.set("n", "<leader>sr", "<cmd>SudaRead<CR>", { desc = "Re-open the current filw with sudo" })
 
 --[[ vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
