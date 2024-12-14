@@ -10,14 +10,17 @@ return {
 
   {
     "Mofiqul/dracula.nvim",
+    enabled = false,
   },
   {
     "erikbackman/brightburn.vim",
+    enabled = false,
   },
 
   {
     "folke/tokyonight.nvim",
     lazy = false,
+    enabled = false,
     opts = {},
     config = function()
       ColorMyPencils()
@@ -25,6 +28,7 @@ return {
   },
   {
     "folke/tokyonight.nvim",
+    enabled = false,
     config = function()
       require("tokyonight").setup({
         style = "moon",         -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
