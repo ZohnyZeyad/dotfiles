@@ -16,7 +16,6 @@ return {
       module = "telescope._extensions.luasnip",
     },
     { 'nvim-telescope/telescope-ui-select.nvim' },
-    { 'nvim-telescope/telescope-smart-history.nvim' },
     {
       'nvim-tree/nvim-web-devicons',
       enabled = vim.g.have_nerd_font
@@ -42,10 +41,6 @@ return {
           case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
           -- the default case_mode is "smart_case"
         },
-        history = {
-          path = vim.fs.joinpath(data),
-          limit = 100,
-        },
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
         },
@@ -57,7 +52,6 @@ return {
 
     pcall(require('telescope').load_extension, 'fzf')
     pcall(require('telescope').load_extension, 'ui-select')
-    pcall(require("telescope").load_extension, 'smart_history')
     pcall(require('telescope').load_extension, 'luasnip')
 
     local builtin = require('telescope.builtin')
