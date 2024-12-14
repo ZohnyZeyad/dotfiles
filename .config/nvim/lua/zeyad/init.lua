@@ -3,10 +3,11 @@ require("zeyad.remap")
 require("zeyad.lazy_init")
 
 local augroup = vim.api.nvim_create_augroup
-local ZeyadGroup = augroup('Zeyad', {})
+local remove_spaces_group = augroup('RemoveTrailingSpaces', {})
 
 local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
+local reload_conf_group = augroup('ReloadConfigs', { clear = true })
 
 function R(name)
   require("plenary.reload").reload_module(name)
@@ -24,13 +25,35 @@ autocmd('TextYankPost', {
 })
 
 autocmd({ "BufWritePre" }, {
-  group = ZeyadGroup,
+  group = remove_spaces_group,
   pattern = "*",
-  command = [[%s/\s\+$//e]],
+  callback = function()
+    vim.cmd([[%s/\s\+$//e]])
+  end
+})
+
+autocmd('BufWritePost', {
+  group = reload_conf_group,
+  pattern = {
+    '~/.config/kitty/kitty.conf',
+    '~/.dotfiles/.config/kitty/kitty.conf'
+  },
+  callback = function()
+    vim.fn.system('kill -SIGUSR1 $(pgrep kitty)')
+  end
+})
+
+autocmd('BufWritePost', {
+  group = reload_conf_group,
+  pattern = '~/.tmux.conf',
+  callback = function()
+    vim.fn.system('tmux source-file ~/.tmux.conf')
+    vim.fn.system('tmux display-message "Reloaded ~/.tmux.conf!"')
+  end
 })
 
 autocmd('LspAttach', {
-  group = ZeyadGroup,
+  group = remove_spaces_group,
   callback = function(e)
     local opts = { buffer = e.buf }
     vim.keymap.set("n", "gd", function()
@@ -68,7 +91,7 @@ autocmd('LspAttach', {
     if not client then return end
 
     if client.supports_method('textDocument/formatting') then
-      vim.api.nvim_create_autocmd('BufWritePre', {
+      autocmd('BufWritePre', {
         buffer = e.buf,
         callback = function()
           vim.lsp.buf.format({ bufnr = e.buf, id = client.id })

@@ -10,7 +10,8 @@ return {
     "hrsh7th/cmp-path",
     "FelipeLema/cmp-async-path",
     "hrsh7th/cmp-cmdline",
-    "hrsh7th/nvim-cmp",
+    -- "hrsh7th/nvim-cmp",
+    { "yioneko/nvim-cmp",        branch = "perf-up" },
     "hrsh7th/cmp-nvim-lsp-signature-help",
     "hrsh7th/cmp-nvim-lsp-document-symbol",
     "petertriho/cmp-git",
@@ -25,7 +26,7 @@ return {
         },
       },
     },
-    { 'j-hui/fidget.nvim',       opts = {} },
+    { 'j-hui/fidget.nvim', opts = {} },
   },
 
   config = function()
@@ -83,13 +84,14 @@ return {
     require("luasnip").filetype_extend("typescript", { "tsdoc" })
     require("luasnip").filetype_extend("javascript", { "jsdoc" })
 
+    local compare = cmp.config.compare
     cmp.setup({
       snippet = {
         expand = function(args)
           require("luasnip").lsp_expand(args.body)
         end,
       },
-      completion = { completeopt = 'menu,menuone,noinsert' },
+      completion = { completeopt = 'menu,menuone,noselect' },
       mapping = cmp.mapping.preset.insert({
         ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
         ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
@@ -157,6 +159,27 @@ return {
         { name = "dotenv" },
         { name = "cmdline" },
       }),
+    })
+
+    cmp.setup.filetype({ "scala", "sc", "sbt", "java" }, {
+      preselect = cmp.PreselectMode.None, -- disable preselection
+      sorting = {
+        priority_weight = 2,
+        comparators = {
+          compare.offset,
+          compare.score,
+          compare.sort_text,
+          compare.recently_used,
+          compare.kind,
+          compare.length,
+          compare.order,
+        },
+      },
+      -- if you want to add preselection you have to set completeopt to new values
+      completion = {
+        -- completeopt = 'menu,menuone,noselect', <---- this is default value,
+        completeopt = 'menu,menuone', -- remove noselect
+      },
     })
 
     vim.diagnostic.config({

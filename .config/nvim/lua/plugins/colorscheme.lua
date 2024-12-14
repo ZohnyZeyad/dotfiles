@@ -13,9 +13,16 @@ return {
     name = "rose-pine",
     config = function()
       require('rose-pine').setup({
-        --                disable_background = true,
+        disable_background = true,
+
+        enable = {
+          terminal = true,
+        },
+
         styles = {
-          italic = false,
+          bold = true,
+          italic = true,
+          transparency = false,
         },
       })
       ColorMyPencils()
