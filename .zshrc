@@ -190,11 +190,6 @@ export PATH=$PATH:$HOME/.local/scripts
 # cargo
 export PATH=$PATH:$HOME/.cargo/bin
 
-# RTA
-# MAST REPORT SERVICE
-export MONGO_MAST_STAGING_PASSWORD=cXn3zIalz3sIrgxv
-export MONGO_COREV2_STAGING_PASSWORD=fuOUme8hG0GWZHn4
-
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
