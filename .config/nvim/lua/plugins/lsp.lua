@@ -1,7 +1,13 @@
 return {
   "neovim/nvim-lspconfig",
   dependencies = {
-    { 'williamboman/mason.nvim', config = true },
+    {
+      'williamboman/mason.nvim',
+      config = true,
+      build = function()
+        pcall(vim.cmd, "MasonUpdate")
+      end,
+    },
     "williamboman/mason-lspconfig.nvim",
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     "saadparwaiz1/cmp_luasnip",
@@ -11,7 +17,7 @@ return {
     "FelipeLema/cmp-async-path",
     "hrsh7th/cmp-cmdline",
     -- "hrsh7th/nvim-cmp",
-    { "yioneko/nvim-cmp",        branch = "perf-up" },
+    { "yioneko/nvim-cmp",  branch = "perf-up" },
     "hrsh7th/cmp-nvim-lsp-signature-help",
     "hrsh7th/cmp-nvim-lsp-document-symbol",
     "petertriho/cmp-git",
@@ -38,7 +44,9 @@ return {
       vim.lsp.protocol.make_client_capabilities(),
       cmp_lsp.default_capabilities())
 
+
     require("mason").setup()
+
     require('mason-tool-installer').setup {
       ensure_installed = {
         "lua_ls",
@@ -48,8 +56,12 @@ return {
         "jsonlint",
         "sql-formatter",
         "terraform-ls",
+        "jdtls",
       }
     }
+
+    require('spring_boot').init_lsp_commands()
+
     require("mason-lspconfig").setup({
       handlers = {
         function(server_name)
@@ -71,6 +83,25 @@ return {
               }
             }
           }
+        end,
+
+        ["jdtls"] = function()
+          local lspconfig = require("lspconfig")
+
+          local opts = {
+            capabilities = capabilities,
+            init_options = {
+              bundles = require("spring_boot").java_extensions(),
+            },
+          }
+
+          local require_ok, conf_opts = pcall(require, "plugins.lsp.settings.jdtls")
+
+          if require_ok then
+            opts = vim.tbl_deep_extend("force", conf_opts, opts)
+          end
+
+          lspconfig.jdtls.setup(opts)
         end,
       }
     })

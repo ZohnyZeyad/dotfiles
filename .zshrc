@@ -204,6 +204,9 @@ eval "$(pyenv virtualenv-init -)"
 # Okta
 alias okta="flatpak run com.okta.developer.CLI"
 
+# Maven
+export MAVEN_OPTS="-Xms2g -Xmx4g"
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
