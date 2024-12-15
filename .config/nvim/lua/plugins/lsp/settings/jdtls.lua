@@ -32,11 +32,22 @@ extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 local mason_path = vim.fn.glob(vim.fn.stdpath("data") .. "/mason/")
 local bundles = {}
 vim.list_extend(bundles, vim.split(vim.fn.glob(mason_path .. "packages/java-test/extension/server/*.jar"), "\n"))
+vim.list_extend(bundles, require("spring_boot").java_extensions())
 vim.list_extend(
   bundles,
   vim.split(vim.fn.glob(mason_path ..
     "packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar"), "\n")
 )
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  focusable = false,
+  border = "rounded",
+})
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+  focusable = false,
+  border = "rounded",
+})
 
 M.get_config = function()
   return {
@@ -81,25 +92,21 @@ M.get_config = function()
       allow_incremental_sync = true,
     },
 
-    handlers = {},
+    handlers = vim.lsp.handlers,
     root_dir = vim.fs.root(0, root_markers),
-    capabilities = require("lsp.handlers").capabilities,
     contentProvider = { preferred = "fernflower" },
     on_init = on_init,
-    on_attach = require("lsp.handlers").on_attach,
 
     init_options = {
       bundles = bundles,
       extendedClientCapabilities = extendedClientCapabilities,
     },
+
     settings = {
       java = {
         signatureHelp = { enabled = true },
         configuration = {
           updateBuildConfiguration = "interactive",
-        },
-        jdk = {
-          auto_install = false,
         },
         eclipse = {
           downloadSources = true,

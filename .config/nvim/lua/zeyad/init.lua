@@ -4,6 +4,7 @@ require("zeyad.lazy_init")
 
 local augroup = vim.api.nvim_create_augroup
 local remove_spaces_group = augroup('RemoveTrailingSpaces', {})
+local lsp_group = augroup('LspAttachMappings', {})
 
 local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
@@ -53,7 +54,7 @@ autocmd('BufWritePost', {
 })
 
 autocmd('LspAttach', {
-  group = remove_spaces_group,
+  group = lsp_group,
   callback = function(e)
     local opts = { buffer = e.buf }
     vim.keymap.set("n", "gd", function()

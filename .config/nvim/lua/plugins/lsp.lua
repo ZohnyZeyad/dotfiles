@@ -38,11 +38,12 @@ return {
   config = function()
     local cmp = require('cmp')
     local cmp_lsp = require("cmp_nvim_lsp")
+    local lspCapabilities = vim.lsp.protocol.make_client_capabilities()
     local capabilities = vim.tbl_deep_extend(
       "force",
       {},
-      vim.lsp.protocol.make_client_capabilities(),
-      cmp_lsp.default_capabilities())
+      lspCapabilities,
+      cmp_lsp.default_capabilities(lspCapabilities))
 
 
     require("mason").setup()
@@ -90,9 +91,6 @@ return {
 
           local opts = {
             capabilities = capabilities,
-            init_options = {
-              bundles = require("spring_boot").java_extensions(),
-            },
           }
 
           local require_ok, conf_opts = pcall(require, "plugins.lsp.settings.jdtls")

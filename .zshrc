@@ -207,6 +207,9 @@ alias okta="flatpak run com.okta.developer.CLI"
 # Maven
 export MAVEN_OPTS="-Xms2g -Xmx4g"
 
+# Lombok
+export JDTLS_JVM_ARGS="-javaagent:$HOME/.local/share/nvim/mason/packages/jdtls/lombok.jar"
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
