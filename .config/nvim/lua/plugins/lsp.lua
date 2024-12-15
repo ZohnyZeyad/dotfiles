@@ -45,30 +45,39 @@ return {
       lspCapabilities,
       cmp_lsp.default_capabilities(lspCapabilities))
 
-
     require("mason").setup()
 
     require('mason-tool-installer').setup {
       ensure_installed = {
-        "lua_ls",
+        'java-debug-adapter',
+        'java-test',
         "stylua",
         "docker-compose-language-service",
         "dockerfile-language-server",
         "jsonlint",
         "sql-formatter",
         "terraform-ls",
-        "jdtls",
       }
     }
 
-    require('spring_boot').init_lsp_commands()
+    vim.api.nvim_command('MasonToolsInstall')
+
+    -- require('spring_boot').init_lsp_commands()
 
     require("mason-lspconfig").setup({
+      ensure_installed = {
+        "lua_ls",
+        "jdtls",
+        "yamlls",
+      },
+
       handlers = {
         function(server_name)
-          require("lspconfig")[server_name].setup {
-            capabilities = capabilities
-          }
+          if server_name ~= 'jdtls' then
+            require("lspconfig")[server_name].setup {
+              capabilities = capabilities
+            }
+          end
         end,
 
         ["lua_ls"] = function()
@@ -86,21 +95,21 @@ return {
           }
         end,
 
-        ["jdtls"] = function()
-          local lspconfig = require("lspconfig")
-
-          local opts = {
-            capabilities = capabilities,
-          }
-
-          local require_ok, conf_opts = pcall(require, "plugins.lsp.settings.jdtls")
-
-          if require_ok then
-            opts = vim.tbl_deep_extend("force", conf_opts, opts)
-          end
-
-          lspconfig.jdtls.setup(opts)
-        end,
+        -- ["jdtls"] = function()
+        --   local lspconfig = require("lspconfig")
+        --
+        --   local opts = {
+        --     capabilities = capabilities,
+        --   }
+        --
+        --   local require_ok, conf_opts = pcall(require, "plugins.lsp.settings.jdtls")
+        --
+        --   if require_ok then
+        --     opts = vim.tbl_deep_extend("force", conf_opts, opts)
+        --   end
+        --
+        --   lspconfig.jdtls.setup(opts)
+        -- end,
       }
     })
 

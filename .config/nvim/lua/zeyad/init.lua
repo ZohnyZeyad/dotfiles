@@ -4,15 +4,27 @@ require("zeyad.lazy_init")
 
 local augroup = vim.api.nvim_create_augroup
 local remove_spaces_group = augroup('RemoveTrailingSpaces', {})
-local lsp_group = augroup('LspAttachMappings', {})
+local lsp_group = augroup('LspAttachMappings', { clear = true })
 
 local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
 local reload_conf_group = augroup('ReloadConfigs', { clear = true })
+local term_group = vim.api.nvim_create_augroup("custom_term_open", { clear = true })
 
 function R(name)
   require("plenary.reload").reload_module(name)
 end
+
+local set = vim.opt_local
+autocmd("TermOpen", {
+  group = term_group,
+  callback = function()
+    set.number = false
+    set.relativenumber = false
+
+    vim.bo.filetype = "terminal"
+  end,
+})
 
 autocmd('TextYankPost', {
   group = yank_group,
@@ -65,7 +77,6 @@ autocmd('LspAttach', {
     vim.keymap.set("n", "gi", function()
       require('telescope.builtin').lsp_implementations({ jump_type = 'vsplit' })
     end, opts)
-    -- vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "gr", function()
       require('telescope.builtin').lsp_references()
     end, opts)

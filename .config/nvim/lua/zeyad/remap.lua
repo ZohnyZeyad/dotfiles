@@ -54,31 +54,20 @@ vim.keymap.set('n', '<A-l>', '<C-w>l', { silent = true })
 vim.keymap.set('n', '<A-j>', '<C-w>j', { silent = true })
 vim.keymap.set('n', '<A-k>', '<C-w>k', { silent = true })
 
-local set = vim.opt_local
-vim.api.nvim_create_autocmd("TermOpen", {
-  group = vim.api.nvim_create_augroup("custom_term_open", {}),
-  callback = function()
-    set.number = false
-    set.relativenumber = false
-    set.scrolloff = 8
-
-    vim.bo.filetype = "terminal"
-  end,
-})
-
 vim.keymap.set("n", "<leader>st", function()
   vim.cmd.new()
+  vim.cmd.term()
   vim.cmd.wincmd "J"
   vim.api.nvim_win_set_height(0, 12)
   vim.wo.winfixheight = true
-  set.scrolloff = 0
-  vim.cmd.term()
+  vim.opt_local.scrolloff = 0
 end)
 
 vim.keymap.set("n", "<leader>vt", function()
-  vim.cmd.new()
-  vim.cmd.wincmd "L"
+  vim.cmd.vnew()
   vim.cmd.term()
+  vim.cmd.wincmd "L"
+  vim.opt_local.scrolloff = 8
 end)
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
