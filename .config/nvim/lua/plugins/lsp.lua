@@ -134,7 +134,8 @@ return {
       },
       completion = { completeopt = 'menu,menuone,noselect' },
       window = {
-        documentation = cmp.config.window.bordered()
+        documentation = cmp.config.window.bordered(),
+        -- completion = cmp.config.window.bordered()
       },
       mapping = cmp.mapping.preset.insert({
         ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
@@ -262,24 +263,20 @@ return {
     sign({ name = 'DiagnosticSignHint', text = '⚑' })
     sign({ name = 'DiagnosticSignInfo', text = '»' })
 
-    -- vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-    --   vim.lsp.handlers.hover,
-    --   {
-    --     border = "rounded",
-    --     style = "minimal",
-    --     header = "",
-    --     prefix = "",
-    --   }
-    -- )
-    --
-    -- vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-    --   vim.lsp.handlers.signature_help,
-    --   {
-    --     border = "rounded",
-    --     style = "minimal",
-    --     header = "",
-    --     prefix = "",
-    --   }
-    -- )
+    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+      vim.lsp.handlers.hover,
+      {
+        focusable = false,
+        source = "always",
+      }
+    )
+
+    vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+      vim.lsp.handlers.signature_help,
+      {
+        focusable = false,
+        source = "always",
+      }
+    )
   end
 }
