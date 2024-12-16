@@ -34,7 +34,7 @@ return {
     },
   },
 
-  ft = { "scala", "sbt", "sc" },
+  ft = { "scala", "sbt", "sc", "java" },
 
   opts = function()
     local metals_config = require("metals").bare_config()
@@ -56,6 +56,19 @@ return {
     }
 
     metals_config.init_options.statusBarProvider = "off"
+
+    local root_markers = {
+      'settings.gradle',
+      'settings.gradle.kts',
+      'pom.xml',
+      'build.gradle',
+      'mvnw',
+      'gradlew',
+      'build.gradle',
+      'build.gradle.kts',
+      '.git',
+    }
+    metals_config.root_patterns = root_markers
 
     metals_config.capabilities = vim.tbl_deep_extend(
       "force",
