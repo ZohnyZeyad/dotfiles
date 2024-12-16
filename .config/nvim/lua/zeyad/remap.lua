@@ -73,6 +73,8 @@ vim.keymap.set("n", "<leader>vt", function()
   vim.opt_local.scrolloff = 8
 end)
 
+vim.keymap.set("n", "<leader>mvn", "<cmd>Maven<CR>")
+
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")

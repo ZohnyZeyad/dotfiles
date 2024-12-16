@@ -2,8 +2,6 @@
 local home = vim.env.HOME
 
 local jdtls = require("jdtls")
-local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-local workspace_dir = home .. "/jdtls-workspace/" .. project_name
 
 local java_path = os.getenv 'JAVA_HOME'
 local java = java_path .. "/bin/java"
@@ -19,6 +17,11 @@ local root_markers = {
   'build.gradle.kts',
   '.git',
 }
+
+local root_dir = require("jdtls.setup").find_root(root_markers)
+
+local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
+local workspace_dir = home .. "/jdtls-workspace/" .. project_name
 
 local system_os = ""
 
@@ -42,16 +45,6 @@ local bundles = {
 -- Needed for running/debugging unit tests
 vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-test/*.jar", 1), "\n"))
 vim.list_extend(bundles, require("spring_boot").java_extensions())
-
--- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
---   focusable = false,
---   border = "rounded",
--- })
---
--- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
---   focusable = false,
---   border = "rounded",
--- })
 
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
@@ -95,7 +88,7 @@ local config = {
 
   -- This is the default if not provided, you can remove it. Or adjust as needed.
   -- One dedicated LSP server & client will be started per unique root_dir
-  root_dir = require("jdtls.setup").find_root(root_markers),
+  root_dir = root_dir,
 
   -- Here you can configure eclipse.jdt.ls specific settings
   -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
@@ -143,6 +136,7 @@ local config = {
         },
       },
       signatureHelp = { enabled = true },
+      contentProvider = { preferred = 'fernflower' }, -- Use fernflower to decompile library code
       format = {
         enabled = true,
         -- Formatting works by default, but you can refer to a specific file/URL if you choose
@@ -188,7 +182,7 @@ local config = {
   -- Needed for auto-completion with method signatures and placeholders
   capabilities = require("cmp_nvim_lsp").default_capabilities(),
   flags = {
-    debounce_text_changes = 150,
+    debounce_text_changes = 80,
     allow_incremental_sync = true,
   },
   init_options = {
@@ -221,4 +215,3 @@ vim.keymap.set('n', '<leader>co', "<Cmd>lua require'jdtls'.organize_imports()<CR
 
 -- This starts a new client & server, or attaches to an existing client & server based on the `root_dir`.
 jdtls.start_or_attach(config)
-

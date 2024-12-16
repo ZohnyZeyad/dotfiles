@@ -20,6 +20,7 @@ return {
     { "yioneko/nvim-cmp",  branch = "perf-up" },
     "hrsh7th/cmp-nvim-lsp-signature-help",
     "hrsh7th/cmp-nvim-lsp-document-symbol",
+    "onsails/lspkind.nvim",
     "petertriho/cmp-git",
     "SergioRibera/cmp-dotenv",
     {
@@ -122,6 +123,8 @@ return {
     require("luasnip").filetype_extend("typescript", { "tsdoc" })
     require("luasnip").filetype_extend("javascript", { "jsdoc" })
 
+    local lspkind = require('lspkind')
+
     local compare = cmp.config.compare
     cmp.setup({
       snippet = {
@@ -130,6 +133,9 @@ return {
         end,
       },
       completion = { completeopt = 'menu,menuone,noselect' },
+      window = {
+        documentation = cmp.config.window.bordered()
+      },
       mapping = cmp.mapping.preset.insert({
         ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
         ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
@@ -157,12 +163,22 @@ return {
       sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
-        -- { name = "nvim_lsp_signature_help" },
+        { name = "nvim_lsp_signature_help" },
       }, {
         { name = 'buffer' },
         { name = 'async_path' },
         -- { name = 'path' },
-      })
+      }),
+      formatting = {
+        format = lspkind.cmp_format({
+          mode = 'symbol_text',
+          maxwidth = 50,
+          ellipsis_char = '...',
+          before = function(_, vim_item)
+            return vim_item
+          end
+        })
+      }
     })
 
     cmp.setup.filetype('gitcommit', {
@@ -222,6 +238,7 @@ return {
 
     vim.diagnostic.config({
       -- update_in_insert = true,
+      severity_sort = true,
       float = {
         focusable = false,
         style = "minimal",
@@ -231,5 +248,38 @@ return {
         prefix = "",
       },
     })
+
+    local sign = function(opts)
+      vim.fn.sign_define(opts.name, {
+        texthl = opts.name,
+        text = opts.text,
+        numhl = ''
+      })
+    end
+
+    sign({ name = 'DiagnosticSignError', text = '✘' })
+    sign({ name = 'DiagnosticSignWarn', text = '▲' })
+    sign({ name = 'DiagnosticSignHint', text = '⚑' })
+    sign({ name = 'DiagnosticSignInfo', text = '»' })
+
+    -- vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+    --   vim.lsp.handlers.hover,
+    --   {
+    --     border = "rounded",
+    --     style = "minimal",
+    --     header = "",
+    --     prefix = "",
+    --   }
+    -- )
+    --
+    -- vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+    --   vim.lsp.handlers.signature_help,
+    --   {
+    --     border = "rounded",
+    --     style = "minimal",
+    --     header = "",
+    --     prefix = "",
+    --   }
+    -- )
   end
 }
