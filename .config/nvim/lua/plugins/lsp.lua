@@ -63,7 +63,7 @@ return {
 
     vim.api.nvim_command('MasonToolsInstall')
 
-    -- require('spring_boot').init_lsp_commands()
+    require('spring_boot').init_lsp_commands()
 
     require("mason-lspconfig").setup({
       ensure_installed = {
@@ -95,22 +95,6 @@ return {
             }
           }
         end,
-
-        -- ["jdtls"] = function()
-        --   local lspconfig = require("lspconfig")
-        --
-        --   local opts = {
-        --     capabilities = capabilities,
-        --   }
-        --
-        --   local require_ok, conf_opts = pcall(require, "plugins.lsp.settings.jdtls")
-        --
-        --   if require_ok then
-        --     opts = vim.tbl_deep_extend("force", conf_opts, opts)
-        --   end
-        --
-        --   lspconfig.jdtls.setup(opts)
-        -- end,
       }
     })
 
@@ -268,6 +252,7 @@ return {
       {
         focusable = false,
         source = "always",
+        border = "rounded",
       }
     )
 
@@ -276,6 +261,7 @@ return {
       {
         focusable = false,
         source = "always",
+        border = "rounded",
       }
     )
   end

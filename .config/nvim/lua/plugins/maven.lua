@@ -6,8 +6,8 @@ return {
     require('maven').setup({
       executable = "./mvnw",
       commands = {
+        { cmd = { "clean", "compile" }, desc = "clean then compile" },
         { cmd = { "clean", "package" }, desc = "clean then package" },
-        { cmd = { "clean", "build" },   desc = "clean then build" },
         { cmd = { "clean", "install" }, desc = "clean then install" },
       },
     })

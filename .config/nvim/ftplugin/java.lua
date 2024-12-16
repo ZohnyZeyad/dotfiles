@@ -88,13 +88,12 @@ local config = {
 
   -- This is the default if not provided, you can remove it. Or adjust as needed.
   -- One dedicated LSP server & client will be started per unique root_dir
-  root_dir = root_dir,
+  -- root_dir = root_dir,
 
   -- Here you can configure eclipse.jdt.ls specific settings
   -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
   settings = {
     java = {
-      -- TODO Replace this with the absolute path to your main java version (JDK 17 or higher)
       home = java_path,
       eclipse = {
         downloadSources = true,
@@ -141,10 +140,18 @@ local config = {
         enabled = true,
         -- Formatting works by default, but you can refer to a specific file/URL if you choose
         settings = {
-          --   url = "https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml",
-          --   profile = "GoogleStyle",
-          url = "https://github.com/ZohnyZeyad/dotfiles/blob/main/.config/code/checkstyle.xml",
-          profile = "NixCheckStyle",
+          -- url = "https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml",
+          -- profile = "GoogleStyle",
+          --
+          -- url = "https://github.com/ZohnyZeyad/dotfiles/blob/main/.config/code/checkstyle.xml",
+          -- url = home .. "/Documents/EDU/checkstyle.xml",
+          -- profile = "NixCheckStyle",
+          --
+          url = home .. "/Documents/RTA/Analytics_Java_Style.xml",
+          profile = "RtaJavaStyle",
+          --
+          --   url = home .. "/Documents/RTA/Analytics_Scala_Style.xml",
+          --   profile = "RtaScalaStyle",
         },
       },
       completion = {

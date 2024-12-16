@@ -34,7 +34,7 @@ return {
     },
   },
 
-  ft = { "scala", "sbt", "sc", "java" },
+  ft = { "scala", "sbt", "sc" },
 
   opts = function()
     local metals_config = require("metals").bare_config()
@@ -43,7 +43,7 @@ return {
       serverVersion = "latest.snapshot",
       showImplicitArguments = true,
       autoImportBuild = "all",
-      fallbackScalaVersion = "3.5.0",
+      fallbackScalaVersion = "2.13.15",
       inlayHints = {
         hintsInPatternMatch = { enable = true },
         implicitArguments = { enable = true },
