@@ -160,9 +160,9 @@ alias vpn-disc="openvpn3 session-manage --config $HOME/Downloads/nxvpn.ovpn --di
 export PATH=$HOME/.local/bin:$PATH
 
 # fnm
-FNM_PATH="/home/zeyad-zohny/.local/share/fnm"
+FNM_PATH="$HOME/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
-  export PATH="/home/zeyad-zohny/.local/share/fnm:$PATH"
+  export PATH="$HOME/.local/share/fnm:$PATH"
   eval "`fnm env`"
 fi
 
@@ -172,7 +172,7 @@ export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
 export PYSPARK_PYTHON=/usr/bin/python3
 
 # ActiveMQ
-export ACTIVEMQ_PATH=/home/zeyad-zohny/apache-activemq-5.18.5
+export ACTIVEMQ_PATH=$HOME/apache-activemq-5.18.5
 export PATH=$PATH:$ACTIVEMQ_PATH/bin
 
 # IDEA
