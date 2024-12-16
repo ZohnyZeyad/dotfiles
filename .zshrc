@@ -155,8 +155,8 @@ source <(fzf --zsh)
 eval "$(zoxide init --cmd cd zsh)"
 
 # OpenVPN 3
-alias vpn-start='openvpn3 session-start --config /home/zeyad-zohny/Downloads/nxvpn.ovpn'
-alias vpn-disc='openvpn3 session-manage --config /home/zeyad-zohny/Downloads/nxvpn.ovpn --disconnect'
+alias vpn-start="openvpn3 session-start --config $HOME/Downloads/nxvpn.ovpn"
+alias vpn-disc="openvpn3 session-manage --config $HOME/Downloads/nxvpn.ovpn --disconnect"
 export PATH=$HOME/.local/bin:$PATH
 
 # fnm

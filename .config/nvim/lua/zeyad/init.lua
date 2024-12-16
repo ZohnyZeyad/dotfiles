@@ -45,11 +45,13 @@ autocmd({ "BufWritePre" }, {
   end
 })
 
+local home = vim.env.HOME
+
 autocmd('BufWritePost', {
   group = reload_conf_group,
   pattern = {
-    '~/.config/kitty/kitty.conf',
-    '~/.dotfiles/.config/kitty/kitty.conf'
+    home .. '/.config/kitty/*.conf',
+    home .. '/.dotfiles/.config/kitty/*.conf'
   },
   callback = function()
     vim.fn.system('kill -SIGUSR1 $(pgrep kitty)')
@@ -58,10 +60,25 @@ autocmd('BufWritePost', {
 
 autocmd('BufWritePost', {
   group = reload_conf_group,
-  pattern = '~/.tmux.conf',
+  pattern = {
+    home .. '/.tmux.conf',
+    home .. '/.dotfiles/.tmux.conf'
+  },
   callback = function()
     vim.fn.system('tmux source-file ~/.tmux.conf')
     vim.fn.system('tmux display-message "Reloaded ~/.tmux.conf!"')
+  end
+})
+
+autocmd('BufWritePost', {
+  group = reload_conf_group,
+  pattern = {
+    home .. '/.zsh*',
+    home .. '/.dotfiles/.zsh*'
+  },
+  callback = function()
+    vim.fn.system('source ~/.zshrc')
+    print('Reloaded ~/.zshrc!')
   end
 })
 
