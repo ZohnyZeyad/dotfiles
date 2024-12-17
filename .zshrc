@@ -39,6 +39,13 @@ zinit light Aloxaf/fzf-tab
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
+zinit light lukechilds/zsh-better-npm-completion
+
+export NVM_DIR="$HOME/.config/nvm"
+export NVM_COMPLETION=true
+export NVM_LAZY_LOAD=true
+export NVM_NO_USE=true
+zinit ice cloneonly; zinit light lukechilds/zsh-nvm
 
 # Add in snippets
 zinit snippet OMZP::git
@@ -159,13 +166,6 @@ alias vpn-start="openvpn3 session-start --config $HOME/Downloads/nxvpn.ovpn"
 alias vpn-disc="openvpn3 session-manage --config $HOME/Downloads/nxvpn.ovpn --disconnect"
 export PATH=$HOME/.local/bin:$PATH
 
-# fnm
-FNM_PATH="$HOME/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="$HOME/.local/share/fnm:$PATH"
-  eval "`fnm env`"
-fi
-
 # Apache Spark
 export SPARK_HOME=/opt/spark/spark-3.5.2-bin-hadoop3-scala2.13
 export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
@@ -205,9 +205,12 @@ export MAVEN_OPTS="-Xms2g -Xmx4g"
 # Lombok
 export JDTLS_JVM_ARGS="-javaagent:$HOME/.local/share/nvim/mason/packages/jdtls/lombok.jar"
 
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# fnm
+FNM_PATH="$HOME/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$HOME/.local/share/fnm:$PATH"
+  eval "$(fnm env)"
+fi
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
