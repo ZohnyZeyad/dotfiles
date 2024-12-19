@@ -46,6 +46,16 @@ local bundles = {
 vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-test/*.jar", 1), "\n"))
 vim.list_extend(bundles, require("spring_boot").java_extensions())
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
+capabilities = vim.tbl_deep_extend("force", capabilities, {
+  workspace = {
+    didChangeWatchedFiles = {
+      relativePatternSupport = true,
+    },
+  },
+})
+
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
   -- The command that starts the language server
@@ -187,7 +197,7 @@ local config = {
     },
   },
   -- Needed for auto-completion with method signatures and placeholders
-  capabilities = require("cmp_nvim_lsp").default_capabilities(),
+  capabilities = capabilities,
   flags = {
     debounce_text_changes = 80,
     allow_incremental_sync = true,

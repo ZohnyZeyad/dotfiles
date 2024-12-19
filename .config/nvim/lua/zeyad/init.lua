@@ -2,18 +2,18 @@ require("zeyad.set")
 require("zeyad.remap")
 require("zeyad.lazy_init")
 
-local augroup = vim.api.nvim_create_augroup
-local remove_spaces_group = augroup('RemoveTrailingSpaces', {})
-local lsp_group = augroup('LspAttachMappings', { clear = true })
-
-local autocmd = vim.api.nvim_create_autocmd
-local yank_group = augroup('HighlightYank', {})
-local reload_conf_group = augroup('ReloadConfigs', { clear = true })
-local term_group = vim.api.nvim_create_augroup("custom_term_open", { clear = true })
-
 function R(name)
   require("plenary.reload").reload_module(name)
 end
+
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+
+-- local remove_spaces_group = augroup('RemoveTrailingSpaces', {})
+local lsp_group = augroup('LspAttachMappings', { clear = true })
+local yank_group = augroup('HighlightYank', {})
+local reload_conf_group = augroup('ReloadConfigs', { clear = true })
+local term_group = vim.api.nvim_create_augroup("custom_term_open", { clear = true })
 
 local set = vim.opt_local
 autocmd("TermOpen", {
@@ -37,13 +37,13 @@ autocmd('TextYankPost', {
   end,
 })
 
-autocmd({ "BufWritePre" }, {
-  group = remove_spaces_group,
-  pattern = "*",
-  callback = function()
-    vim.cmd([[%s/\s\+$//e]])
-  end
-})
+-- autocmd({ "BufWritePre" }, {
+--   group = remove_spaces_group,
+--   pattern = "*",
+--   callback = function()
+--     vim.cmd([[%s/\s\+$//e]])
+--   end
+-- })
 
 local home = vim.env.HOME
 

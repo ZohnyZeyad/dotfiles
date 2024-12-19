@@ -19,7 +19,6 @@ return {
 
   {
     "folke/tokyonight.nvim",
-    lazy = false,
     enabled = false,
     opts = {},
     config = function()

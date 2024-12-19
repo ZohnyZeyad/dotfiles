@@ -3,15 +3,12 @@ return {
 
   dependencies = {
     "nvim-lua/plenary.nvim",
-    {
-      "j-hui/fidget.nvim",
-      opts = {},
-    },
+    { "j-hui/fidget.nvim", opts = {} },
     {
       "mfussenegger/nvim-dap",
+      lazy = true,
       config = function()
         local dap = require("dap")
-
         dap.configurations.scala = {
           {
             type = "scala",
@@ -70,11 +67,18 @@ return {
     }
     metals_config.root_patterns = root_markers
 
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
     metals_config.capabilities = vim.tbl_deep_extend(
       "force",
-      {},
-      vim.lsp.protocol.make_client_capabilities(),
-      require("cmp_nvim_lsp").default_capabilities())
+      capabilities,
+      {
+        workspace = {
+          didChangeWatchedFiles = {
+            relativePatternSupport = true,
+          },
+        },
+      })
 
     metals_config.on_attach = function()
       require("metals").setup_dap()

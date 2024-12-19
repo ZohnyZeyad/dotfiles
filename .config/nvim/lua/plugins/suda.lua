@@ -1,4 +1,5 @@
 return {
   'lambdalisue/vim-suda',
-  tag = 'v1.2.2',
+  version = 'v1.2.*',
+  event = { "BufReadPost", "BufNewFile" },
 }

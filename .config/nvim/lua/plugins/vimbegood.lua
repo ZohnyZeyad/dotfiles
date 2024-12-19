@@ -1,10 +1,7 @@
 return {
   "theprimeagen/vim-be-good",
-
-  dependencies = {
-    "nvim-lua/plenary.nvim"
-  },
-
-  config = function()
-  end
+  cmd = { "VimBeGood" },
+  event = { "VimEnter", "BufNewFile" },
+  dependencies = { "nvim-lua/plenary.nvim" },
+  config = function() end
 }

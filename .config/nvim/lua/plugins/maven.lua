@@ -1,6 +1,7 @@
 return {
   "eatgrass/maven.nvim",
   cmd = { "Maven", "MavenExec" },
+  event = { "BufReadPost", "BufNewFile" },
   dependencies = "nvim-lua/plenary.nvim",
   config = function()
     require('maven').setup({
