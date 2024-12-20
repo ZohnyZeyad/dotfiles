@@ -58,7 +58,7 @@ return {
 
     vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
     vim.keymap.set("n", "<leader>fg", require "plugins.telescope.multi-ripgrep", { desc = '[F]ind [G]rep' })
-    vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = '[P]review [F]iles' })
+    vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = '[P]roject [F]iles' })
     vim.keymap.set('n', '<leader>sgc', builtin.git_commits, { desc = '[S]earch [G]it [C]ommits' })
     vim.keymap.set('n', '<leader>sgs', builtin.git_status, { desc = '[S]earch [G]it [S]tatus' })
     vim.keymap.set('n', '<C-p>', builtin.git_files, {})

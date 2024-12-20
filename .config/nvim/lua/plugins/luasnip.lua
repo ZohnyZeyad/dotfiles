@@ -4,6 +4,7 @@ return {
   lazy = true,
   build = "make install_jsregexp",
   dependencies = {
+    { "rafamadriz/friendly-snippets" },
     {
       "benfowler/telescope-luasnip.nvim",
       module = "telescope._extensions.luasnip",
