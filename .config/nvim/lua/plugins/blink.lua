@@ -3,12 +3,13 @@ return {
     'saghen/blink.compat',
     version = '*',
     lazy = true,
+    enabled = false,
     opts = {},
   },
 
   {
     'saghen/blink.cmp',
-    version = 'v0.*',
+    version = 'v0.7.*',
     event = { "LspAttach" },
     dependencies = {
       'rafamadriz/friendly-snippets',
@@ -46,43 +47,49 @@ return {
       },
 
       sources = {
-        -- enabled_providers = { 'lsp', 'path', 'luasnip', 'buffer', 'lazydev' },
-        enabled_providers = function(_)
+        default = function(_)
           local node = vim.treesitter.get_node()
           if vim.bo.filetype == 'lua' then
             return { 'lsp', 'luasnip', 'path' }
           elseif node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
             return { 'path', 'buffer' }
           else
-            return { 'lsp', 'path', 'luasnip', 'buffer', 'lazydev', 'ripgrep' }
+            return { 'lsp', 'path', 'luasnip', 'buffer', 'lazydev', 'ripgrep', "cmdline" }
           end
-        end
-      },
+        end,
 
-      providers = {
-        -- lsp = { fallback_for = { 'lazydev' } },
+        providers = {
+          luasnip = { score_offset = -5 },
 
-        luasnip = { score_offset = -5 },
+          lazydev = {
+            name = 'LazyDev',
+            module = 'lazydev.integrations.blink',
+            score_offset = 100,
+            fallbacks = { 'lsp' },
+          },
 
-        lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', fallbacks = { 'lsp' } },
-
-        ripgrep = {
-          module = "blink-ripgrep",
-          name = "Ripgrep",
-          score_offset = -4,
-          opts = {
-            prefix_min_len = 3,
-            context_size = 5,
-            max_filesize = "1M",
-            additional_rg_options = {},
-            search_casing = "--smart-case",
+          ripgrep = {
+            module = "blink-ripgrep",
+            name = "Ripgrep",
+            score_offset = -4,
+            opts = {
+              prefix_min_len = 3,
+              context_size = 5,
+              max_filesize = "1M",
+              additional_rg_options = {},
+              search_casing = "--smart-case",
+              fallback_to_regex_highlighting = true,
+            },
           },
         },
       },
 
       signature = {
         enabled = true,
-        border = "rounded",
+        window = {
+          border = "rounded",
+          treesitter_highlighting = true,
+        }
       },
 
       fuzzy = {
@@ -104,6 +111,7 @@ return {
         documentation = {
           auto_show_delay_ms = 0,
           auto_show = true,
+          treesitter_highlighting = true,
           window = {
             border = "rounded",
             scrollbar = false,
