@@ -60,18 +60,22 @@ return {
       },
 
       providers = {
-        lsp = { fallback_for = { 'lazydev' } },
+        -- lsp = { fallback_for = { 'lazydev' } },
 
-        lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink' },
+        luasnip = { score_offset = -5 },
+
+        lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', fallbacks = { 'lsp' } },
 
         ripgrep = {
           module = "blink-ripgrep",
           name = "Ripgrep",
+          score_offset = -4,
           opts = {
             prefix_min_len = 3,
             context_size = 5,
             max_filesize = "1M",
             additional_rg_options = {},
+            search_casing = "--smart-case",
           },
         },
       },
@@ -79,6 +83,12 @@ return {
       signature = {
         enabled = true,
         border = "rounded",
+      },
+
+      fuzzy = {
+        use_typo_resistance = false,
+        use_proximity = false,
+        sorts = { 'score', 'sort_text', 'kind', 'label' },
       },
 
       completion = {
