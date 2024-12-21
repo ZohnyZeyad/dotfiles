@@ -9,8 +9,9 @@ return {
 
   {
     'saghen/blink.cmp',
-    version = 'v0.7.*',
+    version = 'v0.*',
     event = { "LspAttach" },
+    build = "cargo build --release",
     dependencies = {
       'rafamadriz/friendly-snippets',
       'L3MON4D3/LuaSnip',
@@ -47,18 +48,46 @@ return {
       },
 
       sources = {
+        min_keyword_length = function()
+          return vim.bo.filetype == 'markdown' and 2 or 0
+        end,
+
         default = function(_)
-          local node = vim.treesitter.get_node()
+          local ok, node = pcall(vim.treesitter.get_node)
+          local defaults = { 'lsp', 'path', 'luasnip', 'buffer', 'lazydev', 'ripgrep' }
           if vim.bo.filetype == 'lua' then
             return { 'lsp', 'luasnip', 'path' }
-          elseif node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
+          elseif ok and node and vim.tbl_contains({
+                'comment',
+                'comment_content',
+                'line_comment',
+                'block_comment',
+                "string",
+                "string_content",
+              }, node:type()) then
             return { 'path', 'buffer' }
           else
-            return { 'lsp', 'path', 'luasnip', 'buffer', 'lazydev', 'ripgrep', "cmdline" }
+            return defaults
           end
         end,
 
+        cmdline = function()
+          local _, type = pcall(vim.fn.getcmdtype)
+          if type == '/' or type == '?' then
+            return { 'path', 'buffer' }
+          end
+          if type == ':' then
+            return { 'cmdline' }
+          end
+          return {}
+        end,
+
         providers = {
+          lsp = {
+            async = true,
+            fallbacks = { 'ctags', 'buffer' }
+          },
+
           luasnip = { score_offset = -5 },
 
           lazydev = {
@@ -69,15 +98,15 @@ return {
           },
 
           ripgrep = {
-            module = "blink-ripgrep",
-            name = "Ripgrep",
+            module = 'blink-ripgrep',
+            name = 'Ripgrep',
             score_offset = -4,
             opts = {
               prefix_min_len = 3,
               context_size = 5,
-              max_filesize = "1M",
+              max_filesize = '1M',
               additional_rg_options = {},
-              search_casing = "--smart-case",
+              search_casing = '--smart-case',
               fallback_to_regex_highlighting = true,
             },
           },
@@ -87,7 +116,7 @@ return {
       signature = {
         enabled = true,
         window = {
-          border = "rounded",
+          border = 'rounded',
           treesitter_highlighting = true,
         }
       },
@@ -113,7 +142,7 @@ return {
           auto_show = true,
           treesitter_highlighting = true,
           window = {
-            border = "rounded",
+            border = 'rounded',
             scrollbar = false,
           },
         },

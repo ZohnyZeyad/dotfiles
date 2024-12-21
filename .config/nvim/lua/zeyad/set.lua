@@ -1,4 +1,5 @@
 --vim.opt.guicursor = ""
+vim.opt.tags:append({ ".git/tags-dep", "tags-dep", ".git/tags", "tags" })
 
 vim.opt.nu = true
 vim.opt.relativenumber = true

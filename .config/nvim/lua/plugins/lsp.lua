@@ -90,9 +90,9 @@ return {
       }
     }
 
-    lspconfig.ctags_lsp.setup({
-      filetypes = { "lua" }
-    })
+    -- lspconfig.ctags_lsp.setup({
+    --   filetypes = { "lua" }
+    -- })
 
     vim.diagnostic.config({
       -- update_in_insert = true,

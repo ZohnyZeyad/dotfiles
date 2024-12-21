@@ -9,7 +9,7 @@ end
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
--- local remove_spaces_group = augroup('RemoveTrailingSpaces', {})
+local remove_spaces_group = augroup('RemoveTrailingSpaces', { clear = true })
 local lsp_group = augroup('LspAttachMappings', { clear = true })
 local yank_group = augroup('HighlightYank', {})
 local reload_conf_group = augroup('ReloadConfigs', { clear = true })
@@ -37,13 +37,13 @@ autocmd('TextYankPost', {
   end,
 })
 
--- autocmd({ "BufWritePre" }, {
---   group = remove_spaces_group,
---   pattern = "*",
---   callback = function()
---     vim.cmd([[%s/\s\+$//e]])
---   end
--- })
+autocmd({ "BufWritePre" }, {
+  group = remove_spaces_group,
+  pattern = "*",
+  callback = function()
+    vim.cmd([[%s/\s\+$//e]])
+  end
+})
 
 local home = vim.env.HOME
 
