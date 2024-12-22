@@ -85,10 +85,11 @@ return {
         providers = {
           lsp = {
             async = true,
+            score_offset = 50,
             fallbacks = { 'ctags', 'buffer' }
           },
 
-          luasnip = { score_offset = -5 },
+          luasnip = { score_offset = -150 },
 
           lazydev = {
             name = 'LazyDev',
@@ -100,7 +101,7 @@ return {
           ripgrep = {
             module = 'blink-ripgrep',
             name = 'Ripgrep',
-            score_offset = -4,
+            score_offset = -100,
             opts = {
               prefix_min_len = 3,
               context_size = 5,
@@ -124,10 +125,17 @@ return {
       fuzzy = {
         use_typo_resistance = false,
         use_proximity = false,
-        sorts = { 'score', 'sort_text', 'kind', 'label' },
+        sorts = { 'score', 'kind', 'sort_text', 'label' },
       },
 
       completion = {
+        accept = {
+          create_undo_point = true,
+          auto_brackets = {
+            enabled = false,
+          },
+        },
+
         menu = {
           border = vim.g.border_style,
           scrollbar = false,

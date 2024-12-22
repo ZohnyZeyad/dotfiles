@@ -90,7 +90,6 @@ autocmd('LspAttach', {
       require('telescope.builtin').lsp_definitions({ jump_type = 'vsplit' })
     end, opts)
     vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
-    -- vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, opts)
     vim.keymap.set("n", "gi", function()
       require('telescope.builtin').lsp_implementations({ jump_type = 'vsplit' })
     end, opts)
