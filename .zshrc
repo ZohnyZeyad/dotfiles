@@ -103,6 +103,8 @@ export PATH="$PATH:/opt/nvim-linux64/bin"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # Aliases
+alias vim='nvim'
+
 ### Colorize commands
 alias ls='ls --color=auto --hyperlink=auto'
 alias grep='grep --color=auto'
