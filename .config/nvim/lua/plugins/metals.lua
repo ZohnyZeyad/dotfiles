@@ -54,18 +54,18 @@ return {
 
     metals_config.init_options.statusBarProvider = "off"
 
-    local root_markers = {
-      'settings.gradle',
-      'settings.gradle.kts',
-      'pom.xml',
-      'build.gradle',
-      'mvnw',
-      'gradlew',
-      'build.gradle',
-      'build.gradle.kts',
-      '.git',
-    }
-    metals_config.root_patterns = root_markers
+    -- local root_markers = {
+    --   'settings.gradle',
+    --   'settings.gradle.kts',
+    --   'pom.xml',
+    --   'build.gradle',
+    --   'mvnw',
+    --   'gradlew',
+    --   'build.gradle',
+    --   'build.gradle.kts',
+    --   '.git',
+    -- }
+    -- metals_config.root_patterns = root_markers
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
