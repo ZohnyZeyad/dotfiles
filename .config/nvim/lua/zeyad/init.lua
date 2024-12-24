@@ -109,7 +109,7 @@ autocmd('LspAttach', {
     vim.keymap.set("n", "<leader>gd", function()
       require('telescope.builtin').diagnostics()
     end, opts)
-    vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format() end, opts)
+    vim.keymap.set("n", "<leader>ff", function() vim.lsp.buf.format() end, opts)
     vim.keymap.set("n", "<leader>sh", function() vim.lsp.buf.signature_help() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
     vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next({ wrap = false }) end, opts)

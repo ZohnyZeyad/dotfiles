@@ -8,17 +8,20 @@ return {
     ---@diagnostic disable-next-line: missing-fields
     require("nvim-treesitter.configs").setup({
       ensure_installed = {
-        "vimdoc", "lua", "bash", "dockerfile", "java", "json", "regex",
-        "scala", "sql", "tmux", "toml", "terraform", "yaml", "xml",
-        "git_rebase", "diff", "gitcommit", "gitignore"
+        "vim", "vimdoc", "lua",
+        "java", "scala",
+        "json", "yaml", "xml", "toml", "tmux",
+        "dockerfile", "terraform",
+        "query", "sql",
+        "markdown", "markdown_inline",
+        "git_rebase", "diff", "gitcommit", "gitignore",
+        "regex",
       },
-
-      -- Install parsers synchronously (only applied to `ensure_installed`)
-      sync_install = false,
 
       -- Automatically install missing parsers when entering buffer
       -- Recommendation: set to false if you don"t have `tree-sitter` CLI installed locally
       auto_install = true,
+      sync_install = false,
 
       ignore_install = {},
       indent = { enable = true },
@@ -35,7 +38,7 @@ return {
           end
         end,
 
-        additional_vim_regex_highlighting = { "markdown" },
+        additional_vim_regex_highlighting = false,
       },
     })
   end
