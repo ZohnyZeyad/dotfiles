@@ -124,7 +124,7 @@ return {
 
       fuzzy = {
         use_typo_resistance = false,
-        use_proximity = false,
+        use_proximity = true,
         sorts = { 'score', 'kind', 'sort_text', 'label' },
       },
 
