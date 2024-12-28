@@ -7,10 +7,7 @@ local java_path = os.getenv 'JAVA_HOME'
 local java = java_path .. "/bin/java"
 
 local root_markers = {
-  'settings.gradle',
-  'settings.gradle.kts',
   'pom.xml',
-  'build.gradle',
   'mvnw',
   'gradlew',
   'build.gradle',
@@ -18,7 +15,8 @@ local root_markers = {
   '.git',
 }
 
-local root_dir = require("jdtls.setup").find_root(root_markers)
+local root_dir = vim.fs.dirname(vim.fs.find(root_markers, { upward = true })[1])
+-- local root_dir = require("jdtls.setup").find_root(root_markers)
 
 local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
 local workspace_dir = home .. "/jdtls-workspace/" .. project_name
@@ -70,19 +68,16 @@ local config = {
     "-javaagent:" .. home .. "/.local/share/nvim/mason/share/jdtls/lombok.jar",
     "-Xms4g",
     "-Xmx8g",
-    -- '-XX:+UseG1GC',
-    -- '-XX:+UseCompressedOops',
-    -- '-XX:ConcGCThreads=4',
-    -- '-XX:+UseStringDeduplication',
-    -- '-ea',
-    -- '-XX:CICompilerCount=2',
-    -- '-XX:+HeapDumpOnOutOfMemoryError',
-    -- '-XX:ErrorFile=$USER_HOME/java_error_in_idea_%p.log',
-    -- '-XX:HeapDumpPath=$USER_HOME/java_error_in_idea.hprof',
-    -- '-XX:-OmitStackTraceInFastThrow',
-    -- '-XX:ReservedCodeCacheSize=512m',
-    -- '-XX:+ParallelRefProcEnabled',
-    -- '-XX:SoftRefLRUPolicyMSPerMB=1000',
+    '-XX:+UseG1GC',
+    '-XX:+UseCompressedOops',
+    '-XX:ConcGCThreads=4',
+    '-XX:+UseStringDeduplication',
+    '-XX:CICompilerCount=2',
+    '-XX:+HeapDumpOnOutOfMemoryError',
+    '-XX:-OmitStackTraceInFastThrow',
+    '-XX:ReservedCodeCacheSize=512m',
+    '-XX:+ParallelRefProcEnabled',
+    '-XX:SoftRefLRUPolicyMSPerMB=1000',
     "--add-modules=ALL-SYSTEM",
     "--add-opens", "java.base/java.util=ALL-UNNAMED",
     "--add-opens", "java.base/java.lang=ALL-UNNAMED",
@@ -112,20 +107,20 @@ local config = {
         updateBuildConfiguration = "interactive",
         -- TODO Update this by adding any runtimes that you need to support your Java projects and removing any that you don't have installed
         -- The runtime name parameters need to match specific Java execution environments.  See https://github.com/tamago324/nlsp-settings.nvim/blob/2a52e793d4f293c0e1d61ee5794e3ff62bfbbb5d/schemas/_generated/jdtls.json#L317-L334
-        -- runtimes = {
-        --   {
-        --     name = "JavaSE-11",
-        --     path = "/usr/lib/jvm/java-11-openjdk-amd64",
-        --   },
-        --   {
-        --     name = "JavaSE-17",
-        --     path = "/usr/lib/jvm/java-17-openjdk-amd64",
-        --   },
-        --   {
-        --     name = "JavaSE-19",
-        --     path = "/usr/lib/jvm/java-19-openjdk-amd64",
-        --   },
-        -- },
+        runtimes = {
+          {
+            name = "JavaSE-11",
+            path = home .. "/.sdkman/candidates/java/11.0.25-amzn/",
+          },
+          {
+            name = "JavaSE-17",
+            path = home .. "/.sdkman/candidates/java/17.0.13-amzn/",
+          },
+          {
+            name = "JavaSE-21",
+            path = home .. "/.sdkman/candidates/java/21.0.5-amzn/",
+          },
+        },
       },
       maven = {
         downloadSources = true,
@@ -154,11 +149,11 @@ local config = {
           -- profile = "GoogleStyle",
           --
           -- url = "https://github.com/ZohnyZeyad/dotfiles/blob/main/.config/code/checkstyle.xml",
-          -- url = home .. "/Documents/EDU/checkstyle.xml",
-          -- profile = "NixCheckStyle",
+          url = home .. "/Documents/Nix/checkstyle.xml",
+          profile = "NixCheckStyle",
           --
-          url = home .. "/Documents/RTA/Analytics_Java_Style.xml",
-          profile = "RtaJavaStyle",
+          -- url = home .. "/Documents/RTA/Analytics_Java_Style.xml",
+          -- profile = "RtaJavaStyle",
           --
           --   url = home .. "/Documents/RTA/Analytics_Scala_Style.xml",
           --   profile = "RtaScalaStyle",
