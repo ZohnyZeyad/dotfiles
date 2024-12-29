@@ -90,8 +90,42 @@ return {
       }
     }
 
+    local supported_filetypes = {
+      "ansible", -- for AnsiblePlaybook
+      "bibtex",  -- combines BibLaTeX and BibTeX
+      "cs",      -- for C#
+      "dbus",    -- for DBusIntrospect
+      "lisp",    -- for EmacsLisp
+      "ini",     -- for Iniconf
+      "tcl",     -- for ITcl
+      "ld",      -- for LdScript
+      "maven",   -- for Maven2
+      "objc",    -- for ObjectiveC
+      "plist",   -- for PlistXML
+      "puppet",  -- for PuppetManifest
+      "qemu",    -- for QemuHX
+      "qt",      -- for QtMoc
+      "rng",     -- for RelaxNG
+      "rst",     -- for ReStructuredText
+      "rpm",     -- for RpmSpec
+      "systemd", -- for SystemdUnit
+      "abaqus", "abc", "ada", "ant", "asciidoc", "asm", "asp", "autoconf", "autoit",
+      "automake", "awk", "basic", "bats", "beta", "c", "cpp", "cargo", "clojure",
+      "cmake", "cobol", "css", "cuda", "d", "diff", "dosbatch", "dtd", "dts", "eiffel",
+      "elixir", "elm", "erlang", "falcon", "flex", "forth", "fortran", "fypp", "gdscript",
+      "gemspec", "glade", "go", "gperf", "haskell", "haxe", "html", "inko", "java",
+      "javascript", "json", "julia", "kconfig", "kotlin", "lex", "lisp", "lua",
+      "m4", "make", "man", "markdown", "matlab", "meson", "moose", "myrddin", "nsis",
+      "ocaml", "openapi", "org", "pascal", "passwd", "perl", "php", "pkgconfig", "pod",
+      "powershell", "protobuf", "python", "quarto", "r", "rake", "raku", "rdoc", "rexx",
+      "rmarkdown", "robot", "rspec", "ruby", "rust", "scheme", "scss", "sh", "slang", "sml",
+      "sql", "svg", "systemtap", "systemverilog", "tcl", "terraform", "tex", "thrift", "toml",
+      "ttcn", "typescript", "v", "varlink", "vera", "verilog", "vhdl", "vim", "windres", "xml",
+      "xrc", "xslt", "yacc", "yaml", "yumrepo", "zephir", "zsh"
+    }
+
     lspconfig.ctags_lsp.setup({
-      filetypes = { "lua" }
+      filetypes = supported_filetypes
     })
 
     vim.diagnostic.config({
