@@ -113,15 +113,19 @@ return {
       "automake", "awk", "basic", "bats", "beta", "c", "cpp", "cargo", "clojure",
       "cmake", "cobol", "css", "cuda", "d", "diff", "dosbatch", "dtd", "dts", "eiffel",
       "elixir", "elm", "erlang", "falcon", "flex", "forth", "fortran", "fypp", "gdscript",
-      "gemspec", "glade", "go", "gperf", "haskell", "haxe", "html", "inko", "java",
-      "javascript", "json", "julia", "kconfig", "kotlin", "lex", "lisp", "lua",
+      "gemspec", "glade", "go", "gperf", "haskell", "haxe", "html", "inko",
+      "javascript", "json", "julia", "kconfig", "kotlin", "lex", "lisp",
       "m4", "make", "man", "markdown", "matlab", "meson", "moose", "myrddin", "nsis",
       "ocaml", "openapi", "org", "pascal", "passwd", "perl", "php", "pkgconfig", "pod",
       "powershell", "protobuf", "python", "quarto", "r", "rake", "raku", "rdoc", "rexx",
       "rmarkdown", "robot", "rspec", "ruby", "rust", "scheme", "scss", "sh", "slang", "sml",
-      "sql", "svg", "systemtap", "systemverilog", "tcl", "terraform", "tex", "thrift", "toml",
+      "sql", "svg", "systemtap", "systemverilog", "tcl", "tex", "thrift", "toml",
       "ttcn", "typescript", "v", "varlink", "vera", "verilog", "vhdl", "vim", "windres", "xml",
-      "xrc", "xslt", "yacc", "yaml", "yumrepo", "zephir", "zsh"
+      "xrc", "xslt", "yacc", "yumrepo", "zephir", "zsh",
+      -- "java",
+      -- "lua",
+      -- "yaml",
+      -- "terraform",
     }
 
     lspconfig.ctags_lsp.setup({

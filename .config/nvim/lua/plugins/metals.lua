@@ -105,7 +105,7 @@ return {
       map("n", "<leader>gd", function()
         require('telescope.builtin').diagnostics()
       end)
-      map("n", "<leader>f", vim.lsp.buf.format)
+      map("n", "<leader>ff", vim.lsp.buf.format)
       map("n", "<leader>sh", vim.lsp.buf.signature_help)
 
       map("n", "<leader>ws", function()
