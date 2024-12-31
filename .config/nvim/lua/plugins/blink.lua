@@ -1,3 +1,6 @@
+-- NOTE: Specify the trigger character(s) used for luasnip
+local trigger_text = ";"
+
 return {
   {
     'saghen/blink.compat',
@@ -19,7 +22,14 @@ return {
     },
 
     opts = {
-      keymap = { preset = 'default', },
+      keymap = {
+        preset = 'default',
+        cmdline = {
+          preset = 'enter',
+          ['<S-Tab>'] = { 'select_prev', 'fallback' },
+          ['<Tab>'] = { 'select_next', 'fallback' },
+        },
+      },
 
       appearance = {
         use_nvim_cmp_as_default = true,
@@ -54,10 +64,8 @@ return {
 
         default = function(_)
           local ok, node = pcall(vim.treesitter.get_node)
-          local defaults = { 'lsp', 'path', 'luasnip', 'buffer', 'lazydev', 'ripgrep' }
-          if vim.bo.filetype == 'lua' then
-            return { 'lsp', 'luasnip', 'path' }
-          elseif ok and node and vim.tbl_contains({
+          local defaults = { 'lsp', 'path', 'snippets', 'luasnip', 'buffer', 'lazydev', 'ripgrep' }
+          if ok and node and vim.tbl_contains({
                 'comment',
                 'comment_content',
                 'line_comment',
@@ -71,10 +79,14 @@ return {
           end
         end,
 
+        per_filetype = {
+          lua = { 'lazydev', 'lsp', 'luasnip', 'snippets', 'buffer', 'path' }
+        },
+
         cmdline = function()
           local _, type = pcall(vim.fn.getcmdtype)
           if type == '/' or type == '?' then
-            return { 'path', 'buffer' }
+            return { 'buffer', 'path' }
           end
           if type == ':' then
             return { 'cmdline' }
@@ -84,18 +96,90 @@ return {
 
         providers = {
           lsp = {
+            name = "lsp",
+            enabled = true,
+            module = "blink.cmp.sources.lsp",
             async = true,
-            score_offset = 50,
-            fallbacks = { 'ctags', 'buffer' }
+            score_offset = 90,
+            fallbacks = { 'luasnip', 'snippets', 'ctags', 'buffer' }
           },
 
-          luasnip = { score_offset = -150 },
+          luasnip = {
+            name = "luasnip",
+            enabled = true,
+            module = "blink.cmp.sources.luasnip",
+            score_offset = 85,
+            min_keyword_length = 2,
+            max_items = 8,
+            fallbacks = { "snippets" },
+
+            should_show_items = function()
+              local col = vim.api.nvim_win_get_cursor(0)[2]
+              local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
+              return before_cursor:match(trigger_text .. "%w*$") ~= nil
+            end,
+
+            transform_items = function(_, items)
+              local col = vim.api.nvim_win_get_cursor(0)[2]
+              local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
+              local trigger_pos = before_cursor:find(trigger_text .. "[^" .. trigger_text .. "]*$")
+              if trigger_pos then
+                for _, item in ipairs(items) do
+                  item.textEdit = {
+                    newText = item.insertText or item.label,
+                    range = {
+                      start = { line = vim.fn.line(".") - 1, character = trigger_pos - 1 },
+                      ["end"] = { line = vim.fn.line(".") - 1, character = col },
+                    },
+                  }
+                end
+              end
+              -- NOTE: After the transformation, I have to reload the luasnip source
+              -- Otherwise really crazy shit happens.
+              vim.schedule(function()
+                require("blink.cmp").reload("luasnip")
+              end)
+              return items
+            end,
+          },
 
           lazydev = {
             name = 'LazyDev',
             module = 'lazydev.integrations.blink',
             score_offset = 100,
             fallbacks = { 'lsp' },
+          },
+
+          path = {
+            name = "Path",
+            module = "blink.cmp.sources.path",
+            score_offset = 3,
+            fallbacks = { "luasnip", "snippets", "buffer", "ripgrep" },
+            opts = {
+              trailing_slash = false,
+              label_trailing_slash = true,
+              get_cwd = function(context)
+                return vim.fn.expand(("#%d:p:h"):format(context.bufnr))
+              end,
+              show_hidden_files_by_default = true,
+            },
+          },
+
+          buffer = {
+            name = "Buffer",
+            enabled = true,
+            max_items = 3,
+            module = "blink.cmp.sources.buffer",
+            min_keyword_length = 3,
+          },
+
+          snippets = {
+            name = "snippets",
+            enabled = true,
+            max_items = 3,
+            module = "blink.cmp.sources.snippets",
+            min_keyword_length = 4,
+            score_offset = 80,
           },
 
           ripgrep = {
@@ -116,6 +200,9 @@ return {
 
       signature = {
         enabled = true,
+        trigger = {
+          show_on_insert_on_trigger_character = false,
+        },
         window = {
           border = 'rounded',
           treesitter_highlighting = true,
@@ -129,6 +216,16 @@ return {
       },
 
       completion = {
+        list = {
+          selection = function(ctx)
+            return ctx.mode == 'cmdline' and 'auto_insert' or 'preselect'
+          end
+        },
+
+        trigger = {
+          show_on_insert_on_trigger_character = false,
+        },
+
         accept = {
           create_undo_point = true,
           auto_brackets = {

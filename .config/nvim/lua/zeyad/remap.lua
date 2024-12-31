@@ -4,6 +4,8 @@ vim.keymap.set("n", "<leader>nt", '<cmd>Neotree filesystem reveal toggle<CR>', {
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vim.keymap.set("n", "H", "_")
+vim.keymap.set("n", "L", "$")
 
 vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
