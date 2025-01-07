@@ -27,6 +27,10 @@ return {
             },
           },
         }
+
+        dap.listeners.after["event_terminated"]["nvim-metals"] = function()
+          dap.repl.open()
+        end
       end
     },
   },
@@ -36,6 +40,7 @@ return {
   opts = function()
     local metals_config = require("metals").bare_config()
 
+    local home = vim.env.HOME
     metals_config.settings = {
       serverVersion = "latest.snapshot",
       showImplicitArguments = true,
@@ -50,6 +55,8 @@ return {
       },
       excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
       testUserInterface = "Test Explorer",
+      scalafmtConfigPath = home .. "/.scalafmt.conf",
+      scalafixConfigPath = home .. "/.scalafix.conf",
     }
 
     metals_config.init_options.statusBarProvider = "off"
@@ -80,6 +87,7 @@ return {
         },
       })
 
+    local dap = require("dap")
     metals_config.on_attach = function()
       require("metals").setup_dap()
 
@@ -87,8 +95,13 @@ return {
       map("n", "gd", function()
         require('telescope.builtin').lsp_definitions({ jump_type = 'vsplit' })
       end)
+      map("n", "gt", function()
+        require('telescope.builtin').lsp_type_definitions({ jump_type = 'vsplit' })
+      end)
       map("n", "gD", vim.lsp.buf.declaration)
-      map("n", "gi", vim.lsp.buf.implementation)
+      map("n", "gi", function()
+        require('telescope.builtin').lsp_implementations({ jump_type = 'vsplit' })
+      end)
       map("n", "gr", function()
         require('telescope.builtin').lsp_references()
       end)
@@ -100,12 +113,12 @@ return {
         require('telescope.builtin').lsp_document_symbols()
       end)
       map("n", "<leader>gws", function()
-        require('telescope.builtin').lsp_workplace_symbols()
+        require('telescope.builtin').lsp_dynamic_workplace_symbols()
       end)
       map("n", "<leader>gd", function()
         require('telescope.builtin').diagnostics()
       end)
-      map("n", "<leader>ff", vim.lsp.buf.format)
+      map("n", "<leader>ff", function() vim.lsp.buf.format({ async = true }) end)
       map("n", "<leader>sh", vim.lsp.buf.signature_help)
 
       map("n", "<leader>ws", function()
@@ -149,11 +162,11 @@ return {
       end)
 
       map("n", "<leader>dc", function()
-        require("dap").continue()
+        dap.continue()
       end)
 
       map("n", "<leader>dr", function()
-        require("dap").repl.toggle()
+        dap.repl.toggle()
       end)
 
       map("n", "<leader>dK", function()
@@ -161,19 +174,19 @@ return {
       end)
 
       map("n", "<leader>db", function()
-        require("dap").toggle_breakpoint()
+        dap.toggle_breakpoint()
       end)
 
       map("n", "<leader>dso", function()
-        require("dap").step_over()
+        dap.step_over()
       end)
 
       map("n", "<leader>dsi", function()
-        require("dap").step_into()
+        dap.step_into()
       end)
 
       map("n", "<leader>dl", function()
-        require("dap").run_last()
+        dap.run_last()
       end)
     end
 
