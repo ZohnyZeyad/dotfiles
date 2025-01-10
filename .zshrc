@@ -202,7 +202,7 @@ eval "$(pyenv virtualenv-init -)"
 alias okta="flatpak run com.okta.developer.CLI"
 
 # Maven
-export MAVEN_OPTS="-Xms4g -Xmx8g"
+export MAVEN_OPTS="-Xms2g -Xmx8g"
 
 # Lombok
 export JDTLS_JVM_ARGS="-javaagent:$HOME/.local/share/nvim/mason/packages/jdtls/lombok.jar"
