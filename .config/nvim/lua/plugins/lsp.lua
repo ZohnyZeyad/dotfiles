@@ -12,7 +12,12 @@ return {
       end,
     },
     'williamboman/mason-lspconfig.nvim',
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    {
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+      build = function()
+        pcall(vim.api.nvim_cmd, 'MasonToolsUpdate')
+      end
+    },
     'saghen/blink.cmp',
     'netmute/ctags-lsp.nvim',
     {
