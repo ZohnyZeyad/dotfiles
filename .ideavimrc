@@ -1,0 +1,258 @@
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+" Enable mouse support
+set mouse=a
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+" Set leader key
+let mapleader = " "
+
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+
+" Basic sets
+"set clipboard+=unnamed
+"set clipboard+=ideaput
+"set virtualedit=onemore
+set scrolloff=8
+set sidescrolloff=5
+set number
+set relativenumber
+set splitright
+set splitbelow
+set showcmd
+set showmode
+set nrformats-=octal
+set shell=/usr/bin/zsh
+set nocursorline
+set history=1000
+set undolevels=1000
+set undofile
+set undodir=~/.idea/.undo,~/tmp,/tmp
+set nobackup
+set noswapfile
+set directory=~/.idea/.tmp,~/tmp,/tmp
+"set visualbell
+"set noerrorbells
+"set trackactionids
+
+""" Plugins  --------------------------------
+set nerdtree
+set commentary
+set surround
+set highlightedyank
+set multiple-cursors
+" set ReplaceWithRegister
+set argtextobj
+set functiontextobj
+
+" Search settings
+set ignorecase
+set smartcase
+set incsearch
+set nohlsearch
+
+""" Idea specific settings ------------------
+set ideajoin
+set ideamarks
+set ideastrictmode
+set ideastatusicon=gray
+set idearefactormode=keep
+nnoremap \e :e ~/.ideavimrc<CR>
+nnoremap \r :action IdeaVim.ReloadVimRc.reload<CR>
+
+" No line wrapping
+set nowrap
+
+" Fast update time
+set updatetime=50
+
+" Manual fold method
+set foldmethod=manual
+set nofoldenable
+set nocompatible
+syntax enable
+syntax on
+set wildmenu
+set nowrap
+set expandtab
+
+""" My Mappings -----------------------------
+
+nnoremap <leader>zen :action ToggleDistractionFreeMode<CR>
+
+" Move lines in visual mode
+xmap J :action MoveLineDown<CR>
+xmap K :action MoveLineUp<CR>
+
+" Improved navigation
+" nmap <C-d> <C-d>zz
+" nmap <C-u> <C-u>zz
+nmap n nzzzv
+nmap N Nzzzv
+
+" Delete without overwriting register
+nmap <leader>d "_d
+vmap <leader>d "_d
+
+" Copy and paste with system clipboard
+nmap <leader>y "+y
+vmap <leader>y "+y
+nmap <leader>Y "+Y
+nmap <leader>p "+p
+nmap <leader>P "+P
+vmap <leader>p "+p
+vmap <leader>P "+P
+nnoremap Y y$
+
+" Select all
+nmap == gg<S-v>G
+
+" Insert empty lines
+nmap <Enter> o<Esc>
+nmap <S-Enter> O<Esc>
+
+" Input mode remap
+imap <C-c> <Esc>
+nmap <C-z> <C-r>
+
+" Navigate line
+nnoremap H _
+nnoremap L $
+
+" Tabs navigation
+nmap <c-h> :action PreviousTab<CR>
+nmap <c-l> :action NextTab<CR>
+nnoremap gn :action NextTab<CR>
+nnoremap gp :action PreviousTab<CR>
+
+nmap <leader>1 :action GoToTab1<CR>
+nmap <leader>2 :action GoToTab2<CR>
+nmap <leader>3 :action GoToTab3<CR>
+nmap <leader>4 :action GoToTab4<CR>
+nmap <leader>5 :action GoToTab5<CR>
+nmap <leader>6 :action GoToTab6<CR>
+nmap <leader>7 :action GoToTab7<CR>
+nmap <leader>8 :action GoToTab8<CR>
+nmap <leader>9 :action GoToTab9<CR>
+
+nnoremap <leader>xa :action CloseAllEditors<CR>
+nnoremap <leader>xo :action CloseAllEditorsButActive<CR>
+
+" Window navigation
+nmap <A-h> <C-w>h
+nmap <A-l> <C-w>l
+nmap <A-j> <C-w>j
+nmap <A-k> <C-w>k
+
+" location
+nmap <C-o> :action Back<CR>
+nmap <C-i> :action Forward<CR>
+
+" Window management
+map <c-=> :action UnsplitAll<CR>
+map <c-w>m :action MaximizeEditorInSplit<CR>
+map <a-=> :action StretchSplitToTop<CR>
+map <a--> :action StretchSplitToBottom<CR>
+map <a-,> :action StretchSplitToLeft<CR>
+map <a-.> :action StretchSplitToRight<CR>
+
+""" Keep visual selection when indenting
+xnoremap < <gv
+xnoremap > >gv
+
+" Uppercase the word under cursor
+nnoremap <leader>up viwUe
+
+" File navigation
+map <leader>nt :NERDTreeToggle<CR>
+map <leader>pv :action SelectInProjectView<CR>
+
+""" Navigate methods
+map [[ :action MethodUp<CR>
+map ]] :action MethodDown<CR>
+
+" IDE specific actions
+nmap <leader>rt :action Refactorings.QuickListPopupAction<CR>
+nmap <leader>rn :action RenameElement<CR>
+nmap <leader>ff :action ReformatCode<CR>
+nmap <leader>oi :action OptimizeImports<CR>
+nmap <leader>tt :action ActivateTerminalToolWindow<CR>
+nmap <leader>gs :action ActivateCommitToolWindow<CR>
+nmap <leader>hw :action HideAllWindows<CR>
+nmap <leader>cl :action GotoAction<CR>
+nmap <leader>sd :action SafeDelete<CR>
+
+" Run mappings
+nnoremap <leader>cr :action ChooseRunConfiguration<CR>
+nnoremap <leader>cd :action ChooseDebugConfiguration<CR>
+noremap <leader>rf :action Run<CR>
+noremap <leader>rr :action Rerun<CR>
+noremap <leader>rt :action RunTests<CR>
+noremap <leader>dd :action Debug<CR>
+noremap <leader>sp :action Stop<CR>
+
+" Errors and Diagnostics
+nmap <C-k> :action GotoNextError<CR>
+nmap <C-j> :action GotoPreviousError<CR>
+nmap ]d :action GotoNextError<CR>
+nmap [d :action GotoPreviousError<CR>
+
+" Lsp navigation
+nnoremap K :action ShowHoverInfo<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gD :action QuickTypeDefinition<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gI :action QuickImplementations<CR>
+nnoremap gu :action ShowUsages<CR>
+nnoremap gs :action GotoSuperMethod<CR>
+nnoremap gch :action CallHierarchy<CR>
+nnoremap gmh :action MethodHierarchy<CR>
+nnoremap gth :action TypeHierarchy<CR>
+nnoremap <leader>gt :action GotoTest<CR>
+nnoremap <leader>sn :action ShowNavBar<CR>
+
+map <leader>b :action ToggleLineBreakpoint<CR>
+
+" Search mappings
+vnoremap <leader>s :action Replace<CR>
+nnoremap <leader>pc :action GotoClass<CR>
+nnoremap <leader>pf :action GotoFile<CR>
+nnoremap <leader>fg :action SearchEverywhere<CR>
+
+""" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+let g:highlightedyank_highlight_duration = "50"
+
+" Vim Multiple Cursors
+nmap <C-n> <Plug>NextWholeOccurrence
+xmap <C-n> <Plug>NextWholeOccurrence
+nmap g<C-n> <Plug>NextOccurrence
+xmap g<C-n> <Plug>NextOccurrence
+xmap <C-x> <Plug>SkipOccurrence
+xmap <C-p> <Plug>RemoveOccurrence
+
+nmap <leader><C-n> <Plug>AllWholeOccurrences
+xmap <leader><C-n> <Plug>AllWholeOccurrences
+nmap <leader>g<C-n> <Plug>AllOccurrences
+xmap <leader>g<C-n> <Plug>AllOccurrences
+
+" Debug mappings
+nmap <leader>j :action StepOver<CR>
+nmap <leader>k :action Resume<CR>
+nmap <leader>h :action StepOut<CR>
+nmap <leader>l :action ForceStepInto<CR>
+noremap <leader>hs :action Hotswap<CR>
+
+" Information mappings
+noremap <leader>uml :action ShowUmlDiagram<CR>
+
+" Windows
+noremap <leader>mvn  :action ActivateMavenToolWindow<CR>
+
+" Utilities
+noremap <leader>sw :action SurroundWith<CR>
