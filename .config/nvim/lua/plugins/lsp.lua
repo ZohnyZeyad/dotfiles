@@ -104,7 +104,6 @@ return {
       "ini",     -- for Iniconf
       "tcl",     -- for ITcl
       "ld",      -- for LdScript
-      "maven",   -- for Maven2
       "objc",    -- for ObjectiveC
       "plist",   -- for PlistXML
       "puppet",  -- for PuppetManifest
@@ -123,19 +122,22 @@ return {
       "m4", "make", "man", "markdown", "matlab", "meson", "moose", "myrddin", "nsis",
       "ocaml", "openapi", "org", "pascal", "passwd", "perl", "php", "pkgconfig", "pod",
       "powershell", "protobuf", "python", "quarto", "r", "rake", "raku", "rdoc", "rexx",
-      "rmarkdown", "robot", "rspec", "ruby", "rust", "scheme", "scss", "sh", "slang", "sml",
+      "rmarkdown", "robot", "rspec", "ruby", "rust", "scheme", "scss", "slang", "sml",
       "sql", "svg", "systemtap", "systemverilog", "tcl", "tex", "thrift", "toml",
-      "ttcn", "typescript", "v", "varlink", "vera", "verilog", "vhdl", "vim", "windres", "xml",
+      "ttcn", "typescript", "v", "varlink", "vera", "verilog", "vhdl", "vim", "windres",
       "xrc", "xslt", "yacc", "yumrepo", "zephir", "zsh",
+      -- "sh",
+      -- "maven",
+      -- "xml",
       -- "java",
       -- "lua",
       -- "yaml",
       -- "terraform",
     }
 
-    lspconfig.ctags_lsp.setup({
-      filetypes = supported_filetypes
-    })
+    -- lspconfig.ctags_lsp.setup({
+    --   filetypes = supported_filetypes
+    -- })
 
     vim.diagnostic.config({
       -- update_in_insert = true,
