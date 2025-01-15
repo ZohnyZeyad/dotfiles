@@ -32,6 +32,11 @@ return {
         path_display = { "filename_first" },
         -- layout_strategy = "vertical",
       },
+      pickers = {
+        find_files = {
+          find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' },
+        }
+      },
       extensions = {
         wrap_results = true,
         fzf = {
