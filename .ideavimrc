@@ -36,7 +36,7 @@ set undodir=~/.idea/.undo,~/tmp,/tmp
 set nobackup
 set noswapfile
 set directory=~/.idea/.tmp,~/tmp,/tmp
-"set visualbell
+set visualbell
 "set noerrorbells
 "set trackactionids
 
