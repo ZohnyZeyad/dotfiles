@@ -169,7 +169,7 @@ alias vpn-disc="openvpn3 session-manage --config $HOME/Downloads/nxvpn.ovpn --di
 export PATH=$HOME/.local/bin:$PATH
 
 # Apache Spark
-export SPARK_HOME=/opt/spark/spark-3.5.2-bin-hadoop3-scala2.13
+export SPARK_HOME=/opt/spark/spark-3.5.4-bin-hadoop3
 export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
 export PYSPARK_PYTHON=/usr/bin/python3
 
