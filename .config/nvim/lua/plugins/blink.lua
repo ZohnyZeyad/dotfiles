@@ -208,7 +208,8 @@ return {
       },
 
       fuzzy = {
-        use_typo_resistance = false,
+        max_typos = function(keyword) return 0 end, -- Match fzf behavior. No typos allowed.
+        use_frecency = true,
         use_proximity = true,
         sorts = { 'score', 'kind', 'sort_text', 'label' },
       },
