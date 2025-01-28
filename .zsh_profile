@@ -1,6 +1,10 @@
 export XDG_CONFIG_HOME=$HOME/.config
 VIM="nvim"
 
+if [ -f ~/.zsh_secrets ]; then
+    source ~/.zsh_secrets
+fi
+
 export EDITOR=$VIM
 export VISUAL=$VIM
 export GIT_EDITOR=$VIM
