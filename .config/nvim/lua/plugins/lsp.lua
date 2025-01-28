@@ -141,6 +141,7 @@ return {
 
     vim.diagnostic.config({
       -- update_in_insert = true,
+      virtual_lines = true,
       severity_sort = true,
       float = {
         focusable = false,
