@@ -10,6 +10,11 @@ return {
   {
     'saghen/blink.cmp',
     version = 'v0.*',
+    enabled = function()
+      return not vim.tbl_contains({ "typr" }, vim.bo.filetype)
+          and vim.bo.buftype ~= "prompt"
+          and vim.b.completion ~= false
+    end,
     event = { "LspAttach" },
     build = "cargo build --release",
     dependencies = {
@@ -101,45 +106,6 @@ return {
             score_offset = 90,
             fallbacks = { 'snippets', 'ctags', 'buffer' }
           },
-
-          -- luasnip = {
-          --   name = "luasnip",
-          --   enabled = true,
-          --   module = "blink.cmp.sources.luasnip",
-          --   score_offset = 85,
-          --   min_keyword_length = 2,
-          --   max_items = 8,
-          --   fallbacks = { "snippets" },
-          --
-          --   should_show_items = function()
-          --     local col = vim.api.nvim_win_get_cursor(0)[2]
-          --     local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
-          --     return before_cursor:match(trigger_text .. "%w*$") ~= nil
-          --   end,
-          --
-          --   transform_items = function(_, items)
-          --     local col = vim.api.nvim_win_get_cursor(0)[2]
-          --     local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
-          --     local trigger_pos = before_cursor:find(trigger_text .. "[^" .. trigger_text .. "]*$")
-          --     if trigger_pos then
-          --       for _, item in ipairs(items) do
-          --         item.textEdit = {
-          --           newText = item.insertText or item.label,
-          --           range = {
-          --             start = { line = vim.fn.line(".") - 1, character = trigger_pos - 1 },
-          --             ["end"] = { line = vim.fn.line(".") - 1, character = col },
-          --           },
-          --         }
-          --       end
-          --     end
-          --     -- NOTE: After the transformation, I have to reload the luasnip source
-          --     -- Otherwise really crazy shit happens.
-          --     vim.schedule(function()
-          --       require("blink.cmp").reload("luasnip")
-          --     end)
-          --     return items
-          --   end,
-          -- },
 
           lazydev = {
             name = 'LazyDev',
