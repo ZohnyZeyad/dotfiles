@@ -14,10 +14,12 @@ export DOCKER_CONTEXT=desktop-linux
 export DOCKER_HOST="unix://$HOME/.docker/desktop/docker.sock"
 export PKG_CONFIG=/usr/bin/
 export JAVA_OPTS="-Xms2g -Xmx4g"
+export CONDA_PATH=$HOME/anaconda3
 
 export PATH=$PATH:$HOME/.local/scripts
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/.local/share/coursier/bin
+export PATH=$PATH:$CONDA_PATH/bin
 
 bindkey -s ^f "tmux-sessionizer\n"
 
