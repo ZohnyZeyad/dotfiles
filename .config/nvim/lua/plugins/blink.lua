@@ -3,7 +3,7 @@ return {
     'saghen/blink.compat',
     version = '*',
     lazy = true,
-    enabled = false,
+    enabled = true,
     opts = {},
   },
 
@@ -67,7 +67,9 @@ return {
 
         default = function(_)
           local ok, node = pcall(vim.treesitter.get_node)
-          local defaults = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev', 'ripgrep' }
+          local defaults = {
+            'lsp', 'path', 'snippets', 'buffer', 'lazydev', 'ripgrep',
+          }
           if ok and node and vim.tbl_contains({
                 'comment',
                 'comment_content',
@@ -83,7 +85,8 @@ return {
         end,
 
         per_filetype = {
-          lua = { 'lazydev', 'lsp', 'snippets', 'buffer', 'path' }
+          lua = { 'lazydev', 'lsp', 'snippets', 'buffer', 'path' },
+          AvanteInput = { 'avante_commands', 'avante_mentions', 'avante_files' }
         },
 
         cmdline = function()
@@ -112,6 +115,27 @@ return {
             module = 'lazydev.integrations.blink',
             score_offset = 100,
             fallbacks = { 'lsp' },
+          },
+
+          avante_commands = {
+            name = "avante_commands",
+            module = "blink.compat.source",
+            score_offset = 110, -- show at a higher priority than lsp
+            opts = {},
+          },
+
+          avante_files = {
+            name = "avante_files",
+            module = "blink.compat.source",
+            score_offset = 120, -- show at a higher priority than lsp
+            opts = {},
+          },
+
+          avante_mentions = {
+            name = "avante_mentions",
+            module = "blink.compat.source",
+            score_offset = 1000, -- show at a higher priority than lsp
+            opts = {},
           },
 
           path = {
