@@ -17,52 +17,59 @@ return {
     vendors = {
       openrouter = {
         __inherited_from = 'openai',
-        endpoint = 'https://openrouter.ai/api',
+        endpoint = 'https://openrouter.ai/api/v1',
         api_key_name = 'OPENROUTER_API_KEY',
+        model = "google/gemini-2.0-flash-thinking-exp:free",
+        -- model = "google/gemini-2.0-pro-exp-02-05:free",
+        -- model = "deepseek/deepseek-r1-distill-llama-70b:free",
         -- model = "deepseek/deepseek-r1:free",
-        model = "deepseek/deepseek-r1-distill-llama-70b:free",
-        parse_curl_args = function(opts, code_opts)
-          --[[ local messages = {}
-          local first_msg = { role = "system", content = code_opts.system_prompt }
-          table.insert(messages, first_msg)
-          if code_opts.messages then
-            table.insert(messages, require("avante.providers.openai").parse_messages(code_opts))
-            --[[ local content = ""
-                for idx, msg in ipairs(code_opts.) do
-                  if content == "" then
-                    content = content .. msg.content
-                  else
-                    content = content .. "\n" .. msg.content
-                  end
-                end
-                local next_msg = { role = "user", content = content }
-                table.insert(messages, next_msg) ]]
-          local messages = require("avante.providers.openai").parse_messages(code_opts)
-          return {
-            url = opts.endpoint .. "/v1/chat/completions",
-            headers = {
-              ["Content-Type"] = "application/json",
-              ["Authorization"] = "Bearer " .. os.getenv(opts.api_key_name),
-            },
-            insecure = true,
-            body = {
-              model = opts.model,
-              messages = messages,
-              temperature = 0,
-              max_tokens = 8192,
-              stream = true, -- this will be set by default.
-            },
-          }
-        end,
-        -- The below function is used if the vendors has specific SSE spec that is not claude or openai.
-        parse_response = function(data_stream, event_state, opts)
-          require("avante.providers.openai").parse_response(data_stream, event_state, opts)
-        end,
+        timeout = 30000,
+        temperature = 0,
+        max_tokens = 8192,
+        disable_tools = true,
+        -- parse_curl_args = function(opts, code_opts)
+        --   --[[ local messages = {}
+        --   local first_msg = { role = "system", content = code_opts.system_prompt }
+        --   table.insert(messages, first_msg)
+        --   if code_opts.messages then
+        --     table.insert(messages, require("avante.providers.openai").parse_messages(code_opts))
+        --     --[[ local content = ""
+        --         for idx, msg in ipairs(code_opts.) do
+        --           if content == "" then
+        --             content = content .. msg.content
+        --           else
+        --             content = content .. "\n" .. msg.content
+        --           end
+        --         end
+        --         local next_msg = { role = "user", content = content }
+        --         table.insert(messages, next_msg) ]]
+        --   local messages = require("avante.providers.openai").parse_messages(code_opts)
+        --   return {
+        --     url = opts.endpoint .. "/chat/completions",
+        --     headers = {
+        --       ["Content-Type"] = "application/json",
+        --       ["Authorization"] = "Bearer " .. os.getenv(opts.api_key_name),
+        --     },
+        --     insecure = true,
+        --     body = {
+        --       model = opts.model,
+        --       messages = messages,
+        --       temperature = 0,
+        --       max_tokens = 8192,
+        --       stream = true, -- this will be set by default.
+        --     },
+        --   }
+        -- end,
+        -- -- The below function is used if the vendors has specific SSE spec that is not claude or openai.
+        -- parse_response = function(data_stream, event_state, opts)
+        --   require("avante.providers.openai").parse_response(data_stream, event_state, opts)
+        -- end,
       },
     },
     openai = {
       endpoint = "https://openrouter.ai/api/v1",
       model = "o1-mini",
+      timeout = 30000,
       temperature = 0,
       max_tokens = 4096,
     },
@@ -72,6 +79,7 @@ return {
       -- model = "gemini-2.0-pro-exp-02-05",
       -- model = "gemini-2.0-flash-001",
       -- model = "gemini-1.5-flash",
+      timeout = 30000,
       temperature = 0,
       max_tokens = 4096,
     },
