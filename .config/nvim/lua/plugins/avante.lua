@@ -69,6 +69,7 @@ return {
     gemini = {
       -- @see https://ai.google.dev/gemini-api/docs/models/gemini
       model = "gemini-2.0-flash-001",
+      -- model = "gemini-1.5-flash",
       temperature = 0,
       max_tokens = 4096,
     },
