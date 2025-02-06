@@ -12,7 +12,8 @@ return {
       provider_opts = {},
     },
     ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
-    provider = "openrouter",
+    provider = "gemini",
+    -- provider = "openrouter",
     vendors = {
       openrouter = {
         __inherited_from = 'openai',
@@ -59,12 +60,18 @@ return {
         end,
       },
     },
-    -- openai = {
-    --   endpoint = "https://openrouter.ai/api/v1",
-    --   model = "o1-mini",
-    --   temperature = 0,
-    --   max_tokens = 4096,
-    -- },
+    openai = {
+      endpoint = "https://openrouter.ai/api/v1",
+      model = "o1-mini",
+      temperature = 0,
+      max_tokens = 4096,
+    },
+    gemini = {
+      -- @see https://ai.google.dev/gemini-api/docs/models/gemini
+      model = "gemini-2.0-flash-001",
+      temperature = 0,
+      max_tokens = 4096,
+    },
     behaviour = {
       auto_suggestions = false, -- Experimental stage
       auto_set_highlight_group = true,
@@ -74,6 +81,7 @@ return {
       minimize_diff = true,         -- Whether to remove unchanged lines when applying a code block
       enable_token_counting = true, -- Whether to enable token counting. Default to true.
     },
+    hints = { enabled = false },
   },
   build = "make",
   dependencies = {
