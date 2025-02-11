@@ -138,15 +138,15 @@ return {
       end)
 
       -- all workspace diagnostics
-      map("n", "<leader>aa", vim.diagnostic.setqflist)
+      map("n", "<leader>qf", vim.diagnostic.setqflist)
 
       -- all workspace errors
-      map("n", "<leader>ae", function()
+      map("n", "<leader>qfe", function()
         vim.diagnostic.setqflist({ severity = "E" })
       end)
 
       -- all workspace warnings
-      map("n", "<leader>aw", function()
+      map("n", "<leader>qfw", function()
         vim.diagnostic.setqflist({ severity = "W" })
       end)
 
