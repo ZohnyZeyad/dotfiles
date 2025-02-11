@@ -71,7 +71,7 @@ return {
       model = "o1-mini",
       timeout = 30000,
       temperature = 0,
-      max_tokens = 4096,
+      max_tokens = 8192,
     },
     gemini = {
       -- @see https://ai.google.dev/gemini-api/docs/models/gemini
@@ -81,7 +81,7 @@ return {
       -- model = "gemini-1.5-flash",
       timeout = 30000,
       temperature = 0,
-      max_tokens = 4096,
+      max_tokens = 8192,
     },
     behaviour = {
       auto_suggestions = false, -- Experimental stage
