@@ -46,10 +46,13 @@ fpath=($HOME/.local/share/coursier/bin/bloop/zsh $fpath)
 # Add in zsh plugins
 zinit ice wait lucid
 zinit light zsh-users/zsh-completions
+
 zinit ice wait lucid
 zinit light zsh-users/zsh-autosuggestions
+
 zinit ice wait lucid
 zinit light Aloxaf/fzf-tab
+
 zinit ice wait lucid
 zinit light lukechilds/zsh-better-npm-completion
 
@@ -57,26 +60,53 @@ export NVM_DIR="$HOME/.config/nvm"
 export NVM_COMPLETION=true
 export NVM_LAZY_LOAD=true
 export NVM_NO_USE=true
-zinit ice wait lucid for cloneonly; zinit light lukechilds/zsh-nvm
+# zinit ice wait lucid for cloneonly; zinit light lukechilds/zsh-nvm
 
 # Add in snippets
 zinit ice wait lucid
 zinit snippet OMZP::git
+
 zinit ice wait lucid
 zinit snippet OMZP::sudo
+
+zinit ice wait lucid
+zinit snippet OMZP::sbt
+
+zinit ice wait lucid
+zinit snippet OMZP::mvn
+
+zinit ice wait lucid
+zinit snippet OMZP::gradle
+
+zinit ice wait lucid
+zinit snippet OMZP::mongocli
+
+zinit ice wait lucid
+zinit snippet OMZP::docker-compose
+
 zinit ice wait lucid
 zinit snippet OMZP::aws
+
 zinit ice wait lucid
-zinit snippet OMZP::kubectl
-zinit ice wait lucid
-zinit snippet OMZP::kubectx
+zinit snippet OMZP::terraform
+
 zinit ice wait lucid
 zinit snippet OMZP::command-not-found
+
 zinit ice wait lucid for atinit"
         ZSH_TMUX_FIXTERM=true;
         ZSH_TMUX_AUTOSTART=false;
         ZSH_TMUX_AUTOCONNECT=true;"
 zinit snippet OMZP::tmux
+
+# zinit ice wait lucid
+# zinit snippet OMZP::kubectl
+
+# zinit ice wait lucid
+# zinit snippet OMZP::kubectx
+
+# zinit ice wait lucid
+# zinit snippet OMZP::conda
 
 zinit ice wait lucid
 zinit light zdharma-continuum/fast-syntax-highlighting
