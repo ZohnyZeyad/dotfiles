@@ -1,5 +1,9 @@
+# zmodload zsh/zprof
+
 # Configure color-scheme
 COLOR_SCHEME=dark
+DISABLE_AUTO_UPDATE=true
+DISABLE_UPDATE_PROMPT=true
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -8,14 +12,17 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Disable auto updates
+zstyle ':omz:update' mode disabled
+
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 # Download Zinit, if it's not there yet
-if [ ! -d "$ZINIT_HOME" ]; then
-   mkdir -p "$(dirname $ZINIT_HOME)"
-   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-fi
+# if [ ! -d "$ZINIT_HOME" ]; then
+#    mkdir -p "$(dirname $ZINIT_HOME)"
+#    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+# fi
 
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
@@ -25,43 +32,57 @@ source ~/.zsh_profile
 # echo 'fpath+=${ZDOTDIR:-~}/.zsh_functions' >> ${ZDOTDIR:-~}/.zshrc
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 
-zinit ice atinit"
-        ZSH_TMUX_FIXTERM=true;
-        ZSH_TMUX_AUTOSTART=false;
-        ZSH_TMUX_AUTOCONNECT=true;"
-zinit snippet OMZP::tmux
-
 # Add in Powerlevel10k
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
+# Bloop
+fpath=($HOME/.local/share/coursier/bin/bloop/zsh $fpath)
+
+# Disable unneeded completions
+# while IFS= read -r completion_name; do
+#   zinit cdisable "$completion_name" &>/dev/null
+# done < "${ZDOTDIR:-$HOME}/.zinit_cdisable"
+
 # Add in zsh plugins
-zinit light Aloxaf/fzf-tab
-zinit light zsh-users/zsh-syntax-highlighting
+zinit ice wait lucid
 zinit light zsh-users/zsh-completions
+zinit ice wait lucid
 zinit light zsh-users/zsh-autosuggestions
+zinit ice wait lucid
+zinit light Aloxaf/fzf-tab
+zinit ice wait lucid
 zinit light lukechilds/zsh-better-npm-completion
 
 export NVM_DIR="$HOME/.config/nvm"
 export NVM_COMPLETION=true
 export NVM_LAZY_LOAD=true
 export NVM_NO_USE=true
-zinit ice cloneonly; zinit light lukechilds/zsh-nvm
+zinit ice wait lucid for cloneonly; zinit light lukechilds/zsh-nvm
 
 # Add in snippets
+zinit ice wait lucid
 zinit snippet OMZP::git
+zinit ice wait lucid
 zinit snippet OMZP::sudo
+zinit ice wait lucid
 zinit snippet OMZP::aws
+zinit ice wait lucid
 zinit snippet OMZP::kubectl
+zinit ice wait lucid
 zinit snippet OMZP::kubectx
+zinit ice wait lucid
 zinit snippet OMZP::command-not-found
+zinit ice wait lucid for atinit"
+        ZSH_TMUX_FIXTERM=true;
+        ZSH_TMUX_AUTOSTART=false;
+        ZSH_TMUX_AUTOCONNECT=true;"
+zinit snippet OMZP::tmux
+
+zinit ice wait lucid
+zinit light zdharma-continuum/fast-syntax-highlighting
 
 # Load completions
-autoload -Uz compinit && compinit
-
-# Bloop
-autoload -U compinit
-fpath=($HOME/.local/share/coursier/bin/bloop/zsh $fpath)
-compinit
+autoload -Uz compinit; compinit
 
 zinit cdreplay -q
 
@@ -88,14 +109,14 @@ setopt hist_ignore_dups
 setopt hist_find_no_dups
 
 # Completion styling
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
-
-plugins=(git)
 
 # Home Bin
 export PATH=$PATH:$HOME/bin
@@ -217,3 +238,5 @@ fi
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# zprof > ~/.dotfiles/tmp/zprof
