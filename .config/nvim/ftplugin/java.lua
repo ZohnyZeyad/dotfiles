@@ -7,16 +7,15 @@ local java_path = os.getenv 'JAVA_HOME'
 local java = java_path .. "/bin/java"
 
 local root_markers = {
-  'pom.xml',
+  '.git',
   'mvnw',
   'gradlew',
+  'pom.xml',
   'build.gradle',
   'build.gradle.kts',
-  '.git',
 }
 
 local root_dir = vim.fs.dirname(vim.fs.find(root_markers, { upward = true })[1])
--- local root_dir = require("jdtls.setup").find_root(root_markers)
 
 local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
 local workspace_dir = home .. "/jdtls-workspace/" .. project_name
@@ -93,7 +92,7 @@ local config = {
 
   -- This is the default if not provided, you can remove it. Or adjust as needed.
   -- One dedicated LSP server & client will be started per unique root_dir
-  -- root_dir = root_dir,
+  root_dir = root_dir,
 
   -- Here you can configure eclipse.jdt.ls specific settings
   -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request

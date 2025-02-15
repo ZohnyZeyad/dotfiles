@@ -1,6 +1,8 @@
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", '<cmd>Oil<CR>')
 vim.keymap.set("n", "<leader>nt", '<cmd>Neotree filesystem reveal toggle<CR>', { desc = "Toggle [N]eo[T]ree" })
+vim.keymap.set("n", "<leader>gs", vim.cmd.Git, { desc = "Toggle Git (Fugitive)" })
+vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "Toggle UndoTree" })
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")

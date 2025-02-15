@@ -1,28 +1,92 @@
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
+capabilities = vim.tbl_deep_extend("force", capabilities, {
+  workspace = {
+    didChangeWatchedFiles = {
+      relativePatternSupport = true,
+    },
+  },
+})
+
 return {
   "neovim/nvim-lspconfig",
   name = "lspconfig",
   cmd = { "LspInfo", "LspInstall", "LspUninstall" },
-  event = { "BufReadPost", "BufNewFile" },
+  event = { "BufReadPre", "BufNewFile" },
   dependencies = {
+
     {
       'williamboman/mason.nvim',
-      config = true,
+      lazy = true,
+
       build = function()
         pcall(vim.api.nvim_cmd, 'MasonUpdate')
       end,
+
+      config = function()
+        require('mason').setup()
+      end,
     },
-    'williamboman/mason-lspconfig.nvim',
+
+    {
+      'williamboman/mason-lspconfig.nvim',
+      lazy = true,
+      dependencies = { "williamboman/mason.nvim" },
+
+      config = function()
+        require('mason-lspconfig').setup({
+          automatic_installation = true,
+          ensure_installed = {
+            'lua_ls',
+            'yamlls',
+          },
+
+          handlers = {
+            function(server_name)
+              if server_name ~= 'jdtls' then
+                require('lspconfig')[server_name].setup {
+                  capabilities = capabilities
+                }
+              end
+            end,
+          }
+        })
+      end,
+    },
+
     {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
+      lazy = true,
+
       build = function()
         pcall(vim.api.nvim_cmd, 'MasonToolsUpdate')
-      end
+      end,
+
+      config = function()
+        require('mason-tool-installer').setup {
+          ensure_installed = {
+            'java-debug-adapter',
+            'java-test',
+            'stylua',
+            'docker-compose-language-service',
+            'dockerfile-language-server',
+            'jsonlint',
+            'sql-formatter',
+            'terraform-ls',
+          }
+        }
+
+        vim.api.nvim_command('MasonToolsInstall')
+      end,
     },
+
     'saghen/blink.cmp',
-    'netmute/ctags-lsp.nvim',
+    -- 'netmute/ctags-lsp.nvim',
+
     {
       'folke/lazydev.nvim',
       ft = "lua",
+
       opts = {
         library = {
           { path = "${3rd}/luv/library", words = { "vim%.uv" } },
@@ -30,56 +94,12 @@ return {
         enabled = true,
       },
     },
+
     { 'j-hui/fidget.nvim', opts = {} },
   },
 
   config = function()
-    require('mason').setup()
-    require('mason-tool-installer').setup {
-      ensure_installed = {
-        'java-debug-adapter',
-        'java-test',
-        'stylua',
-        'docker-compose-language-service',
-        'dockerfile-language-server',
-        'jsonlint',
-        'sql-formatter',
-        'terraform-ls',
-      }
-    }
-    vim.api.nvim_command('MasonToolsInstall')
-
-    require('spring_boot').init_lsp_commands()
-
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
-    capabilities = vim.tbl_deep_extend("force", capabilities, {
-      workspace = {
-        didChangeWatchedFiles = {
-          relativePatternSupport = true,
-        },
-      },
-    })
-
-    require('mason-lspconfig').setup({
-      automatic_installation = true,
-      ensure_installed = {
-        'lua_ls',
-        'jdtls',
-        'yamlls',
-      },
-
-      handlers = {
-        function(server_name)
-          if server_name ~= 'jdtls' then
-            require('lspconfig')[server_name].setup {
-              capabilities = capabilities
-            }
-          end
-        end,
-      }
-    })
-
+    -- require('spring_boot').init_lsp_commands()
     local lspconfig = require('lspconfig')
 
     lspconfig.lua_ls.setup {

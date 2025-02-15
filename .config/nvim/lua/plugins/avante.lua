@@ -1,7 +1,6 @@
 return {
   "yetone/avante.nvim",
   event = "VeryLazy",
-  lazy = false,
   version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
   build = "make",
 
@@ -9,14 +8,12 @@ return {
     hints = { enabled = false },
 
     file_selector = {
-      --- @alias FileSelectorProvider "native" | "fzf" | "telescope" | string
-      provider = "telescope",
+      provider = "telescope", -- "native" | "fzf" | "telescope" | string
       -- Options override for custom providers
       provider_opts = {},
     },
 
-    ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
-    provider = "gemini",
+    provider = "gemini", -- "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
     -- provider = "openrouter",
 
     vendors = {
@@ -31,29 +28,29 @@ return {
         timeout = 30000,
         temperature = 0,
         max_tokens = 8192,
-        -- disable_tools = true,
-        parse_curl_args = function(opts, code_opts)
-          local messages = require("avante.providers.openai").parse_messages(code_opts)
-          return {
-            url = opts.endpoint .. "/chat/completions",
-            headers = {
-              ["Content-Type"] = "application/json",
-              ["Authorization"] = "Bearer " .. os.getenv(opts.api_key_name),
-            },
-            insecure = true,
-            body = {
-              model = opts.model,
-              messages = messages,
-              temperature = 0,
-              max_tokens = 8192,
-              stream = true, -- this will be set by default.
-            },
-          }
-        end,
+        disable_tools = true,
+        -- parse_curl_args = function(opts, code_opts)
+        --   local messages = require("avante.providers.openai").parse_messages(code_opts)
+        --   return {
+        --     url = opts.endpoint .. "/chat/completions",
+        --     headers = {
+        --       ["Content-Type"] = "application/json",
+        --       ["Authorization"] = "Bearer " .. os.getenv(opts.api_key_name),
+        --     },
+        --     insecure = true,
+        --     body = {
+        --       model = opts.model,
+        --       messages = messages,
+        --       temperature = 0,
+        --       max_tokens = 8192,
+        --       stream = true, -- this will be set by default.
+        --     },
+        --   }
+        -- end,
         -- The below function is used if the vendors has specific SSE spec that is not claude or openai.
-        parse_response = function(data_stream, event_state, opts)
-          require("avante.providers.openai").parse_response(data_stream, event_state, opts)
-        end,
+        -- parse_response = function(data_stream, event_state, opts)
+        --   require("avante.providers.openai").parse_response(data_stream, event_state, opts)
+        -- end,
       },
     },
 
@@ -99,6 +96,7 @@ return {
       -- support for image pasting
       "HakonHarnes/img-clip.nvim",
       event = "VeryLazy",
+      enabled = false,
       opts = {
         -- recommended settings
         default = {

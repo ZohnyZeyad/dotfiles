@@ -1,9 +1,7 @@
 return {
   "tpope/vim-fugitive",
-  event = { "VimEnter" },
+  cmd = "Git",
   config = function()
-    vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
-
     local Zeyad_Fugitive = vim.api.nvim_create_augroup("Zeyad_Fugitive", {})
 
     local autocmd = vim.api.nvim_create_autocmd
