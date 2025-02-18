@@ -16,6 +16,28 @@ local root_markers = {
 }
 
 local root_dir = vim.fs.dirname(vim.fs.find(root_markers, { upward = true })[1])
+-- local function find_parent_pom_root()
+--   local current_dir = vim.fn.getcwd()
+--   while true do
+--     local pom_path = current_dir .. "/pom.xml"
+--     local pom_file = io.open(pom_path, "r")
+--     if pom_file then
+--       local pom_content = pom_file:read("*all")
+--       pom_file:close()
+--       if string.find(pom_content, "<modules>") then
+--         return current_dir -- Found parent pom.xml with <modules> tag
+--       end
+--     end
+--
+--     local parent_dir = vim.fn.fnamemodify(current_dir, ":h")
+--     if parent_dir == current_dir then -- Reached root directory
+--       return vim.fn.getcwd()          -- Fallback to current working directory if no parent pom found
+--     end
+--     current_dir = parent_dir
+--   end
+-- end
+--
+-- local root_dir = find_parent_pom_root()
 
 local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
 local workspace_dir = home .. "/jdtls-workspace/" .. project_name
@@ -109,15 +131,15 @@ local config = {
         runtimes = {
           {
             name = "JavaSE-11",
-            path = home .. "/.sdkman/candidates/java/11.0.25-amzn/",
+            path = home .. "/.sdkman/candidates/java/11.0.26-amzn/",
           },
           {
             name = "JavaSE-17",
-            path = home .. "/.sdkman/candidates/java/17.0.13-amzn/",
+            path = home .. "/.sdkman/candidates/java/17.0.14-amzn/",
           },
           {
             name = "JavaSE-21",
-            path = home .. "/.sdkman/candidates/java/21.0.5-amzn/",
+            path = home .. "/.sdkman/candidates/java/21.0.6-amzn/",
           },
         },
       },
