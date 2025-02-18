@@ -122,12 +122,14 @@ autocmd('LspAttach', {
     if not client then return end
 
     if client.supports_method('textDocument/formatting') then
-      autocmd('BufWritePre', {
-        buffer = e.buf,
-        callback = function()
-          vim.lsp.buf.format({ bufnr = e.buf, id = client.id })
-        end,
-      })
+      if not ((client.name == "metals" and vim.bo.filetype == "scala") or (client.name == "jdtls" and vim.bo.filetype == "java")) then
+        autocmd('BufWritePre', {
+          buffer = e.buf,
+          callback = function()
+            vim.lsp.buf.format({ bufnr = e.buf, id = client.id })
+          end,
+        })
+      end
     end
   end
 })
