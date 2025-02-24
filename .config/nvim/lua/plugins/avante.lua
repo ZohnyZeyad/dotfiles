@@ -23,8 +23,9 @@ return {
         api_key_name = 'OPENROUTER_API_KEY',
         -- model = "google/gemini-2.0-flash-thinking-exp:free",
         -- model = "google/gemini-2.0-pro-exp-02-05:free",
-        model = "deepseek/deepseek-r1-distill-llama-70b:free",
+        -- model = "deepseek/deepseek-r1-distill-llama-70b:free",
         -- model = "deepseek/deepseek-r1:free",
+        model = "deepseek/deepseek-chat:free",
         timeout = 30000,
         temperature = 0,
         max_tokens = 8192,
@@ -66,7 +67,8 @@ return {
       -- @see https://ai.google.dev/gemini-api/docs/models/gemini
       model = "gemini-2.0-flash-thinking-exp-01-21",
       -- model = "gemini-2.0-pro-exp-02-05",
-      -- model = "gemini-2.0-flash-001",
+      -- model = "gemini-2.0-flash",
+      -- model = "gemini-1.5-pro",
       -- model = "gemini-1.5-flash",
       timeout = 30000,
       temperature = 0,
@@ -91,6 +93,7 @@ return {
     --- The below dependencies are optional,
     "nvim-telescope/telescope.nvim",
     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+    "OXY2DEV/markview.nvim",       -- or MeanderingProgrammer/render-markdown.nvim
 
     {
       -- support for image pasting
@@ -109,15 +112,6 @@ return {
           use_absolute_path = true,
         },
       },
-    },
-
-    {
-      -- Make sure to set this up properly if you have lazy=true
-      'MeanderingProgrammer/render-markdown.nvim',
-      opts = {
-        file_types = { "Avante" },
-      },
-      ft = { "Avante" },
     },
   },
 }
