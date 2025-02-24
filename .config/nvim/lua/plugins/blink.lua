@@ -26,11 +26,6 @@ return {
     opts = {
       keymap = {
         preset = 'default',
-        cmdline = {
-          preset = 'enter',
-          ['<S-Tab>'] = { 'select_prev', 'fallback' },
-          ['<Tab>'] = { 'select_next', 'fallback' },
-        },
       },
 
       appearance = {
@@ -88,17 +83,6 @@ return {
           lua = { 'lazydev', 'lsp', 'snippets', 'buffer', 'path' },
           AvanteInput = { 'avante_commands', 'avante_mentions', 'avante_files' }
         },
-
-        cmdline = function()
-          local _, type = pcall(vim.fn.getcmdtype)
-          if type == '/' or type == '?' then
-            return { 'buffer', 'path' }
-          end
-          if type == ':' then
-            return { 'cmdline' }
-          end
-          return {}
-        end,
 
         providers = {
           lsp = {
@@ -184,6 +168,41 @@ return {
             },
           },
         },
+      },
+
+      cmdline = {
+        enabled = true,
+        keymap = {
+          preset = 'enter',
+          ['<S-Tab>'] = { 'select_prev', 'fallback' },
+          ['<Tab>'] = { 'select_next', 'fallback' },
+          ['<CR>'] = { 'accept_and_enter', 'fallback' },
+        },
+
+        sources = function()
+          local _, type = pcall(vim.fn.getcmdtype)
+          if type == '/' or type == '?' then
+            return { 'buffer', 'path' }
+          end
+          if type == ':' then
+            return { 'cmdline' }
+          end
+          return {}
+        end,
+
+        completion = {
+          trigger = {
+            show_on_blocked_trigger_characters = {},
+            show_on_x_blocked_trigger_characters = nil,
+          },
+
+          menu = {
+            auto_show = true,
+            draw = {
+              columns = { { 'label', 'label_description', gap = 1 } },
+            },
+          }
+        }
       },
 
       signature = {
