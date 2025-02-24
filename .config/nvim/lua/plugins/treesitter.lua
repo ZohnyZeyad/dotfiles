@@ -1,6 +1,6 @@
 return {
   "nvim-treesitter/nvim-treesitter",
-  name = "treesitter",
+  name = "nvim-treesitter",
   cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
   build = ":TSUpdate",
   event = { "BufReadPre", "BufNewFile" },

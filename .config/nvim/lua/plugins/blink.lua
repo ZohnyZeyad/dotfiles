@@ -38,19 +38,21 @@ return {
         expand = function(snippet)
           require('luasnip.loaders.from_vscode').lazy_load()
 
-          require('luasnip').filetype_extend('java', { 'javadoc', 'java-tests' })
-          require('luasnip').filetype_extend('scala', { 'javadoc' })
-          require('luasnip').filetype_extend('sh', { 'shelldoc' })
-          require('luasnip').filetype_extend('typescript', { 'tsdoc' })
-          require('luasnip').filetype_extend('javascript', { 'jsdoc' })
+          local luasnip = require('luasnip')
+          luasnip.filetype_extend('java', { 'javadoc', 'java-tests' })
+          luasnip.filetype_extend('scala', { 'javadoc' })
+          luasnip.filetype_extend('sh', { 'shelldoc' })
+          luasnip.filetype_extend('typescript', { 'tsdoc' })
+          luasnip.filetype_extend('javascript', { 'jsdoc' })
 
-          require('luasnip').lsp_expand(snippet)
+          luasnip.lsp_expand(snippet)
         end,
         active = function(filter)
+          local luasnip = require('luasnip')
           if filter and filter.direction then
-            return require('luasnip').jumpable(filter.direction)
+            return luasnip.jumpable(filter.direction)
           end
-          return require('luasnip').in_snippet()
+          return luasnip.in_snippet()
         end,
         jump = function(direction) require('luasnip').jump(direction) end,
       },
@@ -81,7 +83,8 @@ return {
 
         per_filetype = {
           lua = { 'lazydev', 'lsp', 'snippets', 'buffer', 'path' },
-          AvanteInput = { 'avante_commands', 'avante_mentions', 'avante_files' }
+          AvanteInput = { 'avante_commands', 'avante_mentions', 'avante_files' },
+          codecompanion = { "codecompanion" },
         },
 
         providers = {
