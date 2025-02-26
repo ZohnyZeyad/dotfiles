@@ -173,6 +173,7 @@ return {
       },
 
       opts = {
+        ---@diagnostic disable-next-line: unused-local
         system_prompt = function(opts)
           return gemini_flash_thinking_prompt
         end,
@@ -190,5 +191,7 @@ return {
         },
       },
     })
+
+    vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
   end,
 }
