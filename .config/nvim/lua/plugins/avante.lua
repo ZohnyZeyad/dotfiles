@@ -1,3 +1,45 @@
+local openrouter_models = {
+  "deepseek/deepseek-r1-distill-llama-70b:free",
+  "deepseek/deepseek-r1:free",
+  "deepseek/deepseek-chat:free",
+  "google/gemini-2.0-pro-exp-02-05:free",
+  "google/gemini-2.0-flash-thinking-exp:free",
+}
+
+local gemini_models = { -- @see https://ai.google.dev/gemini-api/docs/models/gemini
+  "gemini-2.0-flash-thinking-exp-01-21",
+  "gemini-2.0-pro-exp-02-05",
+  "gemini-2.0-flash",
+  "gemini-1.5-pro",
+  "gemini-1.5-flash",
+}
+
+---@diagnostic disable-next-line: unused-function, unused-local
+local function parse_curl_args(opts, code_opts)
+  local messages = require("avante.providers.openai").parse_messages(code_opts)
+  return {
+    url = opts.endpoint .. "/chat/completions",
+    headers = {
+      ["Content-Type"] = "application/json",
+      ["Authorization"] = "Bearer " .. os.getenv(opts.api_key_name),
+    },
+    insecure = true,
+    body = {
+      model = opts.model,
+      messages = messages,
+      temperature = 0,
+      max_tokens = 8192,
+      stream = true,
+    },
+  }
+end
+
+---@diagnostic disable-next-line: unused-function, unused-local
+local function parse_response(data_stream, event_state, opts)
+  ---@diagnostic disable-next-line: missing-parameter
+  require("avante.providers.openai").parse_response(data_stream, event_state, opts)
+end
+
 return {
   "yetone/avante.nvim",
   event = "VeryLazy",
@@ -16,42 +58,25 @@ return {
     provider = "gemini", -- "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
     -- provider = "openrouter",
 
+    cursor_applying_provider = 'gemini',
+    -- cursor_applying_provider = 'openrouter',
+
+    rag_service = {
+      enabled = false, -- Enables the rag service, requires OPENAI_API_KEY to be set
+    },
+
     vendors = {
       openrouter = {
         __inherited_from = 'openai',
         endpoint = 'https://openrouter.ai/api/v1',
         api_key_name = 'OPENROUTER_API_KEY',
-        -- model = "google/gemini-2.0-flash-thinking-exp:free",
-        -- model = "google/gemini-2.0-pro-exp-02-05:free",
-        -- model = "deepseek/deepseek-r1-distill-llama-70b:free",
-        -- model = "deepseek/deepseek-r1:free",
-        model = "deepseek/deepseek-chat:free",
+        model = openrouter_models[1],
         timeout = 30000,
         temperature = 0,
         max_tokens = 8192,
         disable_tools = true,
-        -- parse_curl_args = function(opts, code_opts)
-        --   local messages = require("avante.providers.openai").parse_messages(code_opts)
-        --   return {
-        --     url = opts.endpoint .. "/chat/completions",
-        --     headers = {
-        --       ["Content-Type"] = "application/json",
-        --       ["Authorization"] = "Bearer " .. os.getenv(opts.api_key_name),
-        --     },
-        --     insecure = true,
-        --     body = {
-        --       model = opts.model,
-        --       messages = messages,
-        --       temperature = 0,
-        --       max_tokens = 8192,
-        --       stream = true, -- this will be set by default.
-        --     },
-        --   }
-        -- end,
-        -- The below function is used if the vendors has specific SSE spec that is not claude or openai.
-        -- parse_response = function(data_stream, event_state, opts)
-        --   require("avante.providers.openai").parse_response(data_stream, event_state, opts)
-        -- end,
+        -- parse_curl_args = parse_curl_args
+        -- parse_response = parse_response -- Used if the vendors has specific SSE spec that is not claude or openai.
       },
     },
 
@@ -64,15 +89,22 @@ return {
     },
 
     gemini = {
-      -- @see https://ai.google.dev/gemini-api/docs/models/gemini
-      model = "gemini-2.0-flash-thinking-exp-01-21",
-      -- model = "gemini-2.0-pro-exp-02-05",
-      -- model = "gemini-2.0-flash",
-      -- model = "gemini-1.5-pro",
-      -- model = "gemini-1.5-flash",
+      model = gemini_models[1],
       timeout = 30000,
       temperature = 0,
       max_tokens = 8192,
+    },
+
+    dual_boost = {
+      enabled = false,
+      first_provider = "gemini",
+      second_provider = "openrouter",
+      prompt = [[
+        Based on the two reference outputs below, generate a response that incorporates elements from both but reflects your own judgment and unique perspective.
+        Do not provide any explanation, just give the response directly.
+        Reference Output 1: [{{provider1_output}}], Reference Output 2: [{{provider2_output}}]
+      ]],
+      timeout = 60000, -- Timeout in milliseconds
     },
 
     behaviour = {
@@ -81,16 +113,18 @@ return {
       auto_set_keymaps = true,
       auto_apply_diff_after_generation = false,
       support_paste_from_clipboard = false,
-      minimize_diff = true,         -- Whether to remove unchanged lines when applying a code block
-      enable_token_counting = true, -- Whether to enable token counting. Default to true.
+      minimize_diff = true,                -- Whether to remove unchanged lines when applying a code block
+      enable_token_counting = true,        -- Whether to enable token counting. Default to true.
+      enable_cursor_planning_mode = false, -- enable cursor planning mode!
     },
   },
 
   dependencies = {
+    "nvim-treesitter/nvim-treesitter",
     "stevearc/dressing.nvim",
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
-    --- The below dependencies are optional,
+    -- The dependencies below are optional,
     "nvim-telescope/telescope.nvim",
     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
     "OXY2DEV/markview.nvim",       -- or MeanderingProgrammer/render-markdown.nvim
