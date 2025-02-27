@@ -195,10 +195,10 @@ return {
       cmdline = {
         enabled = true,
         keymap = {
-          preset = 'enter',
-          ['<S-Tab>'] = { 'select_prev', 'fallback' },
-          ['<Tab>'] = { 'select_next', 'fallback' },
-          ['<CR>'] = { 'accept_and_enter', 'fallback' },
+          preset = 'cmdline',
+          -- ['<S-Tab>'] = { 'select_prev', 'fallback' },
+          -- ['<Tab>'] = { 'select_next', 'fallback' },
+          -- ['<CR>'] = { 'accept_and_enter', 'fallback' },
         },
 
         sources = cmdline_sources_function,
@@ -210,7 +210,7 @@ return {
           },
 
           menu = {
-            auto_show = true,
+            auto_show = false,
             draw = {
               columns = { { 'label', 'label_description', gap = 1 } },
             },
@@ -230,6 +230,7 @@ return {
       },
 
       fuzzy = {
+        ---@diagnostic disable-next-line: unused-local
         max_typos = function(keyword) return 0 end, -- Match fzf behavior. No typos allowed.
         use_frecency = true,
         use_proximity = true,
