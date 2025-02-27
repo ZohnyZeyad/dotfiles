@@ -1,8 +1,6 @@
 -- JDTLS (Java LSP) configuration
 local home = vim.env.HOME
-
 local jdtls = require("jdtls")
-
 local java_path = os.getenv 'JAVA_HOME'
 local java = java_path .. "/bin/java"
 
@@ -16,44 +14,20 @@ local root_markers = {
 }
 
 local root_dir = vim.fs.dirname(vim.fs.find(root_markers, { upward = true })[1])
--- local function find_parent_pom_root()
---   local current_dir = vim.fn.getcwd()
---   while true do
---     local pom_path = current_dir .. "/pom.xml"
---     local pom_file = io.open(pom_path, "r")
---     if pom_file then
---       local pom_content = pom_file:read("*all")
---       pom_file:close()
---       if string.find(pom_content, "<modules>") then
---         return current_dir -- Found parent pom.xml with <modules> tag
---       end
---     end
---
---     local parent_dir = vim.fn.fnamemodify(current_dir, ":h")
---     if parent_dir == current_dir then -- Reached root directory
---       return vim.fn.getcwd()          -- Fallback to current working directory if no parent pom found
---     end
---     current_dir = parent_dir
---   end
--- end
---
--- local root_dir = find_parent_pom_root()
-
 local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
 local workspace_dir = home .. "/jdtls-workspace/" .. project_name
 
-local system_os = ""
-
--- Determine OS
-if vim.fn.has("mac") == 1 then
-  system_os = "mac"
-elseif vim.fn.has("unix") == 1 then
-  system_os = "linux"
-elseif vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
-  system_os = "win"
-else
-  print("OS not found, defaulting to 'linux'")
-  system_os = "linux"
+local function get_os()
+  if vim.fn.has("mac") == 1 then
+    return "mac"
+  elseif vim.fn.has("unix") == 1 then
+    return "linux"
+  elseif vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
+    return "win"
+  else
+    print("OS not found, defaulting to 'linux'")
+    return "linux"
+  end
 end
 
 -- Needed for debugging
@@ -75,10 +49,10 @@ capabilities = vim.tbl_deep_extend("force", capabilities, {
   },
 })
 
--- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
+---@see `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
   -- The command that starts the language server
-  -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
+  ---@see: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
   cmd = {
     java,
     "-Declipse.application=org.eclipse.jdt.ls.core.id1",
@@ -107,7 +81,7 @@ local config = {
     "-jar",
     home .. "/.local/share/nvim/mason/share/jdtls/plugins/org.eclipse.equinox.launcher.jar",
     "-configuration",
-    home .. "/.local/share/nvim/mason/packages/jdtls/config_" .. system_os,
+    home .. "/.local/share/nvim/mason/packages/jdtls/config_" .. get_os,
     "-data",
     workspace_dir,
   },
@@ -117,7 +91,7 @@ local config = {
   root_dir = root_dir,
 
   -- Here you can configure eclipse.jdt.ls specific settings
-  -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
+  ---@see https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
   settings = {
     java = {
       home = java_path,
@@ -126,8 +100,8 @@ local config = {
       },
       configuration = {
         updateBuildConfiguration = "interactive",
-        -- TODO Update this by adding any runtimes that you need to support your Java projects and removing any that you don't have installed
-        -- The runtime name parameters need to match specific Java execution environments.  See https://github.com/tamago324/nlsp-settings.nvim/blob/2a52e793d4f293c0e1d61ee5794e3ff62bfbbb5d/schemas/_generated/jdtls.json#L317-L334
+        -- The runtime name parameters need to match specific Java execution environments.
+        ---@see https://github.com/tamago324/nlsp-settings.nvim/blob/2a52e793d4f293c0e1d61ee5794e3ff62bfbbb5d/schemas/_generated/jdtls.json#L317-L334
         runtimes = {
           {
             name = "JavaSE-11",
@@ -212,14 +186,12 @@ local config = {
       },
     },
   },
-  -- Needed for auto-completion with method signatures and placeholders
-  capabilities = capabilities,
+  capabilities = capabilities, -- Needed for auto-completion with method signatures and placeholders
   flags = {
     debounce_text_changes = 80,
     allow_incremental_sync = true,
   },
-  init_options = {
-    -- References the bundles defined above to support Debugging and Unit Testing
+  init_options = { -- References the bundles defined above to support Debugging and Unit Testing
     bundles = bundles,
     extendedClientCapabilities = jdtls.extendedClientCapabilities,
   },

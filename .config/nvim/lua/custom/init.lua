@@ -1,6 +1,5 @@
-require("zeyad.set")
-require("zeyad.remap")
-require("zeyad.lazy_init")
+require("custom.set")
+require("custom.remap")
 
 function R(name)
   require("plenary.reload").reload_module(name)
