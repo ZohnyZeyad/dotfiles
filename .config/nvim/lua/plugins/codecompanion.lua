@@ -16,85 +16,25 @@ local function gemini_adapter(idx)
       model = {
         default = gemini_models[idx],
       },
-      temperature = { default = 0.2, },
-      maxOutputTokens = { default = 8192, },
+      temperature = { default = 0.2 },
+      maxOutputTokens = { default = 8192 },
     },
   })
 end
 
-local function openrouter_adapter()
+local function openrouter_adapter(idx)
   return require("codecompanion.adapters").extend("openai_compatible", {
     env = {
-      url = "https://openrouter.ai/api", -- optional: default value is ollama url http://127.0.0.1:11434
+      url = "https://openrouter.ai/api",
       api_key = "OPENROUTER_API_KEY",
       chat_url = "/v1/chat/completions",
     },
     schema = {
       model = {
-        default = openrouter_models[1],
+        default = openrouter_models[idx],
       },
-      temperature = {
-        order = 2,
-        mapping = "parameters",
-        type = "number",
-        optional = true,
-        default = 0.2,
-        desc = [[
-                  what sampling temperature to use, between 0 and 2.
-                  higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
-                  we generally recommend altering this or top_p but not both.
-                ]],
-        validate = function(n)
-          return n >= 0 and n <= 2, "must be between 0 and 2"
-        end,
-      },
-      max_completion_tokens = {
-        order = 3,
-        mapping = "parameters",
-        type = "integer",
-        optional = true,
-        default = 8192,
-        desc = "An upper bound for the number of tokens that can be generated for a completion.",
-        validate = function(n)
-          return n > 0, "Must be greater than 0"
-        end,
-      },
-      stop = {
-        order = 4,
-        mapping = "parameters",
-        type = "string",
-        optional = true,
-        default = nil,
-        desc = [[
-                  Sets the stop sequences to use.
-                  When this pattern is encountered the LLM will stop generating text and return.
-                  Multiple stop patterns may be set by specifying multiple separate stop parameters in a modelfile.
-                ]],
-        validate = function(s)
-          return s:len() > 0, "Cannot be an empty string"
-        end,
-      },
-      logit_bias = {
-        order = 5,
-        mapping = "parameters",
-        type = "map",
-        optional = true,
-        default = nil,
-        desc = [[
-                  Modify the likelihood of specified tokens appearing in the completion.
-                  Maps tokens (specified by their token ID) to an associated bias value from -100 to 100.
-                  Use https://platform.openai.com/tokenizer to find token IDs.
-                ]],
-        subtype_key = {
-          type = "integer",
-        },
-        subtype = {
-          type = "integer",
-          validate = function(n)
-            return n >= -100 and n <= 100, "Must be between -100 and 100"
-          end,
-        },
-      },
+      temperature = { default = 0.2 },
+      maxOutputTokens = { default = 8192 },
     },
   })
 end
@@ -333,6 +273,20 @@ local deepseek_r1_prompt = [[
   Final Instruction: By following these coding guidelines, you will produce code that meets high standards of quality and professionalism. Your goal is to deliver logical, secure, efficient, well-documented, readable, and collaboration-ready code for every programming task. Focus on producing practical, high-quality code that is valuable and maintainable in real-world development scenarios.
 ]]
 
+local function get_system_prompt(opts)
+  local model_name = opts.adapter.schema.model.default
+  print(model_name)
+  if model_name == gemini_models[1] then
+    return gemini_flash_thinking_prompt
+  elseif model_name == gemini_models[2] then
+    return gemini_pro_prompt
+  elseif model_name == gemini_models[3] then
+    return gemini_flash_prompt
+  else
+    return deepseek_r1_prompt
+  end
+end
+
 return {
   "olimorris/codecompanion.nvim",
   enabled = true,
@@ -346,32 +300,21 @@ return {
   config = function()
     require("codecompanion").setup({
       strategies = {
-        chat = { adapter = "gemini_flash_thinking", },
-        inline = { adapter = "gemini_flash_thinking", },
+        chat = { adapter = "gemini", },
+        inline = { adapter = "gemini", },
       },
 
       adapters = {
         opts = { show_defaults = false, },
 
-        gemini_flash_thinking = gemini_adapter(1),
+        gemini = gemini_adapter(1),
         gemini_pro = gemini_adapter(2),
         gemini_flash = gemini_adapter(3),
-        openrouter = openrouter_adapter
+        openrouter = openrouter_adapter(1),
       },
 
       opts = {
-        ---@diagnostic disable-next-line: unused-local
-        system_prompt = function(opts)
-          if opts.adapter == 'gemini_flash_thinking' then
-            return gemini_flash_thinking_prompt
-          elseif opts.adapter == 'gemini_pro' then
-            return gemini_pro_prompt
-          elseif opts.adapter == 'gemini_flash' then
-            return gemini_flash_prompt
-          else
-            return deepseek_r1_prompt
-          end
-        end,
+        system_prompt = get_system_prompt
       },
 
       display = {
