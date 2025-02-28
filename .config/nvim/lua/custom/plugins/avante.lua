@@ -6,7 +6,7 @@ local openrouter_models = {
   "google/gemini-2.0-flash-thinking-exp:free",
 }
 
-local gemini_models = { -- @see https://ai.google.dev/gemini-api/docs/models/gemini
+local gemini_models = { ---@see https://ai.google.dev/gemini-api/docs/models/gemini
   "gemini-2.0-flash-thinking-exp-01-21",
   "gemini-2.0-pro-exp-02-05",
   "gemini-2.0-flash",
@@ -72,7 +72,7 @@ return {
         api_key_name = 'OPENROUTER_API_KEY',
         model = openrouter_models[1],
         timeout = 30000,
-        temperature = 0,
+        temperature = 0.2,
         max_tokens = 8192,
         disable_tools = true,
         -- parse_curl_args = parse_curl_args
@@ -91,7 +91,7 @@ return {
     gemini = {
       model = gemini_models[1],
       timeout = 30000,
-      temperature = 0,
+      temperature = 0.2,
       max_tokens = 8192,
     },
 

@@ -17,17 +17,17 @@ local root_dir = vim.fs.dirname(vim.fs.find(root_markers, { upward = true })[1])
 local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
 local workspace_dir = home .. "/jdtls-workspace/" .. project_name
 
-local function get_os()
-  if vim.fn.has("mac") == 1 then
-    return "mac"
-  elseif vim.fn.has("unix") == 1 then
-    return "linux"
-  elseif vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
-    return "win"
-  else
-    print("OS not found, defaulting to 'linux'")
-    return "linux"
-  end
+local system_os = ""
+
+if vim.fn.has("mac") == 1 then
+  system_os = "mac"
+elseif vim.fn.has("unix") == 1 then
+  system_os = "linux"
+elseif vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
+  system_os = "win"
+else
+  print("OS not found, defaulting to 'linux'")
+  system_os = "linux"
 end
 
 -- Needed for debugging
@@ -81,7 +81,7 @@ local config = {
     "-jar",
     home .. "/.local/share/nvim/mason/share/jdtls/plugins/org.eclipse.equinox.launcher.jar",
     "-configuration",
-    home .. "/.local/share/nvim/mason/packages/jdtls/config_" .. get_os,
+    home .. "/.local/share/nvim/mason/packages/jdtls/config_" .. system_os,
     "-data",
     workspace_dir,
   },
