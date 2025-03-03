@@ -115,6 +115,7 @@ return {
       }
     }
 
+    ---@diagnostic disable-next-line: unused-local
     local supported_filetypes = {
       "ansible", -- for AnsiblePlaybook
       "bibtex",  -- combines BibLaTeX and BibTeX
