@@ -1,45 +1,4 @@
 return {
-  -- Debugging Adapter Tool
-  {
-    "mfussenegger/nvim-dap",
-    lazy = true,
-    config = function()
-      local dap = require("dap")
-      dap.configurations.scala = {
-        {
-          type = "scala",
-          request = "launch",
-          name = "RunOrTest",
-          metals = {
-            runType = "runOrTestFile",
-          },
-        },
-        {
-          type = "scala",
-          request = "launch",
-          name = "Test Target",
-          metals = {
-            runType = "testTarget",
-          },
-        },
-      }
-
-      dap.listeners.after["event_terminated"]["nvim-metals"] = function()
-        dap.repl.open()
-      end
-
-      local map = vim.keymap.set
-      map("n", "<leader>dc", function() dap.continue() end)
-      map("n", "<leader>dr", function() dap.repl.toggle() end)
-      map("n", "<leader>dK", function() require("dap.ui.widgets").hover() end)
-      map("n", "<leader>db", function() dap.toggle_breakpoint() end)
-      map("n", "<leader>dso", function() dap.step_over() end)
-      map("n", "<leader>dsi", function() dap.step_into() end)
-      map("n", "<leader>dl", function() dap.run_last() end)
-    end
-  },
-
-  -- Scala Metals plugin for Neovim
   {
     "scalameta/nvim-metals",
     dependencies = {
@@ -73,19 +32,6 @@ return {
       }
 
       metals_config.init_options.statusBarProvider = "off"
-
-      -- local root_markers = {
-      --   'settings.gradle',
-      --   'settings.gradle.kts',
-      --   'pom.xml',
-      --   'build.gradle',
-      --   'mvnw',
-      --   'gradlew',
-      --   'build.gradle',
-      --   'build.gradle.kts',
-      --   '.git',
-      -- }
-      -- metals_config.root_patterns = root_markers
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)

@@ -8,12 +8,20 @@ local root_markers = {
   '.git',
   'mvnw',
   'gradlew',
+}
+
+local build_markers = {
   'pom.xml',
   'build.gradle',
   'build.gradle.kts',
 }
 
-local root_dir = vim.fs.dirname(vim.fs.find(root_markers, { upward = true })[1])
+-- local root_dir = vim.fs.dirname(vim.fs.find(root_markers, { upward = true })[1])
+local root_dir = vim.fs.root(0, root_markers) or vim.fs.root(0, build_markers)
+if not root_dir then
+  return
+end
+
 local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
 local workspace_dir = home .. "/jdtls-workspace/" .. project_name
 
@@ -32,7 +40,7 @@ end
 
 -- Needed for debugging
 local bundles = {
-  vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin.jar"),
+  vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin-*.jar", 1),
 }
 
 -- Needed for running/debugging unit tests
@@ -43,11 +51,22 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 capabilities = vim.tbl_deep_extend("force", capabilities, {
   workspace = {
+    configuration = true,
     didChangeWatchedFiles = {
       relativePatternSupport = true,
     },
   },
+  textDocument = {
+    completion = {
+      completionItem = {
+        snippetSupport = true
+      }
+    }
+  }
 })
+
+local extendedClientCapabilities = require 'jdtls'.extendedClientCapabilities
+extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
 ---@see `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
@@ -117,24 +136,17 @@ local config = {
           },
         },
       },
-      maven = {
-        downloadSources = true,
-      },
-      implementationsCodeLens = {
-        enabled = true,
-      },
-      referencesCodeLens = {
-        enabled = true,
-      },
-      references = {
-        includeDecompiledSources = true,
-      },
+      maven = { downloadSources = true },
+      implementationsCodeLens = { enabled = true },
+      referencesCodeLens = { enabled = true },
+      references = { includeDecompiledSources = true },
       inlayHints = {
         parameterNames = {
           enabled = "all", -- literals, all, none
         },
       },
       signatureHelp = { enabled = true },
+      saveActions = { organizeImports = true },
       contentProvider = { preferred = 'fernflower' }, -- Use fernflower to decompile library code
       format = {
         enabled = true,
@@ -165,11 +177,11 @@ local config = {
           "org.mockito.Mockito.*",
         },
         importOrder = {
-          "java",
-          "javax",
-          "jakarta",
           "com",
           "org",
+          "jakarta",
+          "javax",
+          "java",
         },
       },
       sources = {
@@ -182,7 +194,12 @@ local config = {
         toString = {
           template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
         },
+        hashCodeEquals = {
+          useJava7Objects = false,
+          useInstanceOf = true,
+        },
         useBlocks = true,
+        addFinalForNewDeclaration = "fields",
       },
     },
   },
@@ -193,7 +210,7 @@ local config = {
   },
   init_options = { -- References the bundles defined above to support Debugging and Unit Testing
     bundles = bundles,
-    extendedClientCapabilities = jdtls.extendedClientCapabilities,
+    extendedClientCapabilities = extendedClientCapabilities,
   },
 }
 
@@ -209,7 +226,11 @@ config["on_init"] = function(client, _)
   end
 end
 
-vim.keymap.set('n', '<leader>co', "<Cmd>lua require'jdtls'.organize_imports()<CR>", { desc = 'Organize Imports' })
+vim.keymap.set('n', '<leader>co', "<Cmd>lua require'jdtls'.organize_imports()<CR>",
+  { desc = '[C]ode [O]rganize Imports' })
+vim.keymap.set('n', '<leader>jtc', "<Cmd>lua require'jdtls'.test_class()<CR>", { desc = '[J]ava [T]est [C]lass' })
+vim.keymap.set('n', '<leader>jtm', "<Cmd>lua require'jdtls'.test_nearest_method()<CR>",
+  { desc = '[J]ava [T]est [M]ethod' })
 -- vim.keymap.set('v', '<leader>crv', "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>",
 -- vim.keymap.set('n', '<leader>crv', "<Cmd>lua require('jdtls').extract_variable()<CR>", { desc = 'Extract Variable' })
 --   { desc = 'Extract Variable' })
