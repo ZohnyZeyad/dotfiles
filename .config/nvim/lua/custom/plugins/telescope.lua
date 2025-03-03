@@ -16,6 +16,8 @@ return {
       module = "telescope._extensions.luasnip",
     },
     { 'nvim-telescope/telescope-ui-select.nvim' },
+    { 'nvim-telescope/telescope-dap.nvim' },
+    { "ANGkeith/telescope-terraform-doc.nvim" },
     {
       'nvim-tree/nvim-web-devicons',
       enabled = vim.g.have_nerd_font
@@ -44,7 +46,6 @@ return {
           override_generic_sorter = true, -- override the generic sorter
           override_file_sorter = true,    -- override the file sorter
           case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
-          -- the default case_mode is "smart_case"
         },
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
@@ -52,12 +53,17 @@ return {
         luasnip = {
           require("telescope.themes").get_dropdown(),
         },
+        dap = {
+          require("telescope.themes").get_ivy(),
+        },
       }
     })
 
     pcall(require('telescope').load_extension, 'fzf')
     pcall(require('telescope').load_extension, 'ui-select')
     pcall(require('telescope').load_extension, 'luasnip')
+    pcall(require('telescope').load_extension, 'dap')
+    pcall(require('telescope').load_extension, 'terraform_doc')
 
     local builtin = require('telescope.builtin')
 
@@ -86,14 +92,15 @@ return {
     vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
     vim.keymap.set('n', '<leader>/', function()
-      builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-        winblend = 10,
-        previewer = false,
-      })
+      builtin.current_buffer_fuzzy_find(require('telescope.themes').get_ivy {})
     end, { desc = '[/] Fuzzily search in current buffer' })
 
     vim.keymap.set('n', '<leader>ts', function()
       require('telescope').extensions.luasnip.luasnip {}
     end, { desc = '[T]elescope [S]nip' })
+
+    vim.keymap.set('n', '<leader>td', function()
+      require('telescope').extensions.dap.configurations {}
+    end, { desc = '[T]elescope [D]ap Configurations' })
   end
 }
