@@ -20,6 +20,7 @@ let mapleader = " "
 "set virtualedit=onemore
 set scrolloff=8
 set sidescrolloff=5
+set numberwidth=4
 set number
 set relativenumber
 set splitright
@@ -173,8 +174,8 @@ map <leader>nt :NERDTreeToggle<CR>
 map <leader>pv :action SelectInProjectView<CR>
 
 """ Navigate methods
-map [[ :action MethodUp<CR>
-map ]] :action MethodDown<CR>
+map [m :action MethodUp<CR>
+map ]m :action MethodDown<CR>
 
 " IDE specific actions
 nmap <leader>rt :action Refactorings.QuickListPopupAction<CR>
@@ -186,6 +187,7 @@ nmap <leader>gs :action ActivateCommitToolWindow<CR>
 nmap <leader>hw :action HideAllWindows<CR>
 nmap <leader>cl :action GotoAction<CR>
 nmap <leader>sd :action SafeDelete<CR>
+nmap <leader>gen :action Generate<CR>
 
 " Run mappings
 nnoremap <leader>cr :action ChooseRunConfiguration<CR>
@@ -193,6 +195,7 @@ nnoremap <leader>cd :action ChooseDebugConfiguration<CR>
 noremap <leader>rf :action Run<CR>
 noremap <leader>rr :action Rerun<CR>
 noremap <leader>rt :action RunTests<CR>
+noremap <leader>rft :action RunFailedTests<CR>
 noremap <leader>dd :action Debug<CR>
 noremap <leader>sp :action Stop<CR>
 
