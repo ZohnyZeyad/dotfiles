@@ -89,7 +89,7 @@ return {
     },
 
     gemini = {
-      model = gemini_models[1],
+      model = gemini_models[2],
       timeout = 30000,
       temperature = 0.2,
       max_tokens = 8192,

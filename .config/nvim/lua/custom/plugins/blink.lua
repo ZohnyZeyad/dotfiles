@@ -226,6 +226,7 @@ return {
         window = {
           border = 'rounded',
           treesitter_highlighting = true,
+          show_documentation = true,
         }
       },
 
@@ -259,7 +260,7 @@ return {
         },
 
         menu = {
-          border = vim.g.border_style,
+          border = 'rounded',
           scrollbar = false,
           draw = {
             treesitter = { 'lsp' },
@@ -268,8 +269,9 @@ return {
         },
 
         documentation = {
-          auto_show_delay_ms = 0,
           auto_show = true,
+          auto_show_delay_ms = 500,
+          update_delay_ms = 50,
           treesitter_highlighting = true,
           window = {
             border = 'rounded',

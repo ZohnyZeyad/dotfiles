@@ -78,6 +78,7 @@ return {
       strategies = {
         chat = { adapter = "gemini_flash_thinking", },
         inline = { adapter = "gemini_flash_thinking", },
+        agent = { adapter = "gemini_pro", },
       },
 
       adapters = {
