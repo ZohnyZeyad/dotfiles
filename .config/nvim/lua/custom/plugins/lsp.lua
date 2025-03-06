@@ -1,12 +1,16 @@
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
-capabilities = vim.tbl_deep_extend("force", capabilities, {
-  workspace = {
-    didChangeWatchedFiles = {
-      relativePatternSupport = true,
+local capabilities = vim.tbl_deep_extend(
+  "force",
+  {},
+  vim.lsp.protocol.make_client_capabilities(),
+  require("blink.cmp").get_lsp_capabilities(),
+  {
+    workspace = {
+      didChangeWatchedFiles = {
+        relativePatternSupport = true,
+      },
     },
-  },
-})
+  }
+)
 
 return {
   "neovim/nvim-lspconfig",
@@ -39,6 +43,7 @@ return {
           ensure_installed = {
             'lua_ls',
             'yamlls',
+            'jdtls',
           },
 
           handlers = {
@@ -65,6 +70,7 @@ return {
       config = function()
         require('mason-tool-installer').setup {
           ensure_installed = {
+            'shfmt',
             'java-debug-adapter',
             'java-test',
             'stylua',
