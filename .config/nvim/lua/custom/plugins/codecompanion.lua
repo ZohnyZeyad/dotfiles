@@ -117,5 +117,8 @@ return {
 
     vim.keymap.set({ "n", "v" }, "<leader>cca", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
     vim.keymap.set({ "v" }, "<leader>ce", ":CodeCompanion<space>", { noremap = true })
+
+    -- Integrate with fidget.nvim
+    require("custom.codecompanion.fidget").setup_fidget()
   end,
 }
