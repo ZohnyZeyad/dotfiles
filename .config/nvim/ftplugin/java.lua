@@ -125,18 +125,25 @@ local config = {
           {
             name = "JavaSE-11",
             path = home .. "/.sdkman/candidates/java/11.0.26-amzn/",
+            javadoc = "https://docs.oracle.com/en/java/javase/11/docs/api/",
+            default = true,
           },
           {
             name = "JavaSE-17",
             path = home .. "/.sdkman/candidates/java/17.0.14-amzn/",
+            javadoc = "https://docs.oracle.com/en/java/javase/17/docs/api/",
           },
           {
             name = "JavaSE-21",
             path = home .. "/.sdkman/candidates/java/21.0.6-amzn/",
+            javadoc = "https://docs.oracle.com/en/java/javase/21/docs/api/",
           },
         },
       },
-      maven = { downloadSources = true },
+      maven = {
+        downloadSources = true,
+        updateSnapshots = true,
+      },
       implementationsCodeLens = { enabled = true },
       referencesCodeLens = { enabled = true },
       references = { includeDecompiledSources = true },
@@ -164,6 +171,21 @@ local config = {
           --
           --   url = home .. "/Documents/RTA/Analytics_Scala_Style.xml",
           --   profile = "RtaScalaStyle",
+        },
+      },
+      import = {
+        gradle = {
+          enabled = true,
+        },
+        maven = {
+          enabled = true,
+        },
+        exclusions = {
+          "**/node_modules/**",
+          "**/.metadata/**",
+          "**/archetype-resources/**",
+          "**/META-INF/maven/**",
+          "/**/test/**"
         },
       },
       completion = {
