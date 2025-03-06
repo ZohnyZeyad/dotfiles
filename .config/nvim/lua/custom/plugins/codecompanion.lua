@@ -43,6 +43,7 @@ local gemini_flash_thinking_prompt = require("custom.codecompanion.prompts.gemin
 local gemini_pro_prompt = require("custom.codecompanion.prompts.gemini_pro")
 local gemini_flash_prompt = require("custom.codecompanion.prompts.gemini_flash")
 local deepseek_r1_prompt = require("custom.codecompanion.prompts.deepseek_r1")
+local fake_thinking_prompt = require("custom.codecompanion.prompts.fake_thinking")
 
 local prompt_map = {
   [gemini_models[1]] = gemini_flash_thinking_prompt,
@@ -58,7 +59,7 @@ local function get_system_prompt(opts)
   if prompt_module then
     return prompt_module
   else
-    return gemini_flash_prompt
+    return fake_thinking_prompt
   end
 end
 
@@ -93,7 +94,7 @@ return {
           local err, prompt = pcall(get_system_prompt, opts)
           if not err then
             print("Using generic system prompt...")
-            return gemini_flash_prompt -- TODO: Create a generic prompt as fallback
+            return fake_thinking_prompt
           else
             return prompt
           end
