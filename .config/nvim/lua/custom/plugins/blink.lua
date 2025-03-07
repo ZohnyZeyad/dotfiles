@@ -214,7 +214,11 @@ return {
             draw = {
               columns = { { 'label', 'label_description', gap = 1 } },
             },
-          }
+          },
+
+          ghost_text = {
+            enabled = false
+          },
         }
       },
 

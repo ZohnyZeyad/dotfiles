@@ -53,6 +53,13 @@ local prompt_map = {
 }
 
 local function get_system_prompt(opts)
+  -- Check if opts and adapter are provided and not nil
+  if not opts or not opts.adapter or not opts.adapter.schema.model.default then
+    print("Warning: Invalid opts. Using generic prompt.")
+    return fake_thinking_prompt
+  end
+
+  -- Lookup prompt module from prompt_map
   local model_name = opts.adapter.schema.model.default
   print(model_name)
   local prompt_module = prompt_map[model_name]
@@ -120,6 +127,35 @@ return {
           show_settings = false, -- Show LLM settings at the top of the chat buffer?
           show_token_count = true, -- Show the token count for each response?
           start_in_insert_mode = false, -- Open the chat buffer in insert mode?
+
+          debug_window = {
+            ---@return number|fun(): number
+            width = math.floor(vim.o.columns * 0.8),
+            ---@return number|fun(): number
+            height = math.floor(vim.o.lines * 0.8),
+          },
+
+          window = {
+            layout = "vertical", -- float|vertical|horizontal|buffer
+            position = nil,      -- left|right|top|bottom (nil will default depending on vim.opt.plitright|vim.opt.splitbelow)
+            border = "single",
+            height = 0.8,
+            width = 0.35,
+            relative = "editor",
+            opts = {
+              breakindent = true,
+              cursorcolumn = false,
+              cursorline = false,
+              foldcolumn = "0",
+              linebreak = true,
+              list = false,
+              numberwidth = 1,
+              signcolumn = "no",
+              spell = false,
+              wrap = true,
+            },
+          },
+
         },
       },
     })

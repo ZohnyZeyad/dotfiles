@@ -1,11 +1,11 @@
 return {
   "OXY2DEV/markview.nvim",
   lazy = false,
-  enabled = false,
-  ft = { "Avante", "codecompanion", "markdown" },
+  enabled = true,
+  ft = { "Avante" },
   opts = {
     preview = {
-      filetypes = { "Avante", "codecompanion", "markdown" },
+      filetypes = { "Avante" },
       ignore_buftypes = {},
     },
   },

@@ -100,12 +100,12 @@ return {
 
         -- all workspace errors
         map("n", "<leader>qfe", function()
-          vim.diagnostic.setqflist({ severity = "E" })
+          vim.diagnostic.setqflist({ severity = "ERROR" })
         end)
 
         -- all workspace warnings
         map("n", "<leader>qfw", function()
-          vim.diagnostic.setqflist({ severity = "W" })
+          vim.diagnostic.setqflist({ severity = "WARN" })
         end)
 
         -- buffer diagnostics only
@@ -123,7 +123,10 @@ return {
       return metals_config
     end,
 
-    config = function(self, metals_config)
+    config = function(self, opts)
+      local metals = require("metals")
+      local metals_config = vim.tbl_deep_extend("force", metals.bare_config(), opts)
+
       local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
       vim.api.nvim_create_autocmd("FileType", {
         pattern = self.ft,

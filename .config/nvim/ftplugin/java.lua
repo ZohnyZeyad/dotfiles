@@ -23,7 +23,7 @@ if not root_dir then
 end
 
 local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
-local workspace_dir = home .. "/jdtls-workspace/" .. project_name
+local workspace_dir = home .. "/jdtls/" .. project_name .. "/workspace"
 
 local system_os = ""
 
@@ -71,7 +71,7 @@ extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 ---@see `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
   -- The command that starts the language server
-  ---@see: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
+  ---@see https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
   cmd = {
     java,
     "-Declipse.application=org.eclipse.jdt.ls.core.id1",
@@ -238,7 +238,7 @@ local config = {
 
 -- Needed for debugging
 config["on_attach"] = function(_, _)
-  jdtls.setup_dap({ hotcodereplace = "auto" })
+  jdtls.setup_dap({ hotcodereplace = "auto", config_overrides = {} })
   require("jdtls.dap").setup_dap_main_class_configs()
 end
 
@@ -253,6 +253,7 @@ vim.keymap.set('n', '<leader>co', "<Cmd>lua require'jdtls'.organize_imports()<CR
 vim.keymap.set('n', '<leader>jtc', "<Cmd>lua require'jdtls'.test_class()<CR>", { desc = '[J]ava [T]est [C]lass' })
 vim.keymap.set('n', '<leader>jtm', "<Cmd>lua require'jdtls'.test_nearest_method()<CR>",
   { desc = '[J]ava [T]est [M]ethod' })
+vim.keymap.set('n', '<leader>jpt', "<Cmd>lua require'jdtls'.pick_test()<CR>", { desc = '[J]ava [P]ick [T]est' })
 -- vim.keymap.set('v', '<leader>crv', "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>",
 -- vim.keymap.set('n', '<leader>crv', "<Cmd>lua require('jdtls').extract_variable()<CR>", { desc = 'Extract Variable' })
 --   { desc = 'Extract Variable' })
