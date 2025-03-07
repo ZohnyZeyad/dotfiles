@@ -1,1 +1,5 @@
 .zsh_secrets
+.config/nvim/codecompanion_adapter_debug.txt
+.config/nvim/gemini.planning.avanterules
+.config/nvim/lazy-lock.json
+.config/nvim/repro.lua
