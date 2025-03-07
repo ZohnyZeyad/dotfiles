@@ -127,7 +127,8 @@ return {
     -- The dependencies below are optional,
     "nvim-telescope/telescope.nvim",
     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-    "OXY2DEV/markview.nvim",       -- or MeanderingProgrammer/render-markdown.nvim
+    -- "OXY2DEV/markview.nvim",       -- or MeanderingProgrammer/render-markdown.nvim
+    'MeanderingProgrammer/render-markdown.nvim',
 
     {
       -- support for image pasting

@@ -71,13 +71,27 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
-    "OXY2DEV/markview.nvim",
+    -- "OXY2DEV/markview.nvim",
+    'MeanderingProgrammer/render-markdown.nvim',
   },
 
   config = function()
     require("codecompanion").setup({
       strategies = {
-        chat = { adapter = "gemini_flash_thinking", },
+        chat = {
+          adapter = "gemini_flash_thinking",
+          roles = {
+            ---The header name for the LLM's messages
+            ---@type string|fun(adapter: CodeCompanion.Adapter): string
+            llm = function(adapter)
+              return "CodeCompanion (" .. adapter.formatted_name .. ")"
+            end,
+
+            ---The header name for your messages
+            ---@type string
+            user = "User",
+          }
+        },
         inline = { adapter = "gemini_flash_thinking", },
         agent = { adapter = "gemini_pro", },
       },

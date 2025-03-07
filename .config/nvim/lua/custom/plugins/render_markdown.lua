@@ -1,7 +1,7 @@
 return {
-  "OXY2DEV/markview.nvim",
+  'MeanderingProgrammer/render-markdown.nvim',
   lazy = false,
-  enabled = false,
+  enabled = true,
   ft = { "Avante", "codecompanion", "markdown" },
   opts = {
     preview = {
