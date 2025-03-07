@@ -1,5 +1,7 @@
 # zmodload zsh/zprof
 
+set -o vi
+
 # Configure color-scheme
 COLOR_SCHEME=dark
 DISABLE_AUTO_UPDATE=true
