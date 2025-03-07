@@ -59,6 +59,7 @@ local function get_system_prompt(opts)
   if prompt_module then
     return prompt_module
   else
+    print("No specific system prompt found for model: " .. model_name .. ". Using generic prompt.")
     return fake_thinking_prompt
   end
 end
@@ -92,13 +93,7 @@ return {
 
       opts = {
         system_prompt = function(opts)
-          local err, prompt = pcall(get_system_prompt, opts)
-          if not err then
-            print("Using generic system prompt...")
-            return fake_thinking_prompt
-          else
-            return prompt
-          end
+          return get_system_prompt(opts)
         end
       },
 

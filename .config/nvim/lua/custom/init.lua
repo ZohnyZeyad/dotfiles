@@ -12,7 +12,8 @@ local remove_spaces_group = augroup('RemoveTrailingSpaces', { clear = true })
 local lsp_group = augroup('LspAttachMappings', { clear = true })
 local yank_group = augroup('HighlightYank', {})
 local reload_conf_group = augroup('ReloadConfigs', { clear = true })
-local term_group = vim.api.nvim_create_augroup("custom_term_open", { clear = true })
+local term_group = vim.api.nvim_create_augroup("CustomTermOpen", { clear = true })
+local codecompanion_group = vim.api.nvim_create_augroup("CompanionChatHooks", {})
 
 local set = vim.opt_local
 autocmd("TermOpen", {
@@ -22,6 +23,18 @@ autocmd("TermOpen", {
     set.relativenumber = false
 
     vim.bo.filetype = "terminal"
+  end,
+})
+
+autocmd({ "User" }, {
+  pattern = "CodeCompanionChat*",
+  group = codecompanion_group,
+  callback = function(request)
+    if request.match == "CodeCompanionChatOpened" then
+      set.number = false
+      set.relativenumber = false
+      vim.bo.filetype = "codecompanion"
+    end
   end,
 })
 
