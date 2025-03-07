@@ -29,24 +29,11 @@ return {
 
       dap.configurations.java = {
         {
-          name = "hprof (pick path)",
-          request = "launch",
-          type = "hprof",
-          filepath = function()
-            return require("dap.utils").pick_file({
-              executables = false,
-              filter = "%.hprof$"
-            })
-          end,
-        },
-        {
-          name = "hprof (prompt path)",
-          request = "launch",
-          type = "hprof",
-          filepath = function()
-            local path = vim.fn.input("hprof path: ", "", "file")
-            return path and vim.fn.fnamemodify(path, ":p") or dap.ABORT
-          end,
+          type = "java",
+          request = "attach",
+          name = "Debug (Attach) - Remote",
+          hostName = "127.0.0.1",
+          port = 5005,
         },
       }
 
@@ -61,4 +48,57 @@ return {
     end
   },
 
+  {
+    "rcarriga/nvim-dap-ui",
+    lazy = true,
+    dependencies = {
+      { "nvim-neotest/nvim-nio", lazy = true },
+    },
+
+    keys = {
+      { "<leader>du", function() require("dapui").toggle({}) end, desc = "Dap UI" },
+      { "<leader>de", function() require("dapui").eval() end,     desc = "Eval",  mode = { "n", "v" } },
+    },
+
+    config = function(_, opts)
+      local dap = require("dap")
+      local dapui = require("dapui")
+      dapui.setup(opts)
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open({})
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close({})
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close({})
+      end
+    end,
+  },
+
+  {
+    "theHamsta/nvim-dap-virtual-text",
+    lazy = true,
+  },
+
+  {
+    "jay-babu/mason-nvim-dap.nvim",
+    dependencies = "mason.nvim",
+    cmd = { "DapInstall", "DapUninstall" },
+    opts = {
+      -- Makes a best effort to setup the various debuggers with
+      -- reasonable debug configurations
+      automatic_installation = true,
+
+      ---@see mason-nvim-dap README for more information
+      handlers = {},
+
+      ensure_installed = {
+        "javadbg", "javatest",
+        "bash"
+      },
+    },
+    -- mason-nvim-dap is loaded when nvim-dap loads
+    config = function() end,
+  }
 }

@@ -44,11 +44,25 @@ return {
             'lua_ls',
             'yamlls',
             'jdtls',
+            'marksman',
           },
 
           handlers = {
             function(server_name)
-              if server_name ~= 'jdtls' then
+              if server_name == 'yamlls' then
+                require('lspconfig')[server_name].setup {
+                  capabilities = vim.tbl_deep_extend("force", {},
+                    capabilities,
+                    {
+                      textDocument = {
+                        foldingRange = {
+                          dynamicRegistration = false,
+                          lineFoldingOnly = true,
+                        },
+                      },
+                    })
+                }
+              elseif server_name ~= 'jdtls' then
                 require('lspconfig')[server_name].setup {
                   capabilities = capabilities
                 }
@@ -79,6 +93,11 @@ return {
             'jsonlint',
             'sql-formatter',
             'terraform-ls',
+            'markdownlint-cli2',
+            'markdown-toc',
+            'tflint',
+            'bashls',
+            'shellcheck',
           }
         }
 
@@ -96,6 +115,7 @@ return {
       opts = {
         library = {
           { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+          { "nvim-dap-ui" },
         },
         enabled = true,
       },

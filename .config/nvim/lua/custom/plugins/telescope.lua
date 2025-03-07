@@ -17,7 +17,14 @@ return {
     },
     { 'nvim-telescope/telescope-ui-select.nvim' },
     { 'nvim-telescope/telescope-dap.nvim' },
-    { "ANGkeith/telescope-terraform-doc.nvim" },
+    {
+      "cappyzawa/telescope-terraform.nvim",
+      ft = { "terraform", "hcl" },
+    },
+    {
+      "ANGkeith/telescope-terraform-doc.nvim",
+      ft = { "terraform", "hcl" },
+    },
     {
       'nvim-tree/nvim-web-devicons',
       enabled = vim.g.have_nerd_font
@@ -63,7 +70,9 @@ return {
     pcall(require('telescope').load_extension, 'ui-select')
     pcall(require('telescope').load_extension, 'luasnip')
     pcall(require('telescope').load_extension, 'dap')
+    pcall(require('telescope').load_extension, 'terraform')
     pcall(require('telescope').load_extension, 'terraform_doc')
+    pcall(require("telescope").load_extension, "noice")
 
     local builtin = require('telescope.builtin')
 
