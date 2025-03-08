@@ -18,8 +18,14 @@ DISABLE_AUTO_UPDATE=true
 DISABLE_UPDATE_PROMPT=true
 zstyle ':omz:update' mode disabled
 
+# ~~~~~~~~~~~~~~~ Setup Environment ~~~~~~~~~~~~~~~~~~~~~~~~
+
 set -o vi
 source ~/.zsh_profile
+
+if [ -d "/home/linuxbrew/.linuxbrew" ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 
 # ~~~~~~~~~~~~~~~ History ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -203,13 +209,10 @@ _fzf_comprun() {
     *)            fzf "$@" ;;
   esac
 }
+
+# ~~~~~~~~~~~~~~~ Sourcing ~~~~~~~~~~~~~~~~~~~~~~~~
+
 source <(fzf --zsh)
-
-# ~~~~~~~~~~~~~~~ Dev Specific ~~~~~~~~~~~~~~~~~~~~~~~~
-
-if [ -d "/home/linuxbrew/.linuxbrew" ]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
 
 eval "$(zoxide init --cmd cd zsh)"
 
