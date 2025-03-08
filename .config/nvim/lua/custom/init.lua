@@ -1,5 +1,5 @@
-require("custom.set")
-require("custom.remap")
+require("custom.options")
+require("custom.keymaps")
 
 function R(name)
   require("plenary.reload").reload_module(name)
