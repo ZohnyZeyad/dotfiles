@@ -1,26 +1,35 @@
-export XDG_CONFIG_HOME=$HOME/.config
-VIM="nvim"
-
 if [ -f ~/.zsh_secrets ]; then
     source ~/.zsh_secrets
 fi
 
+# ~~~~~~~~~~~~~~~ Environment Variables ~~~~~~~~~~~~~~~~~~~~~~~~
+
+VIM="nvim"
 export EDITOR=$VIM
 export VISUAL=$VIM
-export TERM="tmux-256color"
 export GIT_EDITOR=$VIM
-export DOTFILES=$HOME/dotfiles
+export TERM="tmux-256color"
+export DOTFILES=$HOME/.dotfiles
 export GCM_CREDENTIAL_STORE=gpg
 export DOCKER_CONTEXT=desktop-linux
 export DOCKER_HOST="unix://$HOME/.docker/desktop/docker.sock"
 export PKG_CONFIG=/usr/bin/
-export JAVA_OPTS="-Xms2g -Xmx4g"
-export CONDA_PATH=$HOME/anaconda3
 
-export PATH=$PATH:$HOME/.local/scripts
-export PATH=$PATH:$HOME/.local/bin
-export PATH=$PATH:$HOME/.local/share/coursier/bin
-export PATH=$PATH:$CONDA_PATH/bin
+export JAVA_OPTS="-Xms2g -Xmx4g"
+export MAVEN_OPTS="-Xms2g -Xmx4g"
+export JDTLS_JVM_ARGS="-javaagent:$HOME/.local/share/nvim/mason/packages/jdtls/lombok.jar"
+
+export XDG_CONFIG_HOME=$HOME/.config
+export CONDA_PATH=$HOME/anaconda3
+export SPARK_HOME=/opt/spark/spark-3.5.4-bin-hadoop3
+export PYSPARK_PYTHON=/usr/bin/python3
+export ACTIVEMQ_PATH=$HOME/apache-activemq-5.18.5
+export IDEA_PATH=/snap/intellij-idea-ultimate/current
+
+export NVM_DIR="$HOME/.config/nvm"
+export NVM_COMPLETION=true
+export NVM_LAZY_LOAD=true
+export NVM_NO_USE=true
 
 bindkey -s ^f "tmux-sessionizer\n"
 
