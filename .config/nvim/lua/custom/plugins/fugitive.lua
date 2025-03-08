@@ -15,8 +15,8 @@ return {
 
         local bufnr = vim.api.nvim_get_current_buf()
         local opts = { buffer = bufnr, remap = false }
-        vim.keymap.set("n", "f<leader>", ":Git fetch", opts)
-        vim.keymap.set("n", "p<leader>", ":Git push", opts)
+        vim.keymap.set("n", "f<leader>", ":Git fetch ", opts)
+        vim.keymap.set("n", "p<leader>", ":Git push ", opts)
 
         -- rebase always
         vim.keymap.set("n", "<leader>P", function()
