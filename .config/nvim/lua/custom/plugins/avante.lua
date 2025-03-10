@@ -14,8 +14,34 @@ local gemini_models = { ---@see https://ai.google.dev/gemini-api/docs/models/gem
   "gemini-1.5-flash",
 }
 
+local gemini_flash_thinking_prompt = require("custom.codecompanion.prompts.gemini_flash_thinking")
+local gemini_pro_prompt = require("custom.codecompanion.prompts.gemini_pro")
+local gemini_flash_prompt = require("custom.codecompanion.prompts.gemini_flash")
+local deepseek_r1_prompt = require("custom.codecompanion.prompts.deepseek_r1")
+local fake_thinking_prompt = require("custom.codecompanion.prompts.fake_thinking")
+
+local prompt_map = {
+  [gemini_models[1]] = gemini_flash_thinking_prompt,
+  [gemini_models[2]] = gemini_pro_prompt,
+  [gemini_models[3]] = gemini_flash_prompt,
+  [openrouter_models[1]] = deepseek_r1_prompt,
+}
+
+local gemini_model = gemini_models[2]
+
+local function get_system_prompt(model_name)
+  local prompt_module = prompt_map[model_name]
+  if prompt_module then
+    return prompt_module
+  else
+    print("No specific system prompt found for model: " .. model_name .. ". Using generic prompt.")
+    return fake_thinking_prompt
+  end
+end
+
 ---@diagnostic disable-next-line: unused-function, unused-local
 local function parse_curl_args(opts, code_opts)
+  ---@diagnostic disable-next-line: missing-parameter
   local messages = require("avante.providers.openai").parse_messages(code_opts)
   return {
     url = opts.endpoint .. "/chat/completions",
@@ -89,7 +115,7 @@ return {
     },
 
     gemini = {
-      model = gemini_models[2],
+      model = gemini_model,
       timeout = 30000,
       temperature = 0.2,
       max_tokens = 8192,
@@ -117,6 +143,8 @@ return {
       enable_token_counting = true,        -- Whether to enable token counting. Default to true.
       enable_cursor_planning_mode = false, -- enable cursor planning mode!
     },
+
+    system_prompt = get_system_prompt(gemini_model),
   },
 
   dependencies = {
