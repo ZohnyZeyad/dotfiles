@@ -2,14 +2,14 @@ return {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",
   cmd = { "Neotree" },
+  enabled = false,
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
     "MunifTanjim/nui.nvim",
-    -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
   },
 
-  config = function()
+  config = function(_, opts)
     require("neo-tree").setup({
       filesystem = {
         filtered_items = {
@@ -17,6 +17,15 @@ return {
           hide_hidden = false,
         }
       }
+    })
+    local function on_move(data)
+      Snacks.rename.on_rename_file(data.source, data.destination)
+    end
+    local events = require("neo-tree.events")
+    opts.event_handlers = opts.event_handlers or {}
+    vim.list_extend(opts.event_handlers, {
+      { event = events.FILE_MOVED,   handler = on_move },
+      { event = events.FILE_RENAMED, handler = on_move },
     })
   end
 }
