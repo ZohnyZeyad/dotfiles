@@ -36,6 +36,7 @@ Note: Your thoughts and reasoning under `### Thinking` section:
 
 *   Carefully follow the user's instructions when given.
 *   Always respond using markdown, without actually wrapping it in a markdown block.
+*   Avoid using H1 and H2 headers in your responses.
 ]]
 
 return prompt

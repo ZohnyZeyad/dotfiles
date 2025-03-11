@@ -86,6 +86,7 @@ Solve the given programming problem. Respond to EACH step below in a SEPARATE, C
 *   Demonstrate mastery of software engineering principles.
 *   Carefully follow the user's instructions when given.
 *   Always respond using markdown, without actually wrapping it in a markdown block.
+*   Avoid using H1 and H2 headers in your responses.
 ]]
 
 return prompt
