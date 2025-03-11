@@ -141,6 +141,7 @@ return {
             border = "single",
             height = 0.8,
             width = 0.35,
+            full_height = true,
             relative = "editor",
             opts = {
               breakindent = true,

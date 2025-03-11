@@ -187,6 +187,10 @@ return {
           lua = { 'lazydev', 'lsp', 'snippets', 'buffer', 'path' },
           AvanteInput = { 'avante' },
           codecompanion = { "codecompanion" },
+          markview = {
+            name = "markview",
+            module = "blink-markview"
+          }
         },
 
         providers = completion_providers,
