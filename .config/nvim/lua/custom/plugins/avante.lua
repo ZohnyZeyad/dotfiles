@@ -76,7 +76,7 @@ return {
     hints = { enabled = false },
 
     file_selector = {
-      provider = "telescope", -- "native" | "fzf" | "telescope" | string
+      provider = "telescope", -- "native" | "fzf" | "telescope" | "snacks" | string
       -- Options override for custom providers
       provider_opts = {},
     },
@@ -86,10 +86,6 @@ return {
 
     cursor_applying_provider = 'gemini',
     -- cursor_applying_provider = 'openrouter',
-
-    rag_service = {
-      enabled = false, -- Enables the rag service, requires OPENAI_API_KEY to be set
-    },
 
     vendors = {
       openrouter = {
@@ -138,6 +134,7 @@ return {
       auto_set_highlight_group = true,
       auto_set_keymaps = true,
       auto_apply_diff_after_generation = false,
+      jump_result_buffer_on_finish = true,
       support_paste_from_clipboard = false,
       minimize_diff = true,                -- Whether to remove unchanged lines when applying a code block
       enable_token_counting = true,        -- Whether to enable token counting. Default to true.
