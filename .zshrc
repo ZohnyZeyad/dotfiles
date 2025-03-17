@@ -158,8 +158,8 @@ alias lzd='lazydocker'
 
 alias idea=$IDEA_PATH/bin/idea.sh
 alias okta="flatpak run com.okta.developer.CLI"
-alias vpn-start="openvpn3 session-start --config $HOME/Downloads/nxvpn.ovpn"
-alias vpn-disc="openvpn3 session-manage --config $HOME/Downloads/nxvpn.ovpn --disconnect"
+alias vpn-start="openvpn3 session-start --config nxvpn"
+alias vpn-disc="openvpn3 session-manage --config nxvpn --disconnect"
 
 # ~~~~~~~~~~~~~~~ Colorize Commands ~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -3,3 +3,4 @@
 .config/nvim/gemini.planning.avanterules
 .config/nvim/lazy-lock.json
 .config/nvim/repro.lua
+.openvpn3/nxvpn-login.file
