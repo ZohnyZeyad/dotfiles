@@ -69,6 +69,8 @@ export PATH
 
 fpath=($HOME/.local/share/coursier/bin/bloop/zsh $fpath)
 
+export LD_LIBRARY_PATH=/opt/openssl/lib:$LD_LIBRARY_PATH
+
 # ~~~~~~~~~~~~~~~ Keybindings ~~~~~~~~~~~~~~~~~~~~~~~~
 
 bindkey -e

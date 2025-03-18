@@ -181,16 +181,12 @@ return {
           return vim.bo.filetype == 'markdown' and 2 or 0
         end,
 
-        default = sources_default_function,
+        default = sources_default_function(),
 
         per_filetype = {
           lua = { 'lazydev', 'lsp', 'snippets', 'buffer', 'path' },
           AvanteInput = { 'avante' },
           codecompanion = { "codecompanion" },
-          markview = {
-            name = "markview",
-            module = "blink-markview"
-          }
         },
 
         providers = completion_providers,
