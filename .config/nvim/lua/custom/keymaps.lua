@@ -5,6 +5,8 @@ vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "Toggle UndoTr
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vim.keymap.set({ "v", "x" }, "<", "<gv")
+vim.keymap.set({ "v", "x" }, ">", ">gv")
 vim.keymap.set("n", "H", "_")
 vim.keymap.set("n", "L", "$")
 
