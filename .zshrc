@@ -73,14 +73,16 @@ export LD_LIBRARY_PATH=/opt/openssl/lib:$LD_LIBRARY_PATH
 
 # ~~~~~~~~~~~~~~~ Keybindings ~~~~~~~~~~~~~~~~~~~~~~~~
 
-bindkey -e
+bindkey -v
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
-bindkey '^[w' kill-region
-bindkey '^[[1;5D' backward-word
-bindkey '^[[1;5C' forward-word
-bindkey '^[[1;3D' backward-word
-bindkey '^[[1;3C' forward-word
+bindkey '^[[1;5D' vi-backward-blank-word
+bindkey '^[[1;5C' vi-forward-blank-word
+bindkey '^[[1;3D' vi-backward-word
+bindkey '^[[1;3C' vi-forward-word
+bindkey '^H' vi-backward-kill-word
+bindkey '^[[3~' delete-char
+bindkey '^[[3;5~' delete-word
 
 # ~~~~~~~~~~~~~~~ ZINIT ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -229,7 +231,7 @@ eval "$(pyenv virtualenv-init -)"
 FNM_PATH="$HOME/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
   export PATH="$HOME/.local/share/fnm:$PATH"
-  eval "$(fnm env)"
+  eval "`fnm env`"
 fi
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!

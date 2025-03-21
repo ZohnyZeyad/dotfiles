@@ -71,7 +71,7 @@ vim.g.netrw_banner = 0                                                 -- Hide t
 vim.g.netrw_winsize = 25                                               -- Set the default netrw window size
 vim.g.netrw_liststyle = 0                                              -- Use the default list style
 vim.g.netrw_sizestyle = 'h'                                            -- Use human-readable sizes
-vim.g.netrw_list_hide = vim.fn['netrw_gitignore#Hide']() .. [[,.git/]] -- Hide files ignored by git
+-- vim.g.netrw_list_hide = vim.fn['netrw_gitignore#Hide']() .. [[,.git/]] -- Hide files ignored by git
 
 vim.opt.foldmethod = "manual"
 -- vim.opt.clipboard = 'unnamedplus'

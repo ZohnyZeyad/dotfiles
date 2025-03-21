@@ -27,7 +27,7 @@ local prompt_map = {
   [openrouter_models[1]] = deepseek_r1_prompt,
 }
 
-local gemini_model = gemini_models[2]
+local gemini_model = gemini_models[1]
 
 local function get_system_prompt(model_name)
   local prompt_module = prompt_map[model_name]

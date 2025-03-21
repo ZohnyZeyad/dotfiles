@@ -9,6 +9,7 @@ export EDITOR=$VIM
 export VISUAL=$VIM
 export GIT_EDITOR=$VIM
 export TERM="tmux-256color"
+export TERMINAL="$(which ghostty)"
 export DOTFILES=$HOME/.dotfiles
 export GCM_CREDENTIAL_STORE=gpg
 export DOCKER_CONTEXT=desktop-linux
