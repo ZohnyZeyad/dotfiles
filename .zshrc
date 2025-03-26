@@ -159,6 +159,7 @@ alias curl='curlie'
 alias ll='ls -la'
 alias la='ls -A'
 alias lzd='lazydocker'
+alias lzg='lazygit'
 
 alias idea=$IDEA_PATH/bin/idea.sh
 alias okta="flatpak run com.okta.developer.CLI"

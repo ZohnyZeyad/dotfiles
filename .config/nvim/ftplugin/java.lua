@@ -1,6 +1,12 @@
 -- JDTLS (Java LSP) configuration
 local home = vim.env.HOME
-local jdtls = require("jdtls")
+local jdtls_ok, jdtls = pcall(require, "jdtls")
+
+if not jdtls_ok then
+  vim.notify "JDTLS not found!"
+  return
+end
+
 local java_path = os.getenv 'JAVA_HOME'
 local java = java_path .. "/bin/java"
 
@@ -47,23 +53,26 @@ local bundles = {
 vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-test/*.jar", 1), "\n"))
 vim.list_extend(bundles, require("spring_boot").java_extensions())
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
-capabilities = vim.tbl_deep_extend("force", capabilities, {
-  workspace = {
-    configuration = true,
-    didChangeWatchedFiles = {
-      relativePatternSupport = true,
+local capabilities = vim.tbl_deep_extend(
+  "force",
+  {},
+  vim.lsp.protocol.make_client_capabilities(),
+  require("blink.cmp").get_lsp_capabilities(),
+  {
+    workspace = {
+      configuration = true,
+      didChangeWatchedFiles = {
+        relativePatternSupport = true,
+      },
     },
-  },
-  textDocument = {
-    completion = {
-      completionItem = {
-        snippetSupport = true
+    textDocument = {
+      completion = {
+        completionItem = {
+          snippetSupport = true
+        }
       }
     }
-  }
-})
+  })
 
 local extendedClientCapabilities = require 'jdtls'.extendedClientCapabilities
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
@@ -98,7 +107,7 @@ local config = {
 
     -- Eclipse jdtls location
     "-jar",
-    home .. "/.local/share/nvim/mason/share/jdtls/plugins/org.eclipse.equinox.launcher.jar",
+    vim.fn.glob(home .. "/.local/share/nvim/mason/share/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
     "-configuration",
     home .. "/.local/share/nvim/mason/packages/jdtls/config_" .. system_os,
     "-data",
@@ -117,6 +126,21 @@ local config = {
       eclipse = {
         downloadSources = true,
       },
+      maven = {
+        downloadSources = true,
+        updateSnapshots = true,
+      },
+      implementationsCodeLens = { enabled = true },
+      referencesCodeLens = { enabled = true },
+      references = { includeDecompiledSources = true },
+      inlayHints = {
+        parameterNames = {
+          enabled = "all", -- literals, all, none
+        },
+      },
+      signatureHelp = { enabled = true },
+      saveActions = { organizeImports = true },
+      contentProvider = { preferred = 'fernflower' }, -- Use fernflower to decompile library code
       configuration = {
         updateBuildConfiguration = "interactive",
         -- The runtime name parameters need to match specific Java execution environments.
@@ -140,21 +164,6 @@ local config = {
           },
         },
       },
-      maven = {
-        downloadSources = true,
-        updateSnapshots = true,
-      },
-      implementationsCodeLens = { enabled = true },
-      referencesCodeLens = { enabled = true },
-      references = { includeDecompiledSources = true },
-      inlayHints = {
-        parameterNames = {
-          enabled = "all", -- literals, all, none
-        },
-      },
-      signatureHelp = { enabled = true },
-      saveActions = { organizeImports = true },
-      contentProvider = { preferred = 'fernflower' }, -- Use fernflower to decompile library code
       format = {
         enabled = true,
         -- Formatting works by default, but you can refer to a specific file/URL if you choose
@@ -163,11 +172,11 @@ local config = {
           -- profile = "GoogleStyle",
           --
           -- url = "https://github.com/ZohnyZeyad/dotfiles/blob/main/.config/code/checkstyle.xml",
-          url = home .. "/Documents/Nix/checkstyle.xml",
-          profile = "NixCheckStyle",
+          -- url = home .. "/Documents/Nix/checkstyle.xml",
+          -- profile = "NixCheckStyle",
           --
-          -- url = home .. "/Documents/RTA/Analytics_Java_Style.xml",
-          -- profile = "RtaJavaStyle",
+          url = home .. "/Documents/RTA/Analytics_Java_Style.xml",
+          profile = "RtaJavaStyle",
           --
           --   url = home .. "/Documents/RTA/Analytics_Scala_Style.xml",
           --   profile = "RtaScalaStyle",
@@ -223,6 +232,7 @@ local config = {
         useBlocks = true,
         addFinalForNewDeclaration = "fields",
       },
+      extendedClientCapabilities = extendedClientCapabilities,
     },
   },
   capabilities = capabilities, -- Needed for auto-completion with method signatures and placeholders
@@ -232,7 +242,6 @@ local config = {
   },
   init_options = { -- References the bundles defined above to support Debugging and Unit Testing
     bundles = bundles,
-    extendedClientCapabilities = extendedClientCapabilities,
   },
 }
 
@@ -240,6 +249,7 @@ local config = {
 config["on_attach"] = function(_, _)
   jdtls.setup_dap({ hotcodereplace = "auto", config_overrides = {} })
   require("jdtls.dap").setup_dap_main_class_configs()
+  vim.lsp.codelens.refresh()
 end
 
 config["on_init"] = function(client, _)
