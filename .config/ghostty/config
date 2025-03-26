@@ -55,6 +55,7 @@ theme = tokyonight
 foreground = #C9D4FF
 background = #181825
 font-family = JetBrainsMono Nerd Font
+font-size = 12
 
 cursor-style = block
 cursor-style-blink = false
@@ -71,3 +72,13 @@ clipboard-read = allow
 clipboard-write = allow
 clipboard-trim-trailing-spaces = true
 copy-on-select = true
+
+keybind = alt+1=unbind
+keybind = alt+2=unbind
+keybind = alt+3=unbind
+keybind = alt+4=unbind
+keybind = alt+5=unbind
+keybind = alt+6=unbind
+keybind = alt+7=unbind
+keybind = alt+8=unbind
+keybind = alt+9=unbind
