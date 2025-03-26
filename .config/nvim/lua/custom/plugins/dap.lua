@@ -42,8 +42,12 @@ return {
       map("n", "<leader>dr", function() dap.repl.toggle() end)
       map("n", "<leader>dK", function() require("dap.ui.widgets").hover() end)
       map("n", "<leader>db", function() dap.toggle_breakpoint() end)
+      map("n", "<leader>dlb", function() dap.list_breakpoints() end)
+      map("n", "<leader>dcb", function() dap.clear_breakpoints() end)
       map("n", "<leader>dso", function() dap.step_over() end)
+      map("n", "<leader>dsO", function() dap.step_out() end)
       map("n", "<leader>dsi", function() dap.step_into() end)
+      map("n", "<leader>dsb", function() dap.step_back() end)
       map("n", "<leader>dl", function() dap.run_last() end)
     end
   },
@@ -85,20 +89,21 @@ return {
     "jay-babu/mason-nvim-dap.nvim",
     dependencies = "mason.nvim",
     cmd = { "DapInstall", "DapUninstall" },
-    opts = {
-      -- Makes a best effort to setup the various debuggers with
-      -- reasonable debug configurations
-      automatic_installation = true,
-
-      ---@see mason-nvim-dap README for more information
-      handlers = {},
-
-      ensure_installed = {
-        "javadbg", "javatest",
-        "bash"
-      },
-    },
     -- mason-nvim-dap is loaded when nvim-dap loads
-    config = function() end,
+    config = function()
+      require('mason-nvim-dap').setup({
+        -- Makes a best effort to setup the various debuggers with
+        -- reasonable debug configurations
+        automatic_installation = true,
+
+        ---@see mason-nvim-dap README for more information
+        handlers = {},
+
+        ensure_installed = {
+          "javadbg", "javatest",
+          "bash"
+        },
+      })
+    end,
   }
 }

@@ -249,7 +249,6 @@ local config = {
 config["on_attach"] = function(_, _)
   jdtls.setup_dap({ hotcodereplace = "auto", config_overrides = {} })
   require("jdtls.dap").setup_dap_main_class_configs()
-  vim.lsp.codelens.refresh()
 end
 
 config["on_init"] = function(client, _)
