@@ -1,13 +1,18 @@
 local gemini_models = {
-  "gemini-2.0-flash-thinking-exp-01-21",
-  "gemini-2.0-pro-exp-02-05",
   "gemini-2.0-flash",
+  "gemini-2.5-pro-exp-03-25",
+  "gemini-1.5-pro",
+  "gemini-2.0-flash-thinking-exp-01-21",
 }
 
-local openrouter_models = {
+local openrouter_models = { ---@see https://openrouter.ai/models
+  "deepseek/deepseek-chat-v3-0324:free",
+  "deepseek/deepseek-r1-zero:free",
   "deepseek/deepseek-r1-distill-llama-70b:free",
-  "deepseek/deepseek-r1:free",
-  "deepseek/deepseek-chat:free",
+  "google/gemini-2.5-pro-exp-03-25:free",
+  "google/gemini-2.0-flash-thinking-exp:free",
+  "anthropic/claude-3.5-sonnet:beta",
+  "anthropic/claude-3.7-sonnet:beta",
 }
 
 local function gemini_adapter(idx)
@@ -42,14 +47,15 @@ end
 local gemini_flash_thinking_prompt = require("custom.codecompanion.prompts.gemini_flash_thinking")
 local gemini_pro_prompt = require("custom.codecompanion.prompts.gemini_pro")
 local gemini_flash_prompt = require("custom.codecompanion.prompts.gemini_flash")
-local deepseek_r1_prompt = require("custom.codecompanion.prompts.deepseek_r1")
+local deepseek_prompt = require("custom.codecompanion.prompts.deepseek")
 local fake_thinking_prompt = require("custom.codecompanion.prompts.fake_thinking")
 
 local prompt_map = {
   [gemini_models[1]] = gemini_flash_thinking_prompt,
   [gemini_models[2]] = gemini_pro_prompt,
-  [gemini_models[3]] = gemini_flash_prompt,
-  [openrouter_models[1]] = deepseek_r1_prompt,
+  [gemini_models[3]] = gemini_pro_prompt,
+  [gemini_models[4]] = gemini_flash_prompt,
+  [openrouter_models[1]] = deepseek_prompt,
 }
 
 local function get_system_prompt(opts)
@@ -86,7 +92,7 @@ return {
     require("codecompanion").setup({
       strategies = {
         chat = {
-          adapter = "gemini_flash_thinking",
+          adapter = "gemini_flash",
           roles = {
             ---The header name for the LLM's messages
             ---@type string|fun(adapter: CodeCompanion.Adapter): string
@@ -99,16 +105,16 @@ return {
             user = "User",
           }
         },
-        inline = { adapter = "gemini_flash_thinking", },
+        inline = { adapter = "gemini_flash", },
         agent = { adapter = "gemini_pro", },
       },
 
       adapters = {
         opts = { show_defaults = false, },
 
-        gemini_flash_thinking = gemini_adapter(1),
+        gemini_flash = gemini_adapter(1),
         gemini_pro = gemini_adapter(2),
-        gemini_flash = gemini_adapter(3),
+        gemini_flash_thinking = gemini_adapter(4),
         openrouter = openrouter_adapter(1),
       },
 

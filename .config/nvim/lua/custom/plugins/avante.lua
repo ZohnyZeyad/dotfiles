@@ -1,30 +1,31 @@
-local openrouter_models = {
+local openrouter_models = { ---@see https://openrouter.ai/models
+  "deepseek/deepseek-chat-v3-0324:free",
+  "deepseek/deepseek-r1-zero:free",
   "deepseek/deepseek-r1-distill-llama-70b:free",
-  "deepseek/deepseek-r1:free",
-  "deepseek/deepseek-chat:free",
-  "google/gemini-2.0-pro-exp-02-05:free",
+  "google/gemini-2.5-pro-exp-03-25:free",
   "google/gemini-2.0-flash-thinking-exp:free",
 }
 
 local gemini_models = { ---@see https://ai.google.dev/gemini-api/docs/models/gemini
-  "gemini-2.0-flash-thinking-exp-01-21",
-  "gemini-2.5-pro-exp-03-25",
   "gemini-2.0-flash",
+  "gemini-2.5-pro-exp-03-25",
   "gemini-1.5-pro",
+  "gemini-2.0-flash-thinking-exp-01-21",
   "gemini-1.5-flash",
 }
 
 local gemini_flash_thinking_prompt = require("custom.codecompanion.prompts.gemini_flash_thinking")
 local gemini_pro_prompt = require("custom.codecompanion.prompts.gemini_pro")
 local gemini_flash_prompt = require("custom.codecompanion.prompts.gemini_flash")
-local deepseek_r1_prompt = require("custom.codecompanion.prompts.deepseek_r1")
+local deepseek_prompt = require("custom.codecompanion.prompts.deepseek")
 local fake_thinking_prompt = require("custom.codecompanion.prompts.fake_thinking")
 
 local prompt_map = {
   [gemini_models[1]] = gemini_flash_thinking_prompt,
   [gemini_models[2]] = gemini_pro_prompt,
-  [gemini_models[3]] = gemini_flash_prompt,
-  [openrouter_models[1]] = deepseek_r1_prompt,
+  [gemini_models[3]] = gemini_pro_prompt,
+  [gemini_models[4]] = gemini_flash_prompt,
+  [openrouter_models[1]] = deepseek_prompt,
 }
 
 local gemini_model = gemini_models[1]
@@ -92,7 +93,7 @@ return {
         __inherited_from = 'openai',
         endpoint = 'https://openrouter.ai/api/v1',
         api_key_name = 'OPENROUTER_API_KEY',
-        model = openrouter_models[1],
+        model = openrouter_models[6],
         timeout = 30000,
         temperature = 0.2,
         max_tokens = 8192,

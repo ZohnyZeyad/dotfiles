@@ -5,3 +5,4 @@
 .config/nvim/repro.lua
 .openvpn3/nxvpn-login.file
 .m2/repository/
+.m2/wrapper/
