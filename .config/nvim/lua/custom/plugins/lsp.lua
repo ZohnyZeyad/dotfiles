@@ -125,7 +125,6 @@ return {
   },
 
   config = function()
-    -- require('spring_boot').init_lsp_commands()
     local lspconfig = require('lspconfig')
 
     lspconfig.lua_ls.setup {
@@ -140,6 +139,13 @@ return {
         }
       }
     }
+
+    -- require('spring_boot').init_lsp_commands()
+    -- require("lspconfig").jdtls.setup {
+    --   init_options = {
+    --     bundles = require("spring_boot").java_extensions(),
+    --   },
+    -- }
 
     ---@diagnostic disable-next-line: unused-local
     local supported_filetypes = {
