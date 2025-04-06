@@ -1,6 +1,7 @@
 return {
   "JavaHello/spring-boot.nvim",
-  ft = { 'java', 'scala' },
+  lazy = true,
+  ft = { 'java', 'scala', 'yaml', 'jproperties' },
   dependencies = {
     { "mfussenegger/nvim-jdtls", lazy = true }, -- or nvim-java, nvim-lspconfig
   },

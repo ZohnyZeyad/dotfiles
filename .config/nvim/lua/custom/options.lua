@@ -66,11 +66,11 @@ vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
 
 -- Netrw (File Explorer) Settings
-vim.g.netrw_browse_split = 0                                           -- Open files in the current window
-vim.g.netrw_banner = 0                                                 -- Hide the netrw banner
-vim.g.netrw_winsize = 25                                               -- Set the default netrw window size
-vim.g.netrw_liststyle = 0                                              -- Use the default list style
-vim.g.netrw_sizestyle = 'h'                                            -- Use human-readable sizes
+vim.g.netrw_browse_split = 0 -- Open files in the current window
+vim.g.netrw_banner = 0       -- Hide the netrw banner
+vim.g.netrw_winsize = 25     -- Set the default netrw window size
+vim.g.netrw_liststyle = 0    -- Use the default list style
+vim.g.netrw_sizestyle = 'h'  -- Use human-readable sizes
 -- vim.g.netrw_list_hide = vim.fn['netrw_gitignore#Hide']() .. [[,.git/]] -- Hide files ignored by git
 
 vim.opt.foldmethod = "manual"

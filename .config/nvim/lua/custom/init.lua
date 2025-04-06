@@ -42,7 +42,7 @@ autocmd('TextYankPost', {
   group = yank_group,
   pattern = '*',
   callback = function()
-    vim.highlight.on_yank({
+    vim.hl.on_yank({
       higroup = 'IncSearch',
       timeout = 40,
     })
@@ -136,13 +136,11 @@ autocmd('LspAttach', {
     vim.keymap.set("n", "<leader>ff", function() vim.lsp.buf.format({ async = true }) end, opts)
     vim.keymap.set("n", "<leader>sh", function() vim.lsp.buf.signature_help() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-    vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next({ wrap = false }) end, opts)
-    vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev({ wrap = false }) end, opts)
 
     local client = vim.lsp.get_client_by_id(e.data.client_id)
     if not client then return end
 
-    if client.supports_method('textDocument/formatting') then
+    if client:supports_method('textDocument/formatting') then
       if not ((client.name == "metals" and vim.bo.filetype == "scala") or (client.name == "jdtls" and vim.bo.filetype == "java")) then
         autocmd('BufWritePre', {
           buffer = e.buf,

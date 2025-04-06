@@ -46,11 +46,11 @@ end
 
 -- Needed for debugging
 local bundles = {
-  vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin-*.jar", 1),
+  vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin-*.jar", true),
 }
 
 -- Needed for running/debugging unit tests
-vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-test/*.jar", 1), "\n"))
+vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-test/*.jar", true), "\n"))
 vim.list_extend(bundles, require("spring_boot").java_extensions())
 
 local capabilities = vim.tbl_deep_extend(
@@ -243,6 +243,11 @@ local config = {
   init_options = { -- References the bundles defined above to support Debugging and Unit Testing
     bundles = bundles,
   },
+  -- handlers = {
+  -- By assigning an empty function, you can remove the notifications
+  -- printed to the cmd
+  -- ["$/progress"] = function(_, result, ctx) end,
+  -- },
 }
 
 -- Needed for debugging

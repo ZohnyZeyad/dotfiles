@@ -110,14 +110,6 @@ return {
 
         -- buffer diagnostics only
         map("n", "<leader>d", vim.diagnostic.setloclist)
-
-        map("n", "[d", function()
-          vim.diagnostic.goto_prev({ wrap = false })
-        end)
-
-        map("n", "]d", function()
-          vim.diagnostic.goto_next({ wrap = false })
-        end)
       end
 
       return metals_config

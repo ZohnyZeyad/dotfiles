@@ -132,6 +132,8 @@ return {
         -- Create some toggle mappings
         Snacks.toggle.diagnostics():map("<leader>dt")
         Snacks.toggle.indent():map("<leader>it")
+
+        vim.ui.input = Snacks.input
       end,
     })
   end,

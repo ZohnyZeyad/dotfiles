@@ -41,6 +41,9 @@ return {
       checkbox = {
         enabled = false,
       },
+      latex = {
+        enabled = false,
+      },
     })
   end,
 }
