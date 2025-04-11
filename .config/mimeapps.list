@@ -30,3 +30,4 @@ application/vnd.debian.binary-package=snap-store_ubuntu-software-local-file.desk
 text/plain=sublime_text.desktop;code_code.desktop;
 text/csv=sublime_text.desktop;org.gnome.gedit.desktop;
 application/x-shellscript=sublime_text.desktop;
+application/zip=org.gnome.Nautilus.desktop;
