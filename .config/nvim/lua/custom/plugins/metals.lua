@@ -18,7 +18,7 @@ return {
         serverVersion = "latest.snapshot",
         showImplicitArguments = true,
         autoImportBuild = "all",
-        fallbackScalaVersion = "2.13.15",
+        fallbackScalaVersion = "2.12.20",
         inlayHints = {
           hintsInPatternMatch = { enable = true },
           implicitArguments = { enable = true },
