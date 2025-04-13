@@ -14,6 +14,7 @@ return {
 
       local home = vim.env.HOME
       metals_config.settings = {
+        javaHome = home .. "/.sdkman/candidates/java/11.0.26-amzn",
         serverVersion = "latest.snapshot",
         showImplicitArguments = true,
         autoImportBuild = "all",
