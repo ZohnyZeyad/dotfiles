@@ -175,7 +175,11 @@ return {
     -- system_prompt = get_system_prompt(gemini_model),
     system_prompt = function()
       local hub = require("mcphub").get_hub_instance()
-      return hub:get_active_servers_prompt()
+      if hub == nil then
+        return get_system_prompt(gemini_model)
+      else
+        return hub:get_active_servers_prompt()
+      end
     end,
 
     custom_tools = function()
