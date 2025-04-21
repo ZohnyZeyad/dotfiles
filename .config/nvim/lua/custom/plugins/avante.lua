@@ -101,19 +101,6 @@ return {
       provider = "google", -- tavily, serpapi, searchapi, google, kagi, brave, or searxng
     },
 
-    disabled_tools = {
-      "list_files",
-      "search_files",
-      "read_file",
-      "create_file",
-      "rename_file",
-      "delete_file",
-      "create_dir",
-      "rename_dir",
-      "delete_dir",
-      "bash",
-    },
-
     cursor_applying_provider = 'gemini',
     -- cursor_applying_provider = 'openrouter',
 

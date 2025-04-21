@@ -1,5 +1,13 @@
 {
   "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/home/stalky"
+      ]
+    },
     "context7": {
       "command": "npx",
       "args": [
