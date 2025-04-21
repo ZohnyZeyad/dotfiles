@@ -49,6 +49,14 @@
     "kubernetes": {
       "command": "npx",
       "args": ["mcp-server-kubernetes"]
+    },
+    "openrouterai": {
+      "command": "npx",
+      "args": ["@mcpservers/openrouterai"],
+      "env": {
+        "OPENROUTER_API_KEY": "${OPENROUTER_API_KEY}",
+        "OPENROUTER_DEFAULT_MODEL": "deepseek/deepseek-chat-v3-0324:free"
+      }
     }
   },
   "nativeMCPServers": [
