@@ -1,17 +1,20 @@
 local openrouter_models = { ---@see https://openrouter.ai/models
   "deepseek/deepseek-chat-v3-0324:free",
+  "agentica-org/deepcoder-14b-preview:free",
+  "google/gemini-2.5-pro-exp-03-25:free",
   "deepseek/deepseek-r1-zero:free",
   "deepseek/deepseek-r1-distill-llama-70b:free",
-  "google/gemini-2.5-pro-exp-03-25:free",
   "google/gemini-2.0-flash-thinking-exp:free",
+  "qwen/qwen-2.5-coder-32b-instruct:free",
 }
 
 local gemini_models = { ---@see https://ai.google.dev/gemini-api/docs/models/gemini
   "gemini-2.0-flash",
+  "gemini-2.5-flash-preview-04-17",
+  "gemini-2.5-pro-preview-03-25",
   "gemini-2.5-pro-exp-03-25",
-  "gemini-1.5-pro",
   "gemini-2.0-flash-thinking-exp-01-21",
-  "gemini-1.5-flash",
+  "gemini-1.5-pro",
 }
 
 local gemini_flash_thinking_prompt = require("custom.codecompanion.prompts.gemini_flash_thinking")
@@ -22,14 +25,17 @@ local fake_thinking_prompt = require("custom.codecompanion.prompts.fake_thinking
 
 local prompt_map = {
   [gemini_models[1]] = gemini_flash_thinking_prompt,
-  [gemini_models[2]] = gemini_pro_prompt,
+  [gemini_models[2]] = gemini_flash_thinking_prompt,
   [gemini_models[3]] = gemini_pro_prompt,
-  [gemini_models[4]] = gemini_flash_prompt,
+  [gemini_models[4]] = gemini_pro_prompt,
+  [gemini_models[5]] = gemini_flash_prompt,
   [openrouter_models[1]] = deepseek_prompt,
+  [openrouter_models[3]] = gemini_pro_prompt,
 }
 
 local gemini_model = gemini_models[1]
 
+---@diagnostic disable-next-line: unused-function, unused-local
 local function get_system_prompt(model_name)
   local prompt_module = prompt_map[model_name]
   if prompt_module then
@@ -76,14 +82,37 @@ return {
   opts = {
     hints = { enabled = false },
 
-    file_selector = {
+    selector = {
       provider = "telescope", -- "native" | "fzf" | "telescope" | "snacks" | string
       -- Options override for custom providers
-      provider_opts = {},
+      provider_opts = {
+        pickers = {
+          find_files = {
+            find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' },
+          }
+        },
+      },
     },
 
     provider = "gemini", -- "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
     -- provider = "openrouter",
+
+    web_search_engine = {
+      provider = "google", -- tavily, serpapi, searchapi, google, kagi, brave, or searxng
+    },
+
+    disabled_tools = {
+      "list_files",
+      "search_files",
+      "read_file",
+      "create_file",
+      "rename_file",
+      "delete_file",
+      "create_dir",
+      "rename_dir",
+      "delete_dir",
+      "bash",
+    },
 
     cursor_applying_provider = 'gemini',
     -- cursor_applying_provider = 'openrouter',
@@ -93,7 +122,7 @@ return {
         __inherited_from = 'openai',
         endpoint = 'https://openrouter.ai/api/v1',
         api_key_name = 'OPENROUTER_API_KEY',
-        model = openrouter_models[6],
+        model = openrouter_models[3],
         timeout = 30000,
         temperature = 0.2,
         max_tokens = 8192,
@@ -116,6 +145,7 @@ return {
       timeout = 30000,
       temperature = 0.2,
       max_tokens = 8192,
+      disable_tools = true,
     },
 
     dual_boost = {
@@ -142,7 +172,17 @@ return {
       enable_cursor_planning_mode = false, -- enable cursor planning mode!
     },
 
-    system_prompt = get_system_prompt(gemini_model),
+    -- system_prompt = get_system_prompt(gemini_model),
+    system_prompt = function()
+      local hub = require("mcphub").get_hub_instance()
+      return hub:get_active_servers_prompt()
+    end,
+
+    custom_tools = function()
+      return {
+        require("mcphub.extensions.avante").mcp_tool(),
+      }
+    end,
   },
 
   dependencies = {

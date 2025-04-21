@@ -1,18 +1,20 @@
-local gemini_models = {
+local gemini_models = { ---@see https://ai.google.dev/gemini-api/docs/models/gemini
   "gemini-2.0-flash",
+  "gemini-2.5-flash-preview-04-17",
+  "gemini-2.5-pro-preview-03-25",
   "gemini-2.5-pro-exp-03-25",
-  "gemini-1.5-pro",
   "gemini-2.0-flash-thinking-exp-01-21",
+  "gemini-1.5-pro",
 }
 
 local openrouter_models = { ---@see https://openrouter.ai/models
   "deepseek/deepseek-chat-v3-0324:free",
+  "agentica-org/deepcoder-14b-preview:free",
+  "google/gemini-2.5-pro-exp-03-25:free",
   "deepseek/deepseek-r1-zero:free",
   "deepseek/deepseek-r1-distill-llama-70b:free",
-  "google/gemini-2.5-pro-exp-03-25:free",
   "google/gemini-2.0-flash-thinking-exp:free",
-  "anthropic/claude-3.5-sonnet:beta",
-  "anthropic/claude-3.7-sonnet:beta",
+  "qwen/qwen-2.5-coder-32b-instruct:free",
 }
 
 local function gemini_adapter(idx)
@@ -22,7 +24,7 @@ local function gemini_adapter(idx)
         default = gemini_models[idx],
       },
       temperature = { default = 0.2 },
-      maxOutputTokens = { default = 8192 },
+      max_tokens = { default = 8192 },
     },
   })
 end
@@ -39,7 +41,7 @@ local function openrouter_adapter(idx)
         default = openrouter_models[idx],
       },
       temperature = { default = 0.2 },
-      maxOutputTokens = { default = 8192 },
+      max_tokens = { default = 8192 },
     },
   })
 end
@@ -52,9 +54,10 @@ local fake_thinking_prompt = require("custom.codecompanion.prompts.fake_thinking
 
 local prompt_map = {
   [gemini_models[1]] = gemini_flash_thinking_prompt,
-  [gemini_models[2]] = gemini_pro_prompt,
+  [gemini_models[2]] = gemini_flash_thinking_prompt,
   [gemini_models[3]] = gemini_pro_prompt,
-  [gemini_models[4]] = gemini_flash_prompt,
+  [gemini_models[4]] = gemini_pro_prompt,
+  [gemini_models[5]] = gemini_flash_prompt,
   [openrouter_models[1]] = deepseek_prompt,
 }
 
@@ -103,6 +106,13 @@ return {
             ---The header name for your messages
             ---@type string
             user = "User",
+          },
+          tools = {
+            ["mcp"] = {
+              -- calling it in a function would prevent mcphub from being loaded before it's needed
+              callback = function() return require("mcphub.extensions.codecompanion") end,
+              description = "Call tools and resources from the MCP Servers",
+            }
           }
         },
         inline = { adapter = "gemini_flash", },
