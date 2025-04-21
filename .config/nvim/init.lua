@@ -24,7 +24,6 @@ local disabled_plugins = {
   "gzip",
   "netrwPlugin",
   "health",
-  "man",
   "matchit",
   "rplugin",
   "tarPlugin",
