@@ -12,8 +12,8 @@
     "metrics": false
   },
   "vim_mode": true,
-  "ui_font_size": 16,
-  "buffer_font_size": 16,
+  "ui_font_size": 14,
+  "buffer_font_size": 14,
   "theme": {
     "mode": "system",
     "light": "GitHub Dark Default",
@@ -31,8 +31,8 @@
     "quick_actions": false,
     "selections_menu": false
   },
-  // "ui_font_family": "Monaspace Neon",
-  // "buffer_font_family": "Monaspace Neon",
+  "ui_font_family": "Monaspace Neon",
+  "buffer_font_family": "Monaspace Neon",
   "features": {
     "edit_prediction_provider": "zed",
     "copilot": false
@@ -72,4 +72,3 @@
   "wrap_guides": [100],
   "show_wrap_guides": true
 }
-

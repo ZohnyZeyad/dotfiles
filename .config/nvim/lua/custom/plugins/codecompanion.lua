@@ -95,7 +95,7 @@ return {
     require("codecompanion").setup({
       strategies = {
         chat = {
-          adapter = "gemini_flash",
+          adapter = "gemini_flash_preview",
           roles = {
             ---The header name for the LLM's messages
             ---@type string|fun(adapter: CodeCompanion.Adapter): string
@@ -123,8 +123,8 @@ return {
         opts = { show_defaults = false, },
 
         gemini_flash = gemini_adapter(1),
-        gemini_pro = gemini_adapter(2),
-        gemini_flash_thinking = gemini_adapter(4),
+        gemini_pro = gemini_adapter(3),
+        gemini_flash_preview = gemini_adapter(2),
         openrouter = openrouter_adapter(1),
       },
 

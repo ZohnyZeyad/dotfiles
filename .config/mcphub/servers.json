@@ -1,70 +1,93 @@
 {
   "mcpServers": {
     "filesystem": {
-      "command": "npx",
+      "disabled": false,
       "args": [
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "/home/stalky"
-      ]
+        "/home/zeyad-zohny"
+      ],
+      "command": "npx"
     },
-    "context7": {
-      "command": "npx",
+    "git": {
+      "command": "uvx",
+      "args": ["mcp-server-git"]
+    },
+    "openrouterai": {
+      "env": {
+        "OPENROUTER_DEFAULT_MODEL": "deepseek/deepseek-chat-v3-0324:free",
+        "OPENROUTER_API_KEY": "${OPENROUTER_API_KEY}"
+      },
       "args": [
-        "-y",
-        "@upstash/context7-mcp@latest"
+        "@mcpservers/openrouterai"
+      ],
+      "command": "npx"
+    },
+    "awslabs.aws-documentation-mcp-server": {
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "command": "uvx",
+      "autoApprove": [
+
+      ],
+      "args": [
+        "awslabs.aws-documentation-mcp-server@latest"
       ],
       "disabled": false
     },
     "sequential-thinking": {
-      "command": "npx",
+      "disabled": false,
       "args": [
         "-y",
         "@modelcontextprotocol/server-sequential-thinking"
       ],
-      "disabled": false
+      "command": "npx"
     },
-    "awslabs.aws-documentation-mcp-server": {
-      "command": "uvx",
+    "mcp-atlassian": {
+      "command": "uv",
       "args": [
-        "awslabs.aws-documentation-mcp-server@latest"
-      ],
-      "env": {
-        "FASTMCP_LOG_LEVEL": "ERROR"
-      },
-      "disabled": false,
-      "autoApprove": []
-    },
-    "markdownify": {
-      "command": "node",
-      "args": [
-        "/home/stalky/personal/MCP/markdownify-mcp/dist/index.js"
+        "run",
+        "--directory",
+        "/home/zeyad-zohny/.config/mcphub/mcp-atlassian",
+        "mcp-atlassian"
       ]
     },
-    "obsidian": {
-      "command": "npx",
-      "args": ["-y", "mcp-obsidian", "/home/stalky/obsidian/base_vault"]
-    },
-    "jetbrains": {
-      "command": "npx",
-      "args": ["-y", "@jetbrains/mcp-proxy"],
-      "env": {
-        "IDE_PORT": "63342",
-        "HOST": "localhost",
-        "LOG_ENABLED": "true"
-      }
+    "mcp-obsidian": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/home/zeyad-zohny/obsidian_vault/.obsidian/plugins/mcp-obsidian",
+        "run",
+        "mcp-obsidian"
+      ]
     },
     "kubernetes": {
       "command": "npx",
-      "args": ["mcp-server-kubernetes"]
+      "args": [
+        "mcp-server-kubernetes"
+      ]
     },
-    "openrouterai": {
-      "command": "npx",
-      "args": ["@mcpservers/openrouterai"],
+    "context7": {
+      "disabled": false,
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ],
+      "command": "npx"
+    },
+    "jetbrains": {
+      "disabled": false,
       "env": {
-        "OPENROUTER_API_KEY": "${OPENROUTER_API_KEY}",
-        "OPENROUTER_DEFAULT_MODEL": "deepseek/deepseek-chat-v3-0324:free"
-      }
+        "LOG_ENABLED": "true",
+        "IDE_PORT": "63342",
+        "HOST": "localhost"
+      },
+      "args": [
+        "-y",
+        "@jetbrains/mcp-proxy"
+      ],
+      "command": "npx"
     }
   },
   "nativeMCPServers": [
