@@ -7,18 +7,65 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  // ================= M E T A / C O R E ==================
   "telemetry": {
     "diagnostics": false,
     "metrics": false
   },
   "vim_mode": true,
-  "ui_font_size": 14,
-  "buffer_font_size": 14,
+
+  // ================= A P P E A R A N C E =================
   "theme": {
     "mode": "system",
-    "light": "GitHub Dark Default",
+    "light": "One Light",
     "dark": "GitHub Dark Default"
   },
+  "ui_font_family": "Monaspace Neon",
+  "ui_font_size": 14,
+  "buffer_font_family": "Monaspace Neon",
+  "buffer_font_size": 14,
+  "relative_line_numbers": true,
+  "cursor_blink": false,
+  "hide_mouse": "on_typing_and_movement",
+  "scrollbar": {
+    "show": "never"
+  },
+  "tab_bar": {
+    "show": true
+  },
+  "toolbar": {
+    "breadcrumbs": true,
+    "quick_actions": false,
+    "selections_menu": false
+  },
+  "indent_guides": {
+    "enabled": true,
+    "coloring": "fixed"
+  },
+  "show_wrap_guides": true,
+  "wrap_guides": [100],
+
+  // =============== E D I T I N G / F E A T U R E S ===============
+  "preview_tabs": {
+    "enabled": true
+  },
+  "inlay_hints": {
+    "enabled": true,
+    "show_type_hints": true,
+    "show_parameter_hints": true,
+    "show_other_hints": true,
+    "show_background": false,
+    "edit_debounce_ms": 700,
+    "scroll_debounce_ms": 50
+  },
+  // Edit predictions are triggered manually via ctrl-x ctrl-c
+  "show_edit_predictions": false,
+  "features": {
+    "edit_prediction_provider": "zed",
+    "copilot": false
+  },
+
+  // =============== A I  /  A S S I S T A N T ===============
   "assistant": {
     "default_model": {
       "provider": "zed.dev",
@@ -26,39 +73,8 @@
     },
     "version": "2"
   },
-  "toolbar": {
-    "breadcrumbs": true,
-    "quick_actions": false,
-    "selections_menu": false
-  },
-  "ui_font_family": "Monaspace Neon",
-  "buffer_font_family": "Monaspace Neon",
-  "features": {
-    "edit_prediction_provider": "zed",
-    "copilot": false
-  },
-  "hide_mouse": "on_typing_and_movement",
-  // Will be triggered manually with `ctrl-x ctrl-c`.
-  "show_edit_predictions": false,
-  "inlay_hints": {
-    "enabled": false
-  },
-  "cursor_blink": false,
-  "relative_line_numbers": true,
-  "tab_bar": {
-    "show": true
-  },
-  "scrollbar": {
-    "show": "never"
-  },
-  // Rainbow indentation
-  "indent_guides": {
-    "enabled": true,
-    "coloring": "fixed"
-  },
-  "preview_tabs": {
-    "enabled": true
-  },
+
+  // ================== V E R S I O N  C O N T R O L =================
   "git": {
     "git_gutter": "tracked_files",
     "inline_blame": {
@@ -66,9 +82,136 @@
       "min_column": 80
     }
   },
+
+  // ================== L A N G U A G E  S P E C I F I C (LSP) ==================
+  "lsp": {
+    // --- Java (jdtls) Configuration ---
+    "jdtls": {
+      "settings": {
+        "java": {
+          "home": "/home/zeyad-zohny/.sdkman/candidates/java/21.0.6-amzn/bin/java",
+          "errors": {
+            "incompleteClasspath": {
+              "severity": "warning"
+            }
+          },
+          "configuration": {
+            "updateBuildConfiguration": "interactive",
+            "runtimes": [
+              {
+                "name": "JavaSE-11",
+                "path": "/home/zeyad-zohny/.sdkman/candidates/java/11.0.26-amzn/",
+                "javadoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+                "default": true
+              },
+              {
+                "name": "JavaSE-17",
+                "path": "/home/zeyad-zohny/.sdkman/candidates/java/17.0.14-amzn/",
+                "javadoc": "https://docs.oracle.com/en/java/javase/17/docs/api/"
+              },
+              {
+                "name": "JavaSE-21",
+                "path": "/home/zeyad-zohny/.sdkman/candidates/java/21.0.6-amzn/",
+                "javadoc": "https://docs.oracle.com/en/java/javase/21/docs/api/"
+              }
+            ]
+          },
+          "import": {
+            "gradle": {
+              "enabled": true
+            },
+            "maven": {
+              "enabled": true
+            },
+            "exclusions": [
+              "**/node_modules/**",
+              "**/.metadata/**",
+              "**/archetype-resources/**",
+              "**/META-INF/maven/**",
+              "/**/test/**"
+            ]
+          },
+          "jdt": {
+            "ls": {
+              "lombokSupport": {
+                "enabled": true
+              }
+            }
+          },
+          "referencesCodeLens": {
+            "enabled": true
+          },
+          "signatureHelp": {
+            "enabled": true
+          },
+          "implementationsCodeLens": {
+            "enabled": true
+          },
+          "format": {
+            "enabled": true,
+            "settings": {
+              "url": "/home/zeyad-zohny/Documents/RTA/Analytics_Java_Style.xml", // Ensure this file exists and is accessible
+              "profile": "RtaJavaStyle"
+            }
+          },
+          "saveActions": {
+            "organizeImports": true
+          },
+          "contentProvider": {
+            "preferred": "fernflower"
+          },
+          "autobuild": {
+            "enabled": false
+          },
+          "completion": {
+            "favoriteStaticMembers": [
+              "org.hamcrest.MatcherAssert.assertThat",
+              "org.hamcrest.Matchers.*",
+              "org.hamcrest.CoreMatchers.*",
+              "org.junit.Assert.*",
+              "org.junit.Assume.*",
+              "org.junit.jupiter.api.Assertions.*",
+              "org.junit.jupiter.api.Assumptions.*",
+              "org.junit.jupiter.api.DynamicContainer.*",
+              "org.junit.jupiter.api.DynamicTest.*",
+              "java.util.Objects.requireNonNull",
+              "java.util.Objects.requireNonNullElse",
+              "org.mockito.Mockito.*"
+            ],
+            "importOrder": ["com", "org", "jakarta", "javax", "java"]
+          }
+        }
+      }
+    },
+
+    // --- Scala (metals) Configuration ---
+    "metals": {
+      "settings": {
+        "showImplicitArguments": "true",
+        "autoImportBuild": "all",
+        "inlayHints": {
+          "inferredTypes": {
+            "enable": true
+          },
+          "implicitArguments": {
+            "enable": true
+          },
+          "implicitConversions": {
+            "enable": true
+          },
+          "typeParameters": {
+            "enable": true
+          },
+          "hintsInPatternMatch": {
+            "enable": true
+          }
+        }
+      }
+    }
+  },
+
+  // ===================== V I M  S P E C I F I C =====================
   "vim": {
     "use_system_clipboard": "never"
-  },
-  "wrap_guides": [100],
-  "show_wrap_guides": true
+  }
 }
