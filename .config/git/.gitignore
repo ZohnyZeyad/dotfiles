@@ -1,0 +1,14 @@
+.metals/
+.bloop/
+.bsp/
+.vscode/
+.ammonite/
+.idea/
+.settings/
+
+.classpath
+.project
+
+*.iml
+
+node_modules/

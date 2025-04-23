@@ -1,0 +1,47 @@
+[user]
+	name = Zohny, Zeyad [PS]
+	email = zeyad.zohny@cengage.com
+
+[core]
+	editor = nvim
+	longpaths = true
+    excludesfile = ~/.config/git/.gitignore
+
+[init]
+	defaultbranch = main
+
+[credential]
+	credentialstore = gpg
+	helper =
+	helper = /usr/local/bin/git-credential-manager
+
+[credential "https://stash.cengage.com"]
+	provider = bitbucket
+
+[credential "https://github.com"]
+	username = ZohnyZeyad
+
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+
+[push]
+	autoSetupRemote = true
+
+[merge]
+    conflictstyle = diff3
+
+[rerere]
+	enabled = true
+
+[grep]
+    lineNumber = true
+    patternType = perl
+
+[alias]
+	fp = !git fetch && git pull
+    lol = log --oneline --decorate
+    graph = log --graph --decorate --oneline
+    word-diff = diff --word-diff
+    blame-all = blame -C -C -C
+    rl = reflog --date=iso
+    rl-long = reflog --pretty --date=iso
