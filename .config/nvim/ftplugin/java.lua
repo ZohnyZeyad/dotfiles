@@ -7,7 +7,8 @@ if not jdtls_ok then
   return
 end
 
-local java_path = os.getenv 'JAVA_HOME'
+-- local java_path = os.getenv 'JAVA_HOME'
+local java_path = home .. "/.sdkman/candidates/java/21.0.6-amzn"
 local java = java_path .. "/bin/java"
 
 local root_markers = {
@@ -202,7 +203,12 @@ local config = {
           "org.hamcrest.MatcherAssert.assertThat",
           "org.hamcrest.Matchers.*",
           "org.hamcrest.CoreMatchers.*",
+          "org.junit.Assert.*",
+          "org.junit.Assume.*",
           "org.junit.jupiter.api.Assertions.*",
+          "org.junit.jupiter.api.Assumptions.*",
+          "org.junit.jupiter.api.DynamicContainer.*",
+          "org.junit.jupiter.api.DynamicTest.*",
           "java.util.Objects.requireNonNull",
           "java.util.Objects.requireNonNullElse",
           "org.mockito.Mockito.*",
