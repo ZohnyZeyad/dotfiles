@@ -2,16 +2,15 @@ local openrouter_models = { ---@see https://openrouter.ai/models
   "deepseek/deepseek-chat-v3-0324:free",
   "agentica-org/deepcoder-14b-preview:free",
   "google/gemini-2.5-pro-exp-03-25:free",
+  "qwen/qwen-2.5-coder-32b-instruct:free",
   "deepseek/deepseek-r1-zero:free",
   "deepseek/deepseek-r1-distill-llama-70b:free",
   "google/gemini-2.0-flash-thinking-exp:free",
-  "qwen/qwen-2.5-coder-32b-instruct:free",
 }
 
 local gemini_models = { ---@see https://ai.google.dev/gemini-api/docs/models/gemini
   "gemini-2.0-flash",
   "gemini-2.5-flash-preview-04-17",
-  "gemini-2.5-pro-preview-03-25",
   "gemini-2.5-pro-exp-03-25",
   "gemini-2.0-flash-thinking-exp-01-21",
   "gemini-1.5-pro",
@@ -33,7 +32,7 @@ local prompt_map = {
   [openrouter_models[3]] = gemini_pro_prompt,
 }
 
-local gemini_model = gemini_models[1]
+local gemini_model = gemini_models[2]
 
 ---@diagnostic disable-next-line: unused-function, unused-local
 local function get_system_prompt(model_name)
