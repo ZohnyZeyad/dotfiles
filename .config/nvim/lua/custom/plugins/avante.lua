@@ -103,6 +103,8 @@ return {
     provider = "gemini", -- "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
     -- provider = "openrouter",
 
+    auto_suggestions_provider = "openrouter",
+
     web_search_engine = {
       provider = "google", -- tavily, serpapi, searchapi, google, kagi, brave, or searxng
     },
@@ -115,7 +117,7 @@ return {
         __inherited_from = 'openai',
         endpoint = 'https://openrouter.ai/api/v1',
         api_key_name = 'OPENROUTER_API_KEY',
-        model = openrouter_models[3],
+        model = openrouter_models[4],
         timeout = 30000,
         temperature = 0.2,
         max_tokens = 8192,
@@ -163,6 +165,11 @@ return {
       minimize_diff = true,                -- Whether to remove unchanged lines when applying a code block
       enable_token_counting = true,        -- Whether to enable token counting. Default to true.
       enable_cursor_planning_mode = false, -- enable cursor planning mode!
+    },
+
+    suggestion = {
+      debounce = 500,
+      throttle = 500,
     },
 
     -- system_prompt = get_system_prompt(gemini_model),
