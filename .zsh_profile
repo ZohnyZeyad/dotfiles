@@ -19,6 +19,7 @@ export PKG_CONFIG=/usr/bin/
 
 export JAVA_OPTS="-Xms2g -Xmx4g"
 export MAVEN_OPTS="-Xms2g -Xmx4g"
+export BLOOP_JAVA_OPTS="-Xms2g -Xmx4g -XX:+UseZGC -Xss4m"
 export JDTLS_JVM_ARGS="-javaagent:$HOME/.local/share/nvim/mason/packages/jdtls/lombok.jar"
 
 export XDG_CONFIG_HOME=$HOME/.config

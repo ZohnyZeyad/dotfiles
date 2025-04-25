@@ -230,6 +230,7 @@ nmap [d :action GotoPreviousError<CR>
 nnoremap K :action ShowHoverInfo<CR>
 nnoremap gd :action GotoDeclaration<CR>
 nnoremap gD :action QuickTypeDefinition<CR>
+nnoremap gt :action GotoTypeDeclaration<CR>
 nnoremap gi :action GotoImplementation<CR>
 nnoremap gI :action QuickImplementations<CR>
 nnoremap gu :action ShowUsages<CR>
