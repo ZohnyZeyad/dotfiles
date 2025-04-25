@@ -33,6 +33,13 @@ local prompt_map = {
 }
 
 local gemini_model = gemini_models[2]
+local gemini_tokens = {
+  8192,
+  32768,
+  32768,
+  65536,
+  8192,
+}
 
 ---@diagnostic disable-next-line: unused-function, unused-local
 local function get_system_prompt(model_name)
@@ -130,7 +137,7 @@ return {
       model = gemini_model,
       timeout = 30000,
       temperature = 0.2,
-      max_tokens = 8192,
+      max_tokens = gemini_tokens[2],
       disable_tools = true,
     },
 
@@ -180,11 +187,10 @@ return {
     "stevearc/dressing.nvim",
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
-    -- The dependencies below are optional,
+    -- Optional dependencies
     "nvim-telescope/telescope.nvim",
     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
     "OXY2DEV/markview.nvim",       -- or MeanderingProgrammer/render-markdown.nvim
-    -- 'MeanderingProgrammer/render-markdown.nvim',
 
     {
       -- support for image pasting
@@ -192,7 +198,6 @@ return {
       event = "VeryLazy",
       enabled = false,
       opts = {
-        -- recommended settings
         default = {
           embed_image_as_base64 = false,
           prompt_for_file_name = false,

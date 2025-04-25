@@ -6,6 +6,14 @@ local gemini_models = { ---@see https://ai.google.dev/gemini-api/docs/models/gem
   "gemini-1.5-pro",
 }
 
+local gemini_tokens = {
+  8192,
+  32768,
+  32768,
+  65536,
+  8192,
+}
+
 local openrouter_models = { ---@see https://openrouter.ai/models
   "deepseek/deepseek-chat-v3-0324:free",
   "agentica-org/deepcoder-14b-preview:free",
@@ -23,7 +31,7 @@ local function gemini_adapter(idx)
         default = gemini_models[idx],
       },
       temperature = { default = 0.2 },
-      max_tokens = { default = 8192 },
+      max_tokens = { default = gemini_tokens[idx] },
     },
   })
 end
@@ -114,7 +122,7 @@ return {
             }
           }
         },
-        inline = { adapter = "gemini_flash", },
+        inline = { adapter = "gemini_flash_preview", },
         agent = { adapter = "gemini_pro", },
       },
 
@@ -129,7 +137,12 @@ return {
 
       opts = {
         system_prompt = function(opts)
-          return get_system_prompt(opts)
+          local hub = require("mcphub").get_hub_instance()
+          if hub == nil then
+            return get_system_prompt(opts)
+          else
+            return hub:get_active_servers_prompt()
+          end
         end
       },
 
