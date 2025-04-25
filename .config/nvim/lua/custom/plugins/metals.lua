@@ -14,7 +14,6 @@ return {
 
       local home = vim.env.HOME
       metals_config.settings = {
-        javaHome = home .. "/.sdkman/candidates/java/11.0.26-amzn",
         serverVersion = "latest.snapshot",
         showImplicitArguments = true,
         autoImportBuild = "all",
@@ -111,6 +110,8 @@ return {
 
         -- buffer diagnostics only
         map("n", "<leader>d", vim.diagnostic.setloclist)
+
+        map("n", "<leader>mt", function() require("metals.tvp").reveal_in_tree() end, { desc = "[M]etals [T]ree" })
       end
 
       return metals_config
