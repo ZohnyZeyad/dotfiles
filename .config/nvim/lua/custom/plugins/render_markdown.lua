@@ -1,11 +1,11 @@
 return {
   'MeanderingProgrammer/render-markdown.nvim',
   lazy = false,
-  enabled = true,
-  ft = { "codecompanion", "markdown" },
+  enabled = false,
+  ft = {},
   opts = {
     preview = {
-      filetypes = { "codecompanion", "markdown" },
+      filetypes = {},
       ignore_buftypes = {},
     },
   },
