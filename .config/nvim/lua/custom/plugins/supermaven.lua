@@ -24,5 +24,5 @@ return {
       end -- condition to check for stopping supermaven, `true` means to stop supermaven when the condition is true.
     })
   end,
-  keys = { { "<Leader>smt", "<cmd>SuperMavenToggle<cr>", desc = "[S]uper [M]aven [T]oggle" } },
+  keys = { { "<Leader>smt", "<cmd>SupermavenToggle<cr>", desc = "[S]uper [M]aven [T]oggle" } },
 }
