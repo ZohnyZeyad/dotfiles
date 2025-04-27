@@ -185,6 +185,11 @@ alias gsh="git stash"
 alias grl="git rl"
 alias grll="git rll"
 
+alias mvnci='mvn clean install'
+alias mvnct='mvn clean test'
+alias mvndr='mvn dependency:resolve'
+alias mvndt='mvn dependency:tree'
+
 # ~~~~~~~~~~~~~~~ Colorize Commands ~~~~~~~~~~~~~~~~~~~~~~~~
 
 alias ls='ls --color=auto --hyperlink=auto'
