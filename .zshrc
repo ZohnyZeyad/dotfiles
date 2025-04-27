@@ -108,11 +108,12 @@ zinit ice wait lucid; zinit light zsh-users/zsh-completions
 zinit ice wait lucid; zinit light zsh-users/zsh-autosuggestions
 zinit ice wait lucid; zinit light Aloxaf/fzf-tab
 zinit ice wait lucid; zinit light lukechilds/zsh-better-npm-completion
+zinit ice lucid as"program" pick"bin/git-dsf"; zinit load so-fancy/diff-so-fancy
 # zinit ice wait lucid for cloneonly; zinit light lukechilds/zsh-nvm
 
 # ~~~~~~~~~~~~~~~ Zinit Snippets ~~~~~~~~~~~~~~~~~~~~~~~~
 
-zinit ice wait lucid; zinit snippet OMZP::git
+# zinit ice wait lucid; zinit snippet OMZP::git
 zinit ice wait lucid; zinit snippet OMZP::sudo
 zinit ice wait lucid; zinit snippet OMZP::sbt
 zinit ice wait lucid; zinit snippet OMZP::mvn
@@ -165,6 +166,24 @@ alias idea=$IDEA_PATH/bin/idea.sh
 alias okta="flatpak run com.okta.developer.CLI"
 alias vpn-start="openvpn3 session-start --config nxvpn"
 alias vpn-disc="openvpn3 session-manage --config nxvpn --disconnect"
+
+alias gd="git diff --output-indicator-new='+' --output-indicator-old='-'"
+alias gwd="git word-diff"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gfp="git fp"
+alias gu="git pull"
+alias gl="git lol"
+alias gg="git graph"
+alias gga="git graph-all"
+alias gb="git branch"
+alias gi="git init"
+alias gcl="git clone"
+alias gs="git status"
+alias gsh="git stash"
+alias grl="git rl"
+alias grll="git rll"
 
 # ~~~~~~~~~~~~~~~ Colorize Commands ~~~~~~~~~~~~~~~~~~~~~~~~
 
