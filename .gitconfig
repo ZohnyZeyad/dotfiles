@@ -82,6 +82,7 @@
     lol = log --oneline --pretty=format:'%C(magenta)%h %C(white) %an  %ar%C(auto)  %D%n%s%n'
     graph = log --graph --pretty=format:'%C(magenta)%h %C(white) %an  %ar%C(auto)  %D%n%s%n'
     graph-all = log --all --graph --pretty=format:'%C(magenta)%h %C(white) %an  %ar%C(auto)  %D%n%s%n'
+    graph-stat= log --stat --graph --pretty=format:'%C(magenta)%h %C(white) %an  %ar%C(auto)  %D%n%s%n'
     word-diff = diff --word-diff
     blame-all = blame -C -C -C
     rl = reflog --date=iso

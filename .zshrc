@@ -177,6 +177,7 @@ alias gu="git pull"
 alias gl="git lol"
 alias gg="git graph"
 alias gga="git graph-all"
+alias ggs="git graph-stat"
 alias gb="git branch"
 alias gi="git init"
 alias gcl="git clone"
@@ -185,10 +186,7 @@ alias gsh="git stash"
 alias grl="git rl"
 alias grll="git rll"
 
-alias mvnci='mvn clean install'
-alias mvnct='mvn clean test'
 alias mvndr='mvn dependency:resolve'
-alias mvndt='mvn dependency:tree'
 
 # ~~~~~~~~~~~~~~~ Colorize Commands ~~~~~~~~~~~~~~~~~~~~~~~~
 
