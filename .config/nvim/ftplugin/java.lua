@@ -149,18 +149,18 @@ local config = {
         runtimes = {
           {
             name = "JavaSE-11",
-            path = home .. "/.sdkman/candidates/java/11.0.26-amzn/",
+            path = home .. "/.sdkman/candidates/java/11.0.27-amzn/",
             javadoc = "https://docs.oracle.com/en/java/javase/11/docs/api/",
             default = true,
           },
           {
             name = "JavaSE-17",
-            path = home .. "/.sdkman/candidates/java/17.0.14-amzn/",
+            path = home .. "/.sdkman/candidates/java/17.0.15-amzn/",
             javadoc = "https://docs.oracle.com/en/java/javase/17/docs/api/",
           },
           {
             name = "JavaSE-21",
-            path = home .. "/.sdkman/candidates/java/21.0.6-amzn/",
+            path = home .. "/.sdkman/candidates/java/21.0.7-amzn/",
             javadoc = "https://docs.oracle.com/en/java/javase/21/docs/api/",
           },
         },
