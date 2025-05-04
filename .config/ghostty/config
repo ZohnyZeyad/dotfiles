@@ -51,11 +51,13 @@
 shell-integration = zsh
 shell-integration-features = no-sudo,no-cursor
 
-theme = tokyonight
-foreground = #C9D4FF
-background = #181825
-font-family = JetBrainsMono Nerd Font
-font-size = 12
+# theme = tokyonight
+# foreground = #C9D4FF
+# background = #181825
+# font-family = JetBrainsMono Nerd Font
+theme = github-dark-default
+font-family = Monaspace
+font-size = 16
 
 cursor-style = block
 cursor-style-blink = false
@@ -64,9 +66,12 @@ window-padding-x = 10
 window-padding-y = 10
 window-padding-balance = true
 window-vsync = true
-window-decoration = none
+#window-decoration = none
+macos-titlebar-style = hidden
+macos-option-as-alt = left
 window-theme = ghostty
 window-save-state = always
+window-colorspace = display-p3
 
 clipboard-read = allow
 clipboard-write = allow
@@ -82,3 +87,7 @@ keybind = alt+6=unbind
 keybind = alt+7=unbind
 keybind = alt+8=unbind
 keybind = alt+9=unbind
+keybind = alt+left=unbind
+keybind = alt+right=unbind
+keybind = cmd+left=csi:1~
+keybind = cmd+right=csi:4~
