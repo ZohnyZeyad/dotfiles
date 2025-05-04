@@ -36,7 +36,7 @@ vim.opt.wrap = false       -- Don't wrap lines
 -- File Handling
 vim.opt.swapfile = false                               -- Disable swap files
 vim.opt.backup = false                                 -- Disable backup files
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir" -- Set the undo directory
+-- vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir" -- Set the undo directory
 vim.opt.undofile = true                                -- Enable persistent undo
 
 -- Search

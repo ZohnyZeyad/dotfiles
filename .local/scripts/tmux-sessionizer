@@ -4,7 +4,7 @@ if [[ $# -eq 1 ]]; then
     selected=$1
 else
     ignored='-I ".git" -I "node_modules" -I ".bloop" -I ".bsp" -I ".metals" -I ".scala-build" -I ".terraform" -I ".idea" -I "target" -I ".gradle"'
-    selected=$(find ~/Cengage/RTA/Stash ~/NixEdu ~/.dotfiles -mindepth 0 -maxdepth 1 -type d ! -name '.git' |
+    selected=$(find ~/Cengage/RTA/Stash ~/NixEdu ~/.dotfiles ~/personal -mindepth 0 -maxdepth 1 -type d ! -name '.git' |
         fzf --preview "tree -a $ignored -C {} | head -200")
 fi
 

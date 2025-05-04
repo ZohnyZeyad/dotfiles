@@ -48,9 +48,9 @@ path=(
     $path
     $HOME/bin
     $HOME/.local/bin
-    $HOME/.local/bin
     $HOME/.local/scripts
     $HOME/.local/share/coursier/bin
+    $HOME/Library/Application Support/Coursier/bin
     $HOME/go/bin
     $HOME/.cargo/bin
     /opt/nvim-linux64/bin
@@ -83,6 +83,8 @@ bindkey '^[[1;3C' vi-forward-word
 bindkey '^H' vi-backward-kill-word
 bindkey '^[[3~' delete-char
 bindkey '^[[3;5~' delete-word
+bindkey '^[[1~' beginning-of-line
+bindkey '^[[4~' end-of-line
 
 # ~~~~~~~~~~~~~~~ ZINIT ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -190,7 +192,7 @@ alias mvndr='mvn dependency:resolve'
 
 # ~~~~~~~~~~~~~~~ Colorize Commands ~~~~~~~~~~~~~~~~~~~~~~~~
 
-alias ls='ls --color=auto --hyperlink=auto'
+alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
@@ -248,14 +250,18 @@ eval "$(zoxide init --cmd cd zsh)"
 
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+eval "$(pyenv init - zsh)"
+# eval "$(pyenv virtualenv-init -)"
 
 FNM_PATH="$HOME/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
-  export PATH="$HOME/.local/share/fnm:$PATH"
-  eval "`fnm env`"
+ eval "$(fnm env --use-on-cd --corepack-enabled --shell zsh)"
 fi
+
+# uvenv
+. "$HOME/.local/bin/env"
+eval "$(uvenv --generate=zsh completions)"
+eval "$(uvenv --generate=zsh activate _)"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"

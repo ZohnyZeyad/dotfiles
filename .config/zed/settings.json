@@ -150,7 +150,7 @@
           "format": {
             "enabled": true,
             "settings": {
-              "url": "/home/zeyad-zohny/Documents/RTA/Analytics_Java_Style.xml", // Ensure this file exists and is accessible
+              "url": "/Users/zeyadzohny/Documents/RTA/Analytics_Java_Style.xml", // Ensure this file exists and is accessible
               "profile": "RtaJavaStyle"
             }
           },
