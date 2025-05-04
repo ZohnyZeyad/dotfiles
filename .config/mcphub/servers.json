@@ -1,98 +1,103 @@
 {
+  "nativeMCPServers": [
+    
+  ],
   "mcpServers": {
+    "mcp-obsidian": {
+      "args": [
+        "--directory",
+        "/Users/zeyadzohny/obsidian/base_vault/.obsidian/plugins/mcp-obsidian",
+        "run",
+        "mcp-obsidian"
+      ],
+      "command": "uv",
+      "disabled": true
+    },
     "filesystem": {
-      "disabled": false,
       "args": [
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "/home/zeyad-zohny"
+        "/Users/zeyadzohny"
       ],
-      "command": "npx"
-    },
-    "git": {
-      "command": "uvx",
-      "args": ["mcp-server-git"]
-    },
-    "openrouterai": {
-      "disabled": true,
-      "env": {
-        "OPENROUTER_DEFAULT_MODEL": "deepseek/deepseek-chat-v3-0324:free",
-        "OPENROUTER_API_KEY": "${OPENROUTER_API_KEY}"
-      },
-      "args": [
-        "@mcpservers/openrouterai"
-      ],
-      "command": "npx"
-    },
-    "awslabs.aws-documentation-mcp-server": {
-      "env": {
-        "FASTMCP_LOG_LEVEL": "ERROR"
-      },
-      "command": "uvx",
-      "autoApprove": [
-
-      ],
-      "args": [
-        "awslabs.aws-documentation-mcp-server@latest"
-      ],
-      "disabled": false
-    },
-    "sequential-thinking": {
-      "disabled": false,
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ],
-      "command": "npx"
-    },
-    "mcp-atlassian": {
-      "command": "uv",
-      "args": [
-        "run",
-        "--directory",
-        "/home/zeyad-zohny/.config/mcphub/mcp-atlassian",
-        "mcp-atlassian"
-      ]
-    },
-    "mcp-obsidian": {
-      "command": "uv",
-      "args": [
-        "--directory",
-        "/home/zeyad-zohny/obsidian_vault/.obsidian/plugins/mcp-obsidian",
-        "run",
-        "mcp-obsidian"
-      ]
-    },
-    "kubernetes": {
-      "disabled": true,
       "command": "npx",
-      "args": [
-        "mcp-server-kubernetes"
-      ]
-    },
-    "context7": {
-      "disabled": false,
-      "args": [
-        "-y",
-        "@upstash/context7-mcp@latest"
-      ],
-      "command": "npx"
+      "disabled": false
     },
     "jetbrains": {
       "disabled": true,
-      "env": {
-        "LOG_ENABLED": "true",
-        "IDE_PORT": "63342",
-        "HOST": "localhost"
-      },
       "args": [
         "-y",
         "@jetbrains/mcp-proxy"
       ],
-      "command": "npx"
+      "command": "npx",
+      "env": {
+        "IDE_PORT": "63342",
+        "LOG_ENABLED": "true",
+        "HOST": "localhost"
+      }
+    },
+    "mcp-atlassian": {
+      "args": [
+        "run",
+        "--directory",
+        "/Users/zeyadzohny/.dotfiles/.config/mcphub/mcp-atlassian",
+        "mcp-atlassian"
+      ],
+      "command": "uv",
+      "disabled": true
+    },
+    "awslabs.aws-documentation-mcp-server": {
+      "args": [
+        "awslabs.aws-documentation-mcp-server@latest"
+      ],
+      "autoApprove": [
+        
+      ],
+      "disabled": false,
+      "command": "uvx",
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      }
+    },
+    "git": {
+      "args": [
+        "mcp-server-git"
+      ],
+      "command": "uvx",
+      "disabled": false
+    },
+    "context7": {
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ],
+      "command": "npx",
+      "disabled": false
+    },
+    "kubernetes": {
+      "args": [
+        "mcp-server-kubernetes"
+      ],
+      "command": "npx",
+      "disabled": true
+    },
+    "openrouterai": {
+      "disabled": true,
+      "args": [
+        "@mcpservers/openrouterai"
+      ],
+      "command": "npx",
+      "env": {
+        "OPENROUTER_API_KEY": "${OPENROUTER_API_KEY}",
+        "OPENROUTER_DEFAULT_MODEL": "deepseek/deepseek-chat-v3-0324:free"
+      }
+    },
+    "sequential-thinking": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "command": "npx",
+      "disabled": false
     }
-  },
-  "nativeMCPServers": [
-
-  ]
+  }
 }

@@ -18,6 +18,8 @@
 [credential]
 	credentialstore = gpg
 	helper = /usr/local/bin/git-credential-manager
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
 
 [credential "https://stash.cengage.com"]
 	provider = bitbucket
