@@ -8,7 +8,7 @@ if not jdtls_ok then
 end
 
 -- local java_path = os.getenv 'JAVA_HOME'
-local java_path = home .. "/.sdkman/candidates/java/21.0.6-amzn"
+local java_path = home .. "/.sdkman/candidates/java/21.0.7-amzn"
 local java = java_path .. "/bin/java"
 
 local root_markers = {
