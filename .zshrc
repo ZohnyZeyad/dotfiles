@@ -123,6 +123,7 @@ zinit ice wait lucid; zinit snippet OMZP::gradle
 zinit ice wait lucid; zinit snippet OMZP::mongocli
 zinit ice wait lucid; zinit snippet OMZP::docker-compose
 zinit ice wait lucid; zinit snippet OMZP::aws
+zinit ice wait lucid; zinit snippet OMZP::nvm
 zinit ice wait lucid; zinit snippet OMZP::terraform
 zinit ice wait lucid; zinit snippet OMZP::command-not-found
 zinit ice wait lucid; zinit light zdharma-continuum/fast-syntax-highlighting
@@ -149,6 +150,9 @@ zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
+# zstyle ':omz:plugins:nvm' lazy yes
+zstyle ':omz:plugins:nvm' autoload yes
+zstyle ':omz:plugins:nvm' silent-autoload yes
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
@@ -253,10 +257,10 @@ export PYENV_ROOT="$HOME/.pyenv"
 eval "$(pyenv init - zsh)"
 # eval "$(pyenv virtualenv-init -)"
 
-FNM_PATH="$HOME/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
- eval "$(fnm env --use-on-cd --corepack-enabled --shell zsh)"
-fi
+# FNM_PATH="$HOME/.local/share/fnm"
+# if [ -d "$FNM_PATH" ]; then
+#  eval "$(fnm env --use-on-cd --corepack-enabled --shell zsh)"
+# fi
 
 # uvenv
 . "$HOME/.local/bin/env"
