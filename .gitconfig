@@ -16,7 +16,7 @@
 	defaultbranch = main
 
 [credential]
-	credentialstore = gpg
+	credentialstore = keychain
 	helper =
 	helper = /usr/local/bin/git-credential-manager
 
