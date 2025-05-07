@@ -32,7 +32,7 @@ local prompt_map = {
   [openrouter_models[3]] = gemini_pro_prompt,
 }
 
-local gemini_model = gemini_models[2]
+local gemini_model = gemini_models[1]
 local gemini_tokens = {
   8192,
   32768,
@@ -88,6 +88,8 @@ return {
   opts = {
     hints = { enabled = false },
 
+    mode = "agentic",
+
     selector = {
       provider = "telescope", -- "native" | "fzf" | "telescope" | "snacks" | string
       -- Options override for custom providers
@@ -117,7 +119,7 @@ return {
         __inherited_from = 'openai',
         endpoint = 'https://openrouter.ai/api/v1',
         api_key_name = 'OPENROUTER_API_KEY',
-        model = openrouter_models[4],
+        model = openrouter_models[1],
         timeout = 30000,
         temperature = 0.2,
         max_tokens = 8192,
@@ -139,7 +141,7 @@ return {
       model = gemini_model,
       timeout = 30000,
       temperature = 0.2,
-      max_tokens = gemini_tokens[2],
+      max_tokens = gemini_tokens[1],
       disable_tools = true,
     },
 
@@ -172,13 +174,12 @@ return {
       throttle = 500,
     },
 
-    -- system_prompt = get_system_prompt(gemini_model),
     system_prompt = function()
       local hub = require("mcphub").get_hub_instance()
-      if hub == nil then
-        return get_system_prompt(gemini_model)
-      else
+      if hub and hub:is_ready() then
         return hub:get_active_servers_prompt()
+      else
+        return get_system_prompt(gemini_model)
       end
     end,
 

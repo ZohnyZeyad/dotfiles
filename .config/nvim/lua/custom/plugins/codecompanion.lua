@@ -113,13 +113,6 @@ return {
             ---The header name for your messages
             ---@type string
             user = "User",
-          },
-          tools = {
-            ["mcp"] = {
-              -- calling it in a function would prevent mcphub from being loaded before it's needed
-              callback = function() return require("mcphub.extensions.codecompanion") end,
-              description = "Call tools and resources from the MCP Servers",
-            }
           }
         },
         inline = { adapter = "gemini_flash_preview", },
@@ -132,7 +125,18 @@ return {
         gemini_flash = gemini_adapter(1),
         gemini_pro = gemini_adapter(3),
         gemini_flash_preview = gemini_adapter(2),
-        openrouter = openrouter_adapter(1),
+        openrouter = openrouter_adapter(2),
+      },
+
+      extensions = {
+        mcphub = {
+          callback = "mcphub.extensions.codecompanion",
+          opts = {
+            show_result_in_chat = true, -- Show the mcp tool result in the chat buffer
+            make_vars = true,           -- make chat #variables from MCP server resources
+            make_slash_commands = true, -- make /slash_commands from MCP server prompts
+          },
+        }
       },
 
       opts = {

@@ -3,6 +3,7 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
   },
+  lazy = false,
   -- comment the following line to ensure hub will be ready at the earliest
   -- cmd = "MCPHub", -- lazy load by default
   build = "npm install -g mcp-hub@latest",
@@ -14,14 +15,7 @@ return {
       extensions = {
         avante = {
           make_slash_commands = true, -- make /slash commands from MCP server prompts
-        },
-        codecompanion = {
-          -- Show the mcp tool result in the chat buffer
-          -- NOTE:if the result is markdown with headers, content after the headers wont be sent by codecompanion
-          show_result_in_chat = true,
-          make_vars = true,           -- make chat #variables from MCP server resources
-          make_slash_commands = true, -- make /slash commands from MCP server prompts
-        },
+        }
       }
     })
   end,
