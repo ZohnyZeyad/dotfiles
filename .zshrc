@@ -193,6 +193,7 @@ alias grl="git rl"
 alias grll="git rll"
 
 alias mvndr='mvn dependency:resolve'
+alias mvnbi='mvn generate-sources bloop:bloopInstall'
 
 # ~~~~~~~~~~~~~~~ Colorize Commands ~~~~~~~~~~~~~~~~~~~~~~~~
 
