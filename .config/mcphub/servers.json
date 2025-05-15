@@ -1,6 +1,6 @@
 {
   "nativeMCPServers": [
-    
+
   ],
   "mcpServers": {
     "mcp-obsidian": {
@@ -50,7 +50,7 @@
         "awslabs.aws-documentation-mcp-server@latest"
       ],
       "autoApprove": [
-        
+
       ],
       "disabled": false,
       "command": "uvx",

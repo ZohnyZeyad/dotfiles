@@ -219,8 +219,9 @@ command -v lsd > /dev/null && alias ls='lsd --group-dirs first' && \
 
 export FZF_COMPLETION_TRIGGER='~~'
 export FZF_COMPLETION_OPTS='--border --info=inline'
-export FZF_DEFAULT_COMMAND="find \! \( -path '*/.git' -prune \) -printf '%P\n'"
+export FZF_DEFAULT_COMMAND="fd -H --color=always --exclude .git --strip-cwd-prefix"
 export FZF_DEFAULT_OPTS="
+    --ansi
     --bind 'ctrl-/:change-preview-window(down|hidden|)'
     --bind 'space:become(nvim {})'
     --preview='bat -n --color=always {}'"
