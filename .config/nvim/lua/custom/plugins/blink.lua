@@ -30,7 +30,7 @@ end
 local function sources_default_function(_)
   local ok, node = pcall(vim.treesitter.get_node)
   local defaults = {
-    'lsp', 'path', 'snippets', 'buffer', 'lazydev', 'ripgrep',
+    'lsp', 'path', 'snippets', 'buffer', 'lazydev', 'ripgrep', 'copilot'
   }
   if ok and node and vim.tbl_contains({
         'comment',
@@ -82,6 +82,26 @@ local completion_providers = {
     name = 'Avante',
     score_offset = 150,
     opts = {},
+  },
+
+  copilot = {
+    name = "copilot",
+    module = "blink-copilot",
+    score_offset = 125,
+    async = true,
+    opts = {
+      max_completions = 3,
+      max_attempts = 4,
+    },
+    transform_items = function(_, items)
+      local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
+      local kind_idx = #CompletionItemKind + 1
+      CompletionItemKind[kind_idx] = "Copilot"
+      for _, item in ipairs(items) do
+        item.kind = kind_idx
+      end
+      return items
+    end,
   },
 
   path = {
@@ -157,6 +177,7 @@ return {
       'L3MON4D3/LuaSnip',
       'mikavilpas/blink-ripgrep.nvim',
       'Kaiser-Yang/blink-cmp-avante',
+      'fang2hou/blink-copilot',
     },
 
     opts = {
@@ -166,7 +187,40 @@ return {
 
       appearance = {
         use_nvim_cmp_as_default = true,
-        nerd_font_variant = 'mono'
+        nerd_font_variant = 'mono',
+        kind_icons = {
+          Copilot = "",
+          Text = '󰉿',
+          Method = '󰊕',
+          Function = '󰊕',
+          Constructor = '󰒓',
+
+          Field = '󰜢',
+          Variable = '󰆦',
+          Property = '󰖷',
+
+          Class = '󱡠',
+          Interface = '󱡠',
+          Struct = '󱡠',
+          Module = '󰅩',
+
+          Unit = '󰪚',
+          Value = '󰦨',
+          Enum = '󰦨',
+          EnumMember = '󰦨',
+
+          Keyword = '󰻾',
+          Constant = '󰏿',
+
+          Snippet = '󱄽',
+          Color = '󰏘',
+          File = '󰈔',
+          Reference = '󰬲',
+          Folder = '󰉋',
+          Event = '󱐋',
+          Operator = '󰪚',
+          TypeParameter = '󰬛',
+        },
       },
 
       snippets = {

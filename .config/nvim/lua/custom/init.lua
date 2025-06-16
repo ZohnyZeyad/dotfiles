@@ -152,3 +152,17 @@ autocmd('LspAttach', {
     end
   end
 })
+
+autocmd("User", {
+  pattern = "BlinkCmpMenuOpen",
+  callback = function()
+    vim.b.copilot_suggestion_hidden = true
+  end,
+})
+
+autocmd("User", {
+  pattern = "BlinkCmpMenuClose",
+  callback = function()
+    vim.b.copilot_suggestion_hidden = false
+  end,
+})
