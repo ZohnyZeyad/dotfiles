@@ -25,6 +25,8 @@ return {
       filetypes = {
         ["."] = true,
         markdown = true,
+        codecompanion = false,
+        Avante = false,
         sh = function()
           if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), '^%.env.*') then
             -- disable for .env files
@@ -42,9 +44,15 @@ return {
       end,
 
       workspace_folders = {
-        "~/Cengage/RTA/Stash/CAP",
+        "~/Cengage/RTA/Stash/CCONTAIN",
         "~/Cengage/RTA/Stash/AINFRA",
+        "~/Cengage/RTA/Stash/API",
+        "~/Cengage/RTA/Stash/CAP",
+        "~/Cengage/RTA/Stash/PLYGRND",
+        "~/Cengage/RTA/Stash/CPERS",
+        "~/Cengage/RTA/Stash/BIG",
         "~/Cengage/RTA/Stash/ALTCS",
+        "~/Cengage/RTA/Stash/PCF",
         "~/.config/nvim",
       },
     })

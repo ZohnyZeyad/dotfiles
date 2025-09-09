@@ -120,12 +120,14 @@ return {
       },
 
       adapters = {
-        opts = { show_defaults = false, },
+        http = {
+          opts = { show_defaults = false, },
 
-        gemini_flash = gemini_adapter(1),
-        gemini_pro = gemini_adapter(3),
-        gemini_flash_preview = gemini_adapter(2),
-        openrouter = openrouter_adapter(2),
+          gemini_flash = gemini_adapter(1),
+          gemini_pro = gemini_adapter(3),
+          gemini_flash_preview = gemini_adapter(2),
+          openrouter = openrouter_adapter(2),
+        }
       },
 
       extensions = {

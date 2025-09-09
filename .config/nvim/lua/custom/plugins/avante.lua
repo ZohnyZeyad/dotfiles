@@ -114,35 +114,39 @@ return {
     cursor_applying_provider = 'gemini',
     -- cursor_applying_provider = 'openrouter',
 
-    vendors = {
+    providers = {
       openrouter = {
         __inherited_from = 'openai',
         endpoint = 'https://openrouter.ai/api/v1',
         api_key_name = 'OPENROUTER_API_KEY',
         model = openrouter_models[1],
         timeout = 30000,
-        temperature = 0.2,
         max_tokens = 8192,
         disable_tools = true,
+        extra_request_body = {
+          temperature = 0.2,
+        },
         -- parse_curl_args = parse_curl_args
         -- parse_response = parse_response -- Used if the vendors has specific SSE spec that is not claude or openai.
       },
-    },
 
-    openai = {
-      endpoint = "https://openrouter.ai/api/v1",
-      model = "o1-mini",
-      timeout = 30000,
-      temperature = 0,
-      max_tokens = 8192,
-    },
+      openai = {
+        endpoint = "https://openrouter.ai/api/v1",
+        model = "o1-mini",
+        timeout = 30000,
+        extra_request_body = {
+          temperature = 0.2,
+        },
+        max_tokens = 8192,
+      },
 
-    gemini = {
-      model = gemini_model,
-      timeout = 30000,
-      temperature = 0.2,
-      max_tokens = gemini_tokens[1],
-      disable_tools = true,
+      gemini = {
+        model = gemini_model,
+        timeout = 30000,
+        temperature = 0.2,
+        max_tokens = gemini_tokens[1],
+        disable_tools = true,
+      },
     },
 
     dual_boost = {

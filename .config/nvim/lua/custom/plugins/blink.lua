@@ -142,11 +142,15 @@ local completion_providers = {
     score_offset = -100,
     opts = {
       prefix_min_len = 3,
-      context_size = 5,
-      max_filesize = '1M',
-      additional_rg_options = {},
-      search_casing = '--smart-case',
       fallback_to_regex_highlighting = true,
+      backend = {
+        context_size = 5,
+        ripgrep = {
+          additional_rg_options = {},
+          max_filesize = '1M',
+          search_casing = '--smart-case',
+        },
+      },
     },
   },
 }
